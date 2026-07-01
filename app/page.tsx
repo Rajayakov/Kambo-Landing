@@ -3,6 +3,7 @@ import Hero from '@/components/Hero'
 import WhatIsKambo from '@/components/WhatIsKambo'
 import Effects from '@/components/Effects'
 import Process from '@/components/Process'
+import Guide from '@/components/Guide'
 import Safety from '@/components/Safety'
 import SocialProof from '@/components/SocialProof'
 import Booking from '@/components/Booking'
@@ -17,6 +18,7 @@ export default function Home() {
         <WhatIsKambo />
         <Effects />
         <Process />
+        <Guide />
         <Safety />
         <SocialProof />
         <Booking />
