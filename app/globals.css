@@ -1,26 +1,174 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --kambo-bg:         rgba(11,26,15,0.86);
+  --kambo-surface:    rgba(18,32,22,0.84);
+  --kambo-surface-hi: rgba(28,48,32,0.88);
+  --kambo-border:     #2E4A32;
+
+  --kambo-accent:     #C4922A;
+  --kambo-accent-hi:  #E8B84B;
+
+  --kambo-text-hi:    #F0E6C8;
+  --kambo-text-lo:    #B2C2B4;
+
+  --kambo-bento-1:    rgba(13,46,26,0.82);
+  --kambo-bento-2:    rgba(74,122,78,0.82);
+  --kambo-bento-3:    rgba(26,18,8,0.82);
+  --kambo-bento-4:    rgba(107,63,26,0.82);
+
+  --radius-sm:  2px;
+  --radius-md:  4px;
+  --radius-lg:  8px;
+  --max-w:      1100px;
+  --section-py: clamp(72px, 11vw, 128px);
+
+  --text-display: clamp(52px, 7vw, 88px);
+  --text-h2:      clamp(34px, 4vw, 52px);
+  --text-h3:      clamp(20px, 2.5vw, 28px);
+  --text-body:    18px;
+  --text-small:   14px;
+  --text-eyebrow: 11px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--kambo-bg);
+  --color-foreground: var(--kambo-text-hi);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--kambo-bg);
+  color: var(--kambo-text-hi);
+  font-family: var(--font-onest), system-ui, sans-serif;
+  font-size: var(--text-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Jungle fixed background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url('/jungle-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.42) saturate(0.85);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Anchor scroll offset — floating pill nav is ~82px tall */
+section[id] {
+  scroll-margin-top: 88px;
+}
+
+/* Grain overlay — fixed, pointer-events-none, no GPU repaint */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* Cursor + focus */
+a, button, [role="button"] {
+  cursor: pointer;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--kambo-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--kambo-accent);
+  outline-offset: 3px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 400;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--kambo-accent);
+  color: var(--kambo-bg);
+}
+
+.eyebrow {
+  font-family: var(--font-onest), sans-serif;
+  font-size: var(--text-eyebrow);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--kambo-accent);
+  font-weight: 500;
+}
+
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--kambo-accent);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.btn-tactile {
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+.btn-tactile:hover {
+  background: var(--kambo-accent-hi) !important;
+}
+.btn-tactile:active {
+  transform: translateY(1px);
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--kambo-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--kambo-border);
+  border-radius: 2px;
 }
