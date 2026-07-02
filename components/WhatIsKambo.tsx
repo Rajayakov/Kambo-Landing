@@ -66,7 +66,7 @@ export default function WhatIsKambo() {
             display: 'grid',
             gridTemplateColumns: '54% 46%',
             gap: 'clamp(32px, 5vw, 72px)',
-            alignItems: 'center',
+            alignItems: 'stretch',
             marginBottom: 'clamp(48px, 7vw, 80px)',
           }}
         >
@@ -108,21 +108,46 @@ export default function WhatIsKambo() {
             >
               {WHAT_KAMBO.quote}
             </blockquote>
+
+            <div
+              style={{
+                height: '1px',
+                background: 'linear-gradient(to right, rgba(196,146,42,0.24), transparent)',
+              }}
+            />
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              {WHAT_KAMBO.paragraphs.map((para, i) => (
+                <p
+                  key={i}
+                  style={{
+                    fontSize: 'clamp(14px, 1.3vw, 15px)',
+                    color: 'var(--kambo-text-lo)',
+                    lineHeight: 1.82,
+                    margin: 0,
+                  }}
+                >
+                  {para}
+                </p>
+              ))}
+            </div>
           </motion.div>
 
-          {/* Right: photo */}
+          {/* Right: photo — fills full column height */}
           <motion.div
+            className="what-photo-wrap"
             initial={reduce ? {} : { opacity: 0, x: 24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, delay: 0.12, ease: EASE }}
+            style={{ position: 'relative' }}
           >
             <div
               style={{
-                position: 'relative',
+                position: 'absolute',
+                inset: 0,
                 borderRadius: '3px',
                 overflow: 'hidden',
-                aspectRatio: '4 / 5',
                 boxShadow: '0 28px 72px rgba(0,0,0,0.55), 0 0 0 1px rgba(196,146,42,0.14)',
               }}
             >
@@ -138,7 +163,7 @@ export default function WhatIsKambo() {
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  background: 'radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.42) 100%)',
+                  background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.52) 100%)',
                 }}
               />
             </div>
@@ -203,6 +228,7 @@ export default function WhatIsKambo() {
       <style>{`
         @media (max-width: 767px) {
           .what-grid { grid-template-columns: 1fr !important; }
+          .what-photo-wrap { min-height: clamp(300px, 75vw, 520px) !important; }
           .what-stats { grid-template-columns: 1fr !important; }
           .what-stats > div { border-left: none !important; border-top: 1px solid var(--kambo-border); padding-inline: 0 !important; }
           .what-stats > div:first-child { border-top: none; }

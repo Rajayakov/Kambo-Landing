@@ -70,9 +70,9 @@ export default function Safety() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           style={{
             background: 'var(--kambo-surface)',
-            border: '1px solid var(--kambo-border)',
-            borderRadius: 'var(--radius-md)',
-            padding: 'clamp(20px, 3vw, 32px)',
+            borderTop: '2px solid rgba(196,146,42,0.32)',
+            borderRadius: 'var(--radius-lg)',
+            padding: 'clamp(24px, 3.5vw, 40px)',
             display: 'flex',
             flexDirection: 'column',
           }}
@@ -139,7 +139,7 @@ export default function Safety() {
           {/* Footer note */}
           <p
             style={{
-              fontSize: '13px',
+              fontSize: '15px',
               color: 'var(--kambo-text-lo)',
               marginTop: '20px',
               paddingTop: '16px',
@@ -158,10 +158,10 @@ export default function Safety() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           style={{
-            background: 'var(--kambo-surface)',
-            border: '1px solid var(--kambo-border)',
-            borderRadius: 'var(--radius-md)',
-            padding: 'clamp(20px, 3vw, 32px)',
+            background: 'rgba(28,48,32,0.72)',
+            borderTop: '2px solid rgba(196,146,42,0.55)',
+            borderRadius: 'var(--radius-lg)',
+            padding: 'clamp(24px, 3.5vw, 40px)',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
@@ -190,7 +190,7 @@ export default function Safety() {
                   display: 'flex',
                   alignItems: 'flex-start',
                   gap: '12px',
-                  fontSize: '14px',
+                  fontSize: '15px',
                   color: 'var(--kambo-text-lo)',
                   lineHeight: 1.65,
                 }}

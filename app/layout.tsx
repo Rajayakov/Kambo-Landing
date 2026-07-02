@@ -12,11 +12,12 @@ const cormorant = Cormorant_Garamond({
 const onest = Onest({
   variable: "--font-onest",
   subsets: ["latin", "cyrillic"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://kambo-landing.vercel.app"),
   title: "Церемония Камбо — очищение амазонской лягушкой | Яков Раджуна",
   description:
     "Церемония Камбо на Ко Пангане. 350+ проведённых церемоний. Детокс, иммунитет, ясность. Запись через личный разговор.",
@@ -26,6 +27,7 @@ export const metadata: Metadata = {
       "350+ церемоний на Ко Пангане. Иммунитет, детокс, ясность. Запись открыта.",
     locale: "ru_RU",
     type: "website",
+    images: [{ url: "/hero-kambo.png", width: 1200, height: 630 }],
   },
 };
 
