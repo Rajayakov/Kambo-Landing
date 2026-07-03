@@ -12,7 +12,7 @@ function IconEnergy() {
     <svg width="14" height="18" viewBox="0 0 14 18" fill="none" aria-hidden>
       <path d="M7 17C7 17 2 13 2 8.5C2 5 4.5 2 7 1C9.5 2 12 5 12 8.5C12 13 7 17 7 17Z"
         stroke="currentColor" strokeWidth="0.85" strokeLinejoin="round"/>
-      <circle cx="7" cy="9" r="1.5" fill="currentColor" opacity="0.75"/>
+      <circle cx="7" cy="9" r="1.5" stroke="currentColor" strokeWidth="0.7"/>
     </svg>
   )
 }
@@ -62,7 +62,7 @@ function IconPresence() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
       <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="0.85"/>
-      <circle cx="8" cy="8" r="1.8" fill="currentColor"/>
+      <circle cx="8" cy="8" r="2" stroke="currentColor" strokeWidth="0.7"/>
     </svg>
   )
 }
@@ -104,10 +104,10 @@ export default function Effects() {
         overflow: 'hidden',
       }}
     >
-      {/* Section overlay — increases contrast so cards pop against forest */}
+      {/* Section overlay — denser to make cards read as distinct objects */}
       <div aria-hidden style={{
         position: 'absolute', inset: 0,
-        background: 'linear-gradient(180deg, rgba(6,18,12,.38), rgba(6,18,12,.56))',
+        background: 'linear-gradient(180deg, rgba(6,16,10,.45), rgba(6,16,10,.62))',
         pointerEvents: 'none', zIndex: 0,
       }} />
       {/* Ambient top shimmer */}
@@ -175,12 +175,19 @@ export default function Effects() {
             transition={{ duration: 0.85, delay: 0, ease: EASE }}
             style={{
               gridColumn: 'span 2',
-              background: 'rgba(12,28,18,0.88)',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)',
-              border: '1px solid rgba(186,148,62,0.24)',
-              borderRadius: '18px',
-              boxShadow: '0 0 0 1px rgba(186,148,62,.14) inset, 0 18px 50px rgba(0,0,0,.35)',
+              background: [
+                'radial-gradient(circle at top left, rgba(191,157,73,.08), transparent 45%)',
+                'linear-gradient(180deg, rgba(13,30,19,.96), rgba(9,23,15,.94))',
+              ].join(', '),
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid rgba(191,157,73,.22)',
+              borderRadius: '20px',
+              boxShadow: [
+                '0 1px 0 rgba(255,255,255,.04) inset',
+                '0 0 0 1px rgba(191,157,73,.14) inset',
+                '0 28px 70px rgba(0,0,0,.48)',
+              ].join(', '),
               padding: 'clamp(36px, 5vw, 56px)',
               position: 'relative',
               overflow: 'hidden',
@@ -218,16 +225,16 @@ export default function Effects() {
                 fontSize: 'clamp(35px, 5.2vw, 60px)',
                 color: 'var(--kambo-text-hi)',
                 fontWeight: 400,
-                lineHeight: 1.05,
-                letterSpacing: '0.005em',
+                lineHeight: 1.2,
+                letterSpacing: '0.01em',
                 marginBottom: 'clamp(14px, 1.8vw, 20px)',
               }}>
                 {featured.title}
               </h3>
               <p style={{
                 fontSize: 'clamp(14px, 1.6vw, 16px)',
-                color: 'rgba(255,255,255,0.78)',
-                lineHeight: 1.82,
+                color: 'rgba(255,255,255,0.82)',
+                lineHeight: 1.75,
                 maxWidth: '400px',
               }}>
                 {featured.body}
@@ -245,12 +252,19 @@ export default function Effects() {
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.7, delay: (i + 1) * 0.065, ease: EASE }}
               style={{
-                background: 'rgba(8,24,16,0.82)',
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
-                border: '1px solid rgba(186,148,62,0.18)',
-                borderRadius: '18px',
-                boxShadow: '0 0 0 1px rgba(186,148,62,.12) inset, 0 18px 40px rgba(0,0,0,.35)',
+                background: [
+                  'radial-gradient(circle at top left, rgba(191,157,73,.06), transparent 45%)',
+                  'linear-gradient(180deg, rgba(10,24,16,.94), rgba(7,19,13,.92))',
+                ].join(', '),
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
+                border: '1px solid rgba(191,157,73,.16)',
+                borderRadius: '20px',
+                boxShadow: [
+                  '0 1px 0 rgba(255,255,255,.03) inset',
+                  '0 0 0 1px rgba(191,157,73,.10) inset',
+                  '0 20px 60px rgba(0,0,0,.40)',
+                ].join(', '),
                 padding: 'clamp(22px, 3vw, 34px)',
                 position: 'relative',
                 overflow: 'hidden',
@@ -274,7 +288,7 @@ export default function Effects() {
                   fontSize: 'clamp(20px, 2.4vw, 27px)',
                   color: 'var(--kambo-text-hi)',
                   fontWeight: 400,
-                  lineHeight: 1.1,
+                  lineHeight: 1.2,
                   letterSpacing: '0.01em',
                   marginBottom: '10px',
                 }}>
@@ -282,7 +296,7 @@ export default function Effects() {
                 </h3>
                 <p style={{
                   fontSize: '14px',
-                  color: 'rgba(255,255,255,0.78)',
+                  color: 'rgba(255,255,255,0.82)',
                   lineHeight: 1.75,
                 }}>
                   {cell.body}
@@ -372,24 +386,24 @@ export default function Effects() {
 
         /* ── Featured hover ── */
         .eff-card--featured:hover {
-          transform: translateY(-4px);
-          background: rgba(14,32,20,0.92) !important;
-          border-color: rgba(186,148,62,0.38) !important;
+          transform: translateY(-5px) scale(1.01);
+          border-color: rgba(191,157,73,.36) !important;
           box-shadow:
-            0 0 0 1px rgba(186,148,62,.22) inset,
-            0 24px 60px rgba(0,0,0,.45),
-            0 0 32px rgba(186,148,62,.08) !important;
+            0 1px 0 rgba(255,255,255,.06) inset,
+            0 0 0 1px rgba(191,157,73,.22) inset,
+            0 32px 80px rgba(0,0,0,.55),
+            0 0 24px rgba(191,157,73,.06) !important;
         }
 
         /* ── Small card hover ── */
         .eff-card--small:hover {
-          transform: translateY(-4px);
-          background: rgba(12,28,18,0.88) !important;
-          border-color: rgba(186,148,62,0.30) !important;
+          transform: translateY(-5px) scale(1.01);
+          border-color: rgba(191,157,73,.28) !important;
           box-shadow:
-            0 0 0 1px rgba(186,148,62,.18) inset,
-            0 20px 48px rgba(0,0,0,.42),
-            0 0 20px rgba(186,148,62,.06) !important;
+            0 1px 0 rgba(255,255,255,.05) inset,
+            0 0 0 1px rgba(191,157,73,.18) inset,
+            0 24px 64px rgba(0,0,0,.46),
+            0 0 18px rgba(191,157,73,.05) !important;
         }
 
         /* ── CTA ── */
