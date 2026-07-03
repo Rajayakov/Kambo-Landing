@@ -264,8 +264,7 @@ export const FOOTER = {
   },
   note: 'Работа начинается с доверия.',
   year: 2026,
-  telegram:  'https://t.me/Rajuna_Yakov',
-  instagram: 'https://www.instagram.com/yakov_rajuna?igsh=NGoxbzRoaGFtbm51&utm_source=qr',
+  telegram: 'https://t.me/Rajuna_Yakov',
   links: [
     { label: 'Политика конфиденциальности',                href: '/privacy-policy' },
     { label: 'Согласие на обработку персональных данных',  href: '/data-consent' },

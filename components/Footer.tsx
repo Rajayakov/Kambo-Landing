@@ -1,7 +1,7 @@
 'use client'
 // v2
 import Link from 'next/link'
-import { TelegramLogo, InstagramLogo } from '@phosphor-icons/react'
+import { TelegramLogo } from '@phosphor-icons/react'
 import { FOOTER } from '@/lib/constants'
 
 function LeafMark() {
@@ -92,15 +92,6 @@ export default function Footer() {
             className="footer-social"
           >
             <TelegramLogo size={16} weight="light" />
-          </a>
-          <a
-            href={FOOTER.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram"
-            className="footer-social"
-          >
-            <InstagramLogo size={16} weight="light" />
           </a>
         </div>
 
