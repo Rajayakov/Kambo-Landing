@@ -2,6 +2,7 @@
 
 import { useRef, useEffect } from 'react'
 import { useReducedMotion } from 'motion/react'
+import Image from 'next/image'
 import { PROCESS } from '@/lib/constants'
 
 function parseBold(text: string) {
@@ -109,8 +110,11 @@ export default function Process() {
           </h2>
         </div>
 
-        {/* Timeline rows */}
-        <div style={{ maxWidth: '760px' }}>
+        {/* Two-column: timeline left, photo right */}
+        <div className="process-layout">
+
+        {/* Left: timeline */}
+        <div>
           {PROCESS.steps.map((step, i) => (
             <div
               key={step.n}
@@ -216,7 +220,72 @@ export default function Process() {
             </div>
           ))}
         </div>
+
+        {/* Right: sticky photo */}
+        <div className="process-photo-col">
+          <div className="process-photo-sticky">
+            <Image
+              src="/kambo-ceremony.png"
+              alt="Церемония Камбо"
+              width={600}
+              height={800}
+              style={{
+                width: '100%',
+                height: 'auto',
+                objectFit: 'cover',
+                borderRadius: '8px',
+                border: '1px solid var(--kambo-border)',
+                aspectRatio: '3 / 4',
+                display: 'block',
+              }}
+              sizes="(max-width: 767px) 100vw, 40vw"
+            />
+            <Image
+              src="/kambo-tools.png"
+              alt="Инструменты для церемонии Камбо"
+              width={600}
+              height={450}
+              style={{
+                width: '100%',
+                height: 'auto',
+                objectFit: 'cover',
+                borderRadius: '8px',
+                border: '1px solid var(--kambo-border)',
+                aspectRatio: '4 / 3',
+                display: 'block',
+                marginTop: 'clamp(16px, 2.5vw, 24px)',
+              }}
+              sizes="(max-width: 767px) 100vw, 40vw"
+            />
+          </div>
+        </div>
+
+        </div>{/* /process-layout */}
       </div>
+
+      <style>{`
+        .process-layout {
+          display: grid;
+          grid-template-columns: 60% 40%;
+          gap: clamp(32px, 5vw, 64px);
+          align-items: start;
+        }
+        .process-photo-sticky {
+          position: sticky;
+          top: 100px;
+        }
+        @media (max-width: 767px) {
+          .process-layout {
+            grid-template-columns: 1fr;
+          }
+          .process-photo-col {
+            order: -1;
+          }
+          .process-photo-sticky {
+            position: static;
+          }
+        }
+      `}</style>
     </section>
   )
 }
