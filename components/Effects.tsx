@@ -174,7 +174,6 @@ export default function Effects() {
             viewport={{ once: true, amount: 0.12 }}
             transition={{ duration: 0.85, delay: 0, ease: EASE }}
             style={{
-              gridColumn: 'span 2',
               background: [
                 'radial-gradient(circle at top left, rgba(190,150,70,.05), transparent 50%)',
                 'linear-gradient(180deg, rgba(13,28,21,.97), rgba(9,21,16,.96))',
@@ -371,6 +370,9 @@ export default function Effects() {
           row-gap: clamp(20px, 3vw, 36px);
         }
 
+        /* ── Featured spans 2 cols by default (overridden on mobile via media query) ── */
+        .eff-card--featured { grid-column: span 2; }
+
         /* ── Card base ── */
         .eff-card {
           transition:
@@ -415,7 +417,7 @@ export default function Effects() {
         }
         @media (max-width: 520px) {
           .eff-grid { grid-template-columns: 1fr; }
-          .eff-card--featured { grid-column: span 1; }
+          .eff-card--featured { grid-column: span 1 !important; }
         }
       `}</style>
     </section>

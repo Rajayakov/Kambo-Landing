@@ -4,6 +4,91 @@ import { useRef, useEffect } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { FOR_WHOM } from '@/lib/constants'
 
+// Stacked layout — used for mobile and prefers-reduced-motion
+function StackedCards({ reduce }: { reduce: boolean | null }) {
+  return (
+    <div
+      style={{
+        maxWidth: 'var(--max-w)',
+        marginInline: 'auto',
+        paddingInline: 'clamp(20px, 5vw, 48px)',
+      }}
+    >
+      <div style={{ marginBottom: 'clamp(32px, 5vw, 56px)' }}>
+        <div style={{ width: '32px', height: '2px', background: 'var(--kambo-accent)', marginBottom: '18px' }} />
+        <h2
+          style={{
+            fontSize: 'var(--text-h2)',
+            fontFamily: 'var(--font-cormorant)',
+            color: 'var(--kambo-text-hi)',
+            fontWeight: 400,
+          }}
+        >
+          {FOR_WHOM.title}
+        </h2>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+        {FOR_WHOM.items.map((item, i) => (
+          <motion.div
+            key={item.n}
+            initial={reduce ? {} : { opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.55, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              background: 'var(--kambo-surface)',
+              borderRadius: 'var(--radius-lg)',
+              padding: 'clamp(20px, 4vw, 32px)',
+              borderLeft: '2px solid var(--kambo-accent)',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '18px' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--font-cormorant)',
+                  fontSize: '52px',
+                  color: 'var(--kambo-accent)',
+                  opacity: 0.28,
+                  lineHeight: 1,
+                  fontVariantNumeric: 'tabular-nums',
+                }}
+              >
+                {item.n}
+              </span>
+              <span
+                style={{
+                  fontSize: '11px',
+                  letterSpacing: '0.13em',
+                  textTransform: 'uppercase',
+                  color: 'var(--kambo-accent)',
+                  fontWeight: 500,
+                }}
+              >
+                {item.tag}
+              </span>
+            </div>
+            <p style={{ fontSize: '15px', color: 'var(--kambo-text-lo)', lineHeight: 1.75, marginBottom: '16px' }}>
+              {item.before}
+            </p>
+            <div style={{ height: '1px', background: 'var(--kambo-border)', marginBottom: '16px' }} />
+            <p
+              style={{
+                fontSize: 'clamp(17px, 2vw, 20px)',
+                fontFamily: 'var(--font-cormorant)',
+                color: 'var(--kambo-accent)',
+                lineHeight: 1.6,
+              }}
+            >
+              {item.after}
+            </p>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function ForWhom() {
   const stickyRef  = useRef<HTMLDivElement>(null)
   const reduce     = useReducedMotion()
@@ -104,91 +189,6 @@ export default function ForWhom() {
     }
   }, [reduce])
 
-  // Stacked layout — used for mobile and prefers-reduced-motion
-  function StackedCards() {
-    return (
-      <div
-        style={{
-          maxWidth: 'var(--max-w)',
-          marginInline: 'auto',
-          paddingInline: 'clamp(20px, 5vw, 48px)',
-        }}
-      >
-        <div style={{ marginBottom: 'clamp(32px, 5vw, 56px)' }}>
-          <div style={{ width: '32px', height: '2px', background: 'var(--kambo-accent)', marginBottom: '18px' }} />
-          <h2
-            style={{
-              fontSize: 'var(--text-h2)',
-              fontFamily: 'var(--font-cormorant)',
-              color: 'var(--kambo-text-hi)',
-              fontWeight: 400,
-            }}
-          >
-            {FOR_WHOM.title}
-          </h2>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
-          {FOR_WHOM.items.map((item, i) => (
-            <motion.div
-              key={item.n}
-              initial={reduce ? {} : { opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.55, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              style={{
-                background: 'var(--kambo-surface)',
-                borderRadius: 'var(--radius-lg)',
-                padding: 'clamp(20px, 4vw, 32px)',
-                borderLeft: '2px solid var(--kambo-accent)',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '18px' }}>
-                <span
-                  style={{
-                    fontFamily: 'var(--font-cormorant)',
-                    fontSize: '52px',
-                    color: 'var(--kambo-accent)',
-                    opacity: 0.28,
-                    lineHeight: 1,
-                    fontVariantNumeric: 'tabular-nums',
-                  }}
-                >
-                  {item.n}
-                </span>
-                <span
-                  style={{
-                    fontSize: '11px',
-                    letterSpacing: '0.13em',
-                    textTransform: 'uppercase',
-                    color: 'var(--kambo-accent)',
-                    fontWeight: 500,
-                  }}
-                >
-                  {item.tag}
-                </span>
-              </div>
-              <p style={{ fontSize: '15px', color: 'var(--kambo-text-lo)', lineHeight: 1.75, marginBottom: '16px' }}>
-                {item.before}
-              </p>
-              <div style={{ height: '1px', background: 'var(--kambo-border)', marginBottom: '16px' }} />
-              <p
-                style={{
-                  fontSize: 'clamp(17px, 2vw, 20px)',
-                  fontFamily: 'var(--font-cormorant)',
-                  color: 'var(--kambo-accent)',
-                  lineHeight: 1.6,
-                }}
-              >
-                {item.after}
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    )
-  }
-
   if (reduce) {
     return (
       <section
@@ -199,7 +199,7 @@ export default function ForWhom() {
           borderTop: '1px solid var(--kambo-border)',
         }}
       >
-        <StackedCards />
+        <StackedCards reduce={reduce} />
       </section>
     )
   }
@@ -374,7 +374,7 @@ export default function ForWhom() {
         className="fw-mobile"
         style={{ display: 'none', paddingBlock: 'var(--section-py)' }}
       >
-        <StackedCards />
+        <StackedCards reduce={reduce} />
       </div>
 
       <style>{`

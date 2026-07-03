@@ -277,6 +277,17 @@ export default function Guide() {
         .guide-stats {
           max-width: 480px;
         }
+        @media (max-width: 900px) {
+          .guide-stats {
+            max-width: 100%;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 24px 0;
+          }
+          .guide-stats > div:nth-child(2) { border-right: none !important; }
+          .guide-stats > div:nth-child(3) { border-right: 1px solid var(--kambo-border) !important; padding-left: 0 !important; }
+          .guide-stats > div:nth-child(3),
+          .guide-stats > div:nth-child(4) { padding-top: 24px; border-top: 1px solid var(--kambo-border); }
+        }
         @media (max-width: 767px) {
           .guide-top {
             grid-template-columns: 1fr;
@@ -290,15 +301,6 @@ export default function Guide() {
             padding-inline: clamp(20px, 5vw, 40px) !important;
             padding-block: 48px 40px !important;
           }
-          .guide-stats {
-            max-width: 100%;
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 24px 0;
-          }
-          .guide-stats > div:nth-child(2) { border-right: none !important; }
-          .guide-stats > div:nth-child(3) { border-right: 1px solid var(--kambo-border) !important; padding-left: 0 !important; }
-          .guide-stats > div:nth-child(3),
-          .guide-stats > div:nth-child(4) { padding-top: 24px; border-top: 1px solid var(--kambo-border); }
         }
       `}</style>
     </section>

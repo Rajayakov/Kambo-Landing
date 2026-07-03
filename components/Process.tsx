@@ -31,7 +31,7 @@ export default function Process() {
       if (!sectionRef.current) return
 
       // Animate each step row
-      stepsRef.current.forEach((step, i) => {
+      stepsRef.current.forEach((step) => {
         if (!step) return
         gsap.fromTo(
           step,
@@ -51,7 +51,7 @@ export default function Process() {
       })
 
       // Animate dots
-      dotsRef.current.forEach((dot, i) => {
+      dotsRef.current.forEach((dot) => {
         if (!dot) return
         gsap.fromTo(
           dot,

@@ -76,6 +76,18 @@ section[id] {
   scroll-margin-top: 88px;
 }
 
+/* Without JS, framer-motion's whileInView elements are stuck at their
+   server-rendered initial (opacity:0) state and never reveal — force them
+   visible so base content still reads without JavaScript. */
+@media (scripting: none) {
+  [style*="opacity:0;"],
+  [style$="opacity:0"] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
 /* Grain overlay — fixed, pointer-events-none, no GPU repaint */
 body::after {
   content: '';
