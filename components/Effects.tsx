@@ -5,286 +5,286 @@ import { ArrowRight } from '@phosphor-icons/react'
 import { EFFECTS } from '@/lib/constants'
 
 const EASE = [0.16, 1, 0.3, 1] as const
-const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII']
 
-function FernMark() {
+// ── Minimal gold pictograms ────────────────────────────────────────────────
+function IconEnergy() {
   return (
-    <svg
-      aria-hidden
-      width="108" height="156"
-      viewBox="0 0 100 145"
-      fill="none"
-      style={{
-        position: 'absolute',
-        bottom: 0,
-        right: 0,
-        opacity: 0.06,
-        pointerEvents: 'none',
-        flexShrink: 0,
-      }}
-    >
-      <path
-        d="M50 140 C50 140 10 108 7 70 C4 34 24 6 50 2 C76 6 96 34 93 70 C90 108 50 140 50 140Z"
-        fill="var(--kambo-accent)"
-      />
-      <line x1="50" y1="140" x2="50" y2="2" stroke="rgba(196,146,42,0.55)" strokeWidth="0.7" />
-      <path d="M50 50 C34 43 16 47 10 60" stroke="rgba(196,146,42,0.45)" strokeWidth="0.65" />
-      <path d="M50 70 C66 63 82 66 88 78" stroke="rgba(196,146,42,0.45)" strokeWidth="0.65" />
-      <path d="M50 88 C37 82 22 85 15 97" stroke="rgba(196,146,42,0.45)" strokeWidth="0.65" />
-      <path d="M50 106 C62 101 76 103 82 113" stroke="rgba(196,146,42,0.45)" strokeWidth="0.65" />
+    <svg width="14" height="18" viewBox="0 0 14 18" fill="none" aria-hidden>
+      <path d="M7 17C7 17 2 13 2 8.5C2 5 4.5 2 7 1C9.5 2 12 5 12 8.5C12 13 7 17 7 17Z"
+        stroke="currentColor" strokeWidth="0.85" strokeLinejoin="round"/>
+      <circle cx="7" cy="9" r="1.5" fill="currentColor" opacity="0.75"/>
+    </svg>
+  )
+}
+function IconDetox() {
+  return (
+    <svg width="13" height="17" viewBox="0 0 13 17" fill="none" aria-hidden>
+      <path d="M6.5 1C6.5 1 12 7.5 12 11C12 14.1 9.5 16.5 6.5 16.5C3.5 16.5 1 14.1 1 11C1 7.5 6.5 1 6.5 1Z"
+        stroke="currentColor" strokeWidth="0.85" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+function IconClarity() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden>
+      <path d="M7.5 1L13.5 7.5L7.5 14L1.5 7.5L7.5 1Z"
+        stroke="currentColor" strokeWidth="0.85" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+function IconBalance() {
+  return (
+    <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden>
+      <line x1="1" y1="5.5" x2="17" y2="5.5" stroke="currentColor" strokeWidth="0.85"/>
+      <line x1="9" y1="1" x2="9" y2="5.5" stroke="currentColor" strokeWidth="0.85"/>
+      <path d="M1 5.5C1 7.5 2.8 9.5 5 9.5C7.2 9.5 9 7.5 9 5.5" stroke="currentColor" strokeWidth="0.85" fill="none"/>
+      <path d="M9 5.5C9 7.5 10.8 9.5 13 9.5C15.2 9.5 17 7.5 17 5.5" stroke="currentColor" strokeWidth="0.85" fill="none"/>
+    </svg>
+  )
+}
+function IconShield() {
+  return (
+    <svg width="14" height="17" viewBox="0 0 14 17" fill="none" aria-hidden>
+      <path d="M7 1L13 3.8V9C13 12.3 10.4 15.2 7 16.5C3.6 15.2 1 12.3 1 9V3.8L7 1Z"
+        stroke="currentColor" strokeWidth="0.85" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+function IconStrength() {
+  return (
+    <svg width="17" height="14" viewBox="0 0 17 14" fill="none" aria-hidden>
+      <path d="M1 13.5L8.5 1.5L16 13.5" stroke="currentColor" strokeWidth="0.85" strokeLinejoin="round"/>
+      <path d="M4 9.5L8.5 3L13 9.5" stroke="currentColor" strokeWidth="0.85" strokeLinejoin="round" opacity="0.4"/>
+    </svg>
+  )
+}
+function IconPresence() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="0.85"/>
+      <circle cx="8" cy="8" r="1.8" fill="currentColor"/>
+    </svg>
+  )
+}
+function IconRenewal() {
+  return (
+    <svg width="14" height="17" viewBox="0 0 14 17" fill="none" aria-hidden>
+      <path d="M7 16.5C4 16.5 1 13.5 1 9.5C1 5.5 4 2 7 1C10 2 13 5.5 13 9.5C13 13.5 10 16.5 7 16.5Z"
+        stroke="currentColor" strokeWidth="0.85" strokeLinejoin="round"/>
+      <line x1="7" y1="16.5" x2="7" y2="6" stroke="currentColor" strokeWidth="0.85" opacity="0.45"/>
     </svg>
   )
 }
 
+const ICONS: Record<string, React.ReactNode> = {
+  energy:   <IconEnergy />,
+  detox:    <IconDetox />,
+  clarity:  <IconClarity />,
+  balance:  <IconBalance />,
+  immunity: <IconShield />,
+  strength: <IconStrength />,
+  presence: <IconPresence />,
+  renewal:  <IconRenewal />,
+}
+
 export default function Effects() {
-  const reduce = useReducedMotion()
-  const cells  = EFFECTS.cells
-
-  const featured = cells.filter(c => c.size === 'large')
-  const small    = cells.filter(c => c.size === 'small')
-
-  const romanOf = (id: string) => {
-    const idx = cells.findIndex(c => c.id === id)
-    return ROMAN[idx] ?? ''
-  }
+  const reduce  = useReducedMotion()
+  const cells   = EFFECTS.cells
+  const featured = cells[0]
+  const rest     = cells.slice(1)
 
   return (
     <section
       id="effects"
       style={{
         paddingBlock: 'var(--section-py)',
-        background: 'var(--kambo-bg)',
+        background: 'transparent',
         borderTop: '1px solid var(--kambo-border)',
         position: 'relative',
         overflow: 'hidden',
       }}
     >
-      {/* Gold horizon shimmer at top of section */}
-      <div
-        aria-hidden
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: '10%',
-          right: '10%',
-          height: '1px',
-          background: 'linear-gradient(to right, transparent, rgba(196,146,42,0.55) 30%, rgba(196,146,42,0.55) 70%, transparent)',
-          pointerEvents: 'none',
-        }}
-      />
-      {/* Radial gold glow — upper center */}
-      <div
-        aria-hidden
-        style={{
-          position: 'absolute',
-          top: '-80px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: '700px',
-          height: '400px',
-          background: 'radial-gradient(ellipse at center top, rgba(196,146,42,0.055) 0%, transparent 65%)',
-          pointerEvents: 'none',
-        }}
-      />
+      {/* Section overlay — increases contrast so cards pop against forest */}
+      <div aria-hidden style={{
+        position: 'absolute', inset: 0,
+        background: 'linear-gradient(180deg, rgba(6,18,12,.38), rgba(6,18,12,.56))',
+        pointerEvents: 'none', zIndex: 0,
+      }} />
+      {/* Ambient top shimmer */}
+      <div aria-hidden style={{
+        position: 'absolute', top: 0, left: '10%', right: '10%', height: '1px',
+        background: 'linear-gradient(to right, transparent, rgba(196,146,42,0.45) 30%, rgba(196,146,42,0.45) 70%, transparent)',
+        pointerEvents: 'none', zIndex: 1,
+      }} />
+      <div aria-hidden style={{
+        position: 'absolute', top: '-80px', left: '50%', transform: 'translateX(-50%)',
+        width: '700px', height: '400px',
+        background: 'radial-gradient(ellipse at center top, rgba(196,146,42,0.05) 0%, transparent 65%)',
+        pointerEvents: 'none', zIndex: 1,
+      }} />
 
-      <div
-        style={{
-          maxWidth: 'var(--max-w)',
-          marginInline: 'auto',
-          paddingInline: 'clamp(20px, 5vw, 48px)',
-          position: 'relative',
-        }}
-      >
-        {/* ── Header ── */}
+      <div style={{
+        maxWidth: 'var(--max-w)',
+        marginInline: 'auto',
+        paddingInline: 'clamp(20px, 5vw, 48px)',
+        position: 'relative',
+        zIndex: 1,
+      }}>
+
+        {/* ── Header + intro ── */}
         <motion.div
           initial={reduce ? {} : { opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.65, ease: EASE }}
-          style={{ marginBottom: 'clamp(36px, 5.5vw, 60px)' }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.7, ease: EASE }}
+          style={{ marginBottom: 'clamp(36px, 5vw, 56px)' }}
         >
           <div style={{ width: '32px', height: '2px', background: 'var(--kambo-accent)', marginBottom: '18px' }} />
-          <h2
-            style={{
-              fontSize: 'var(--text-h2)',
-              color: 'var(--kambo-text-hi)',
-              fontFamily: 'var(--font-cormorant)',
-              fontWeight: 400,
-              lineHeight: 1.05,
-            }}
-          >
+          <h2 style={{
+            fontSize: 'var(--text-h2)',
+            color: 'var(--kambo-text-hi)',
+            fontFamily: 'var(--font-cormorant)',
+            fontWeight: 400,
+            lineHeight: 1.05,
+            marginBottom: 'clamp(16px, 2vw, 22px)',
+          }}>
             {EFFECTS.title}
           </h2>
+          <p style={{
+            fontSize: 'clamp(14px, 1.6vw, 16px)',
+            color: 'var(--kambo-text-lo)',
+            lineHeight: 1.85,
+            maxWidth: '460px',
+            opacity: 0.72,
+          }}>
+            {EFFECTS.intro.split('\n').map((line, i) => (
+              <span key={i}>{i > 0 && <br />}{line}</span>
+            ))}
+          </p>
         </motion.div>
 
-        {/* ── Featured row: two tall showcase cards ── */}
-        <div className="eff-featured">
-          {featured.map((cell, i) => (
-            <motion.article
-              key={cell.id}
-              className="eff-card-featured"
-              initial={reduce ? {} : { opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.75, delay: i * 0.14, ease: EASE }}
-              style={{
-                position: 'relative',
-                overflow: 'hidden',
-                background: 'rgba(16,30,20,0.82)',
-                border: '1px solid rgba(196,146,42,0.18)',
-                borderTop: '2px solid var(--kambo-accent)',
-                borderRadius: '2px',
-                padding: 'clamp(28px, 3.8vw, 48px)',
-                minHeight: 'clamp(210px, 26vw, 300px)',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-end',
-              }}
-            >
-              {/* Large Roman numeral — visual anchor */}
-              <span
-                aria-hidden
-                style={{
-                  position: 'absolute',
-                  top: '-14px',
-                  right: '20px',
-                  fontFamily: 'var(--font-cormorant)',
-                  fontSize: 'clamp(88px, 13vw, 160px)',
-                  color: 'var(--kambo-accent)',
-                  opacity: 0.14,
-                  lineHeight: 1,
-                  fontWeight: 400,
-                  userSelect: 'none',
-                  pointerEvents: 'none',
-                  letterSpacing: '-0.04em',
-                }}
-              >
-                {romanOf(cell.id)}
-              </span>
-
-              {/* Botanical mark */}
-              <FernMark />
-
-              {/* Inner glow — bottom right */}
-              <div
-                aria-hidden
-                style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  right: 0,
-                  width: '260px',
-                  height: '200px',
-                  background: 'radial-gradient(ellipse at 80% 100%, rgba(196,146,42,0.07) 0%, transparent 65%)',
-                  pointerEvents: 'none',
-                }}
-              />
-
-              <div style={{ position: 'relative', zIndex: 1 }}>
-                {/* Eyebrow: small roman number */}
-                <p
-                  style={{
-                    fontFamily: 'var(--font-cormorant)',
-                    fontSize: '12px',
-                    color: 'var(--kambo-accent)',
-                    letterSpacing: '0.18em',
-                    marginBottom: '14px',
-                    opacity: 0.75,
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  {romanOf(cell.id)}
-                </p>
-                <h3
-                  style={{
-                    fontFamily: 'var(--font-cormorant)',
-                    fontSize: 'clamp(26px, 3.4vw, 44px)',
-                    color: 'var(--kambo-text-hi)',
-                    fontWeight: 400,
-                    lineHeight: 1.08,
-                    letterSpacing: '-0.01em',
-                    marginBottom: 'clamp(12px, 1.6vw, 20px)',
-                  }}
-                >
-                  {cell.title}
-                </h3>
-                <p
-                  style={{
-                    fontSize: '15px',
-                    color: 'var(--kambo-text-lo)',
-                    lineHeight: 1.75,
-                    maxWidth: '360px',
-                    fontFamily: 'var(--font-onest)',
-                  }}
-                >
-                  {cell.body}
-                </p>
-              </div>
-            </motion.article>
-          ))}
-        </div>
-
-        {/* ── Small items grid: 3 columns ── */}
+        {/* ── Unified card grid: featured spans 2 of 3 columns ── */}
         <div className="eff-grid">
-          {small.map((cell, i) => (
+
+          {/* Featured: Жизненная энергия */}
+          <motion.article
+            className="eff-card eff-card--featured"
+            initial={reduce ? {} : { opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.12 }}
+            transition={{ duration: 0.85, delay: 0, ease: EASE }}
+            style={{
+              gridColumn: 'span 2',
+              background: 'rgba(12,28,18,0.88)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)',
+              border: '1px solid rgba(186,148,62,0.24)',
+              borderRadius: '18px',
+              boxShadow: '0 0 0 1px rgba(186,148,62,.14) inset, 0 18px 50px rgba(0,0,0,.35)',
+              padding: 'clamp(36px, 5vw, 56px)',
+              position: 'relative',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-end',
+              minHeight: 'clamp(260px, 30vw, 340px)',
+            }}
+          >
+            {/* Radial gold glow top-left */}
+            <div aria-hidden style={{
+              position: 'absolute', inset: 0,
+              background: 'radial-gradient(circle at top left, rgba(186,148,62,.10), transparent 55%)',
+              pointerEvents: 'none',
+            }} />
+            {/* Gold top accent line */}
+            <div aria-hidden style={{
+              position: 'absolute', top: 0, left: 0, right: 0, height: '2px',
+              background: 'linear-gradient(to right, var(--kambo-accent) 0%, rgba(196,146,42,0.18) 80%, transparent 100%)',
+            }} />
+
+            <div style={{ position: 'relative', zIndex: 1 }}>
+              <div style={{
+                color: 'var(--kambo-accent)',
+                marginBottom: '22px',
+                filter: 'drop-shadow(0 0 5px rgba(196,146,42,0.42))',
+                transform: 'scale(1.2)',
+                transformOrigin: 'left center',
+                display: 'inline-block',
+              }}>
+                {ICONS[featured.id]}
+              </div>
+              <h3 style={{
+                fontFamily: 'var(--font-cormorant)',
+                fontSize: 'clamp(35px, 5.2vw, 60px)',
+                color: 'var(--kambo-text-hi)',
+                fontWeight: 400,
+                lineHeight: 1.05,
+                letterSpacing: '0.005em',
+                marginBottom: 'clamp(14px, 1.8vw, 20px)',
+              }}>
+                {featured.title}
+              </h3>
+              <p style={{
+                fontSize: 'clamp(14px, 1.6vw, 16px)',
+                color: 'rgba(255,255,255,0.78)',
+                lineHeight: 1.82,
+                maxWidth: '400px',
+              }}>
+                {featured.body}
+              </p>
+            </div>
+          </motion.article>
+
+          {/* 7 compact cards */}
+          {rest.map((cell, i) => (
             <motion.article
               key={cell.id}
-              className="eff-card-small"
+              className="eff-card eff-card--small"
               initial={reduce ? {} : { opacity: 0, y: 22 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.6, delay: i * 0.07, ease: EASE }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.7, delay: (i + 1) * 0.065, ease: EASE }}
               style={{
+                background: 'rgba(8,24,16,0.82)',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)',
+                border: '1px solid rgba(186,148,62,0.18)',
+                borderRadius: '18px',
+                boxShadow: '0 0 0 1px rgba(186,148,62,.12) inset, 0 18px 40px rgba(0,0,0,.35)',
+                padding: 'clamp(22px, 3vw, 34px)',
                 position: 'relative',
                 overflow: 'hidden',
-                background: 'rgba(10,22,13,0.7)',
-                border: '1px solid rgba(46,74,50,0.6)',
-                borderTop: '1px solid rgba(196,146,42,0.35)',
-                borderRadius: '2px',
-                padding: 'clamp(18px, 2.6vw, 28px)',
+                display: 'flex',
+                flexDirection: 'column',
               }}
             >
-              {/* Watermark Roman numeral */}
-              <span
-                aria-hidden
-                style={{
-                  position: 'absolute',
-                  top: '-6px',
-                  right: '10px',
-                  fontFamily: 'var(--font-cormorant)',
-                  fontSize: 'clamp(48px, 6.5vw, 80px)',
+              <div style={{ position: 'relative', zIndex: 1, flex: 1, display: 'flex', flexDirection: 'column' }}>
+                <div style={{
                   color: 'var(--kambo-accent)',
-                  opacity: 0.1,
-                  lineHeight: 1,
+                  marginBottom: '16px',
+                  filter: 'drop-shadow(0 0 4px rgba(196,146,42,0.35))',
+                  transform: 'scale(1.18)',
+                  transformOrigin: 'left center',
+                  display: 'inline-block',
+                }}>
+                  {ICONS[cell.id]}
+                </div>
+                <h3 style={{
+                  fontFamily: 'var(--font-cormorant)',
+                  fontSize: 'clamp(20px, 2.4vw, 27px)',
+                  color: 'var(--kambo-text-hi)',
                   fontWeight: 400,
-                  userSelect: 'none',
-                  pointerEvents: 'none',
-                  letterSpacing: '-0.03em',
-                }}
-              >
-                {romanOf(cell.id)}
-              </span>
-
-              <div style={{ position: 'relative', zIndex: 1 }}>
-                <h3
-                  style={{
-                    fontFamily: 'var(--font-cormorant)',
-                    fontSize: 'clamp(17px, 2.1vw, 23px)',
-                    color: 'var(--kambo-text-hi)',
-                    fontWeight: 400,
-                    lineHeight: 1.15,
-                    marginBottom: '10px',
-                  }}
-                >
+                  lineHeight: 1.1,
+                  letterSpacing: '0.01em',
+                  marginBottom: '10px',
+                }}>
                   {cell.title}
                 </h3>
-                <p
-                  style={{
-                    fontSize: '15px',
-                    color: 'var(--kambo-text-lo)',
-                    lineHeight: 1.72,
-                    fontFamily: 'var(--font-onest)',
-                  }}
-                >
+                <p style={{
+                  fontSize: '14px',
+                  color: 'rgba(255,255,255,0.78)',
+                  lineHeight: 1.75,
+                }}>
                   {cell.body}
                 </p>
               </div>
@@ -292,14 +292,33 @@ export default function Effects() {
           ))}
         </div>
 
-        {/* ── CTA ── */}
+        {/* ── Closing note + CTA ── */}
         <motion.div
           initial={reduce ? {} : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.6, ease: EASE }}
-          style={{ display: 'flex', justifyContent: 'center', marginTop: 'clamp(40px, 6vw, 64px)' }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.65, ease: EASE }}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            marginTop: 'clamp(44px, 6.5vw, 72px)',
+            gap: 'clamp(18px, 2.5vw, 26px)',
+          }}
         >
+          <div style={{ width: '24px', height: '1px', background: 'rgba(196,146,42,0.25)' }} />
+          <p style={{
+            fontFamily: 'var(--font-cormorant)',
+            fontSize: 'clamp(16px, 1.8vw, 19px)',
+            fontStyle: 'italic',
+            color: 'var(--kambo-text-lo)',
+            textAlign: 'center',
+            opacity: 0.75,
+            maxWidth: '400px',
+            lineHeight: 1.9,
+          }}>
+            {EFFECTS.closing}
+          </p>
           <a
             href="#booking"
             className="eff-cta"
@@ -323,14 +342,9 @@ export default function Effects() {
           >
             Записаться на церемонию
             <span style={{
-              width: '38px',
-              height: '38px',
-              borderRadius: '50%',
+              width: '38px', height: '38px', borderRadius: '50%',
               background: 'rgba(11,26,15,0.2)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
             }}>
               <ArrowRight size={16} weight="bold" />
             </span>
@@ -339,40 +353,58 @@ export default function Effects() {
       </div>
 
       <style>{`
-        .eff-featured {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: clamp(14px, 2.2vw, 24px);
-          margin-bottom: clamp(14px, 2.2vw, 24px);
-        }
+        /* ── Grid ── */
         .eff-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: clamp(12px, 1.8vw, 20px);
+          column-gap: clamp(16px, 2.2vw, 26px);
+          row-gap: clamp(20px, 3vw, 36px);
         }
-        @media (max-width: 767px) {
-          .eff-featured { grid-template-columns: 1fr; }
-          .eff-grid     { grid-template-columns: 1fr 1fr; }
+
+        /* ── Card base ── */
+        .eff-card {
+          transition:
+            transform 350ms cubic-bezier(.22,.61,.36,1),
+            box-shadow 350ms cubic-bezier(.22,.61,.36,1),
+            border-color 350ms cubic-bezier(.22,.61,.36,1),
+            background 350ms cubic-bezier(.22,.61,.36,1);
         }
-        @media (max-width: 479px) {
+
+        /* ── Featured hover ── */
+        .eff-card--featured:hover {
+          transform: translateY(-4px);
+          background: rgba(14,32,20,0.92) !important;
+          border-color: rgba(186,148,62,0.38) !important;
+          box-shadow:
+            0 0 0 1px rgba(186,148,62,.22) inset,
+            0 24px 60px rgba(0,0,0,.45),
+            0 0 32px rgba(186,148,62,.08) !important;
+        }
+
+        /* ── Small card hover ── */
+        .eff-card--small:hover {
+          transform: translateY(-4px);
+          background: rgba(12,28,18,0.88) !important;
+          border-color: rgba(186,148,62,0.30) !important;
+          box-shadow:
+            0 0 0 1px rgba(186,148,62,.18) inset,
+            0 20px 48px rgba(0,0,0,.42),
+            0 0 20px rgba(186,148,62,.06) !important;
+        }
+
+        /* ── CTA ── */
+        .eff-cta:hover { background: #d4a030 !important; transform: translateY(-1px); }
+        .eff-cta:active { transform: translateY(1px) !important; }
+
+        /* ── Responsive ── */
+        @media (max-width: 860px) {
+          .eff-grid { grid-template-columns: repeat(2, 1fr); }
+          .eff-card--featured { grid-column: span 2; }
+        }
+        @media (max-width: 520px) {
           .eff-grid { grid-template-columns: 1fr; }
+          .eff-card--featured { grid-column: span 1; }
         }
-        .eff-card-featured {
-          transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-        .eff-card-featured:hover {
-          border-color: rgba(196,146,42,0.42) !important;
-          box-shadow: 0 0 0 1px rgba(196,146,42,0.15), 0 20px 52px rgba(0,0,0,0.45);
-        }
-        .eff-card-small {
-          transition: border-top-color 0.2s ease, box-shadow 0.2s ease;
-        }
-        .eff-card-small:hover {
-          border-top-color: rgba(196,146,42,0.65) !important;
-          box-shadow: 0 8px 28px rgba(0,0,0,0.32), 0 0 0 1px rgba(196,146,42,0.12);
-        }
-        .eff-cta:hover { background: var(--kambo-accent-hi) !important; transform: translateY(-1px); }
-        .eff-cta:active { transform: translateY(1px); }
       `}</style>
     </section>
   )
