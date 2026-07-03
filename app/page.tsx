@@ -18,8 +18,8 @@ export default function Home() {
         <WhatIsKambo />
         <Effects />
         <Process />
-        <Guide />
         <Safety />
+        <Guide />
         <SocialProof />
         <Booking />
       </main>
