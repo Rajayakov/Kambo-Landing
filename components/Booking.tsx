@@ -1,151 +1,246 @@
 'use client'
 
 import { motion, useReducedMotion } from 'motion/react'
-import { ArrowUpRight } from '@phosphor-icons/react'
+import { Check } from '@phosphor-icons/react'
 import { BOOKING } from '@/lib/constants'
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
+const INCLUDES = [
+  'Предварительная консультация',
+  'Проверка противопоказаний',
+  'Поддержка после церемонии',
+]
+
 interface CardProps {
+  badge?: string
+  tag: string
   title: string
-  subtitle?: string
   body: string
   price: string
   priceUnit?: string
-  cta: string
   ctaHref: string
   delay?: number
   reduce: boolean | null
+  accent?: boolean
 }
 
-function BookingCard({ title, subtitle, body, price, priceUnit, cta, ctaHref, delay = 0, reduce }: CardProps) {
+function ExperienceCard({
+  badge, tag, title, body, price, priceUnit, ctaHref,
+  delay = 0, reduce, accent,
+}: CardProps) {
   return (
     <motion.div
-      initial={reduce ? {} : { opacity: 0, y: 28 }}
+      initial={reduce ? {} : { opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.75, delay, ease: EASE }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.8, delay, ease: EASE }}
+      className={`bk-card${accent ? ' bk-card--accent' : ''}`}
       style={{
         flex: 1,
-        background: 'rgba(28,48,32,0.96)',
-        border: '1px solid rgba(196,146,42,0.22)',
-        borderTop: '3px solid var(--kambo-accent)',
-        borderRadius: '3px',
-        padding: 'clamp(28px, 4vw, 44px)',
+        background: accent
+          ? 'linear-gradient(180deg, rgba(17,36,23,.98) 0%, rgba(11,25,16,.99) 100%)'
+          : 'linear-gradient(180deg, rgba(15,32,20,.97) 0%, rgba(10,22,14,.98) 100%)',
+        border: accent
+          ? '1px solid rgba(196,146,42,0.28)'
+          : '1px solid rgba(196,146,42,0.18)',
+        borderRadius: '4px',
+        padding: accent
+          ? 'clamp(44px, 5.5vw, 66px) clamp(36px, 5vw, 56px)'
+          : 'clamp(36px, 5vw, 56px)',
         display: 'flex',
         flexDirection: 'column',
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
-      {/* Header */}
-      <div>
-        <p
-          style={{
-            fontFamily: 'var(--font-cormorant)',
-            fontSize: 'clamp(22px, 2.8vw, 30px)',
-            color: 'var(--kambo-text-hi)',
-            fontWeight: 400,
-            lineHeight: 1.15,
-            marginBottom: subtitle ? '6px' : '16px',
-          }}
-        >
-          {title}
-        </p>
-        {subtitle && (
-          <p
-            style={{
-              fontSize: '11px',
-              color: 'var(--kambo-accent)',
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              marginBottom: '16px',
-              opacity: 0.8,
-            }}
-          >
-            {subtitle}
-          </p>
-        )}
-        <p
-          style={{
-            fontSize: '15px',
-            color: 'var(--kambo-text-lo)',
-            lineHeight: 1.72,
-          }}
-        >
-          {body}
-        </p>
-      </div>
+      {/* Top accent line */}
+      <div
+        aria-hidden
+        style={{
+          position: 'absolute',
+          top: 0, left: 0, right: 0,
+          height: accent ? '2px' : '1px',
+          background: accent
+            ? 'linear-gradient(to right, transparent 0%, var(--kambo-accent) 25%, var(--kambo-accent) 75%, transparent 100%)'
+            : 'linear-gradient(to right, transparent 0%, rgba(196,146,42,0.45) 35%, rgba(196,146,42,0.45) 65%, transparent 100%)',
+          pointerEvents: 'none',
+        }}
+      />
 
-      {/* Price */}
-      <div style={{ marginTop: 'auto', paddingTop: 'clamp(28px, 4vw, 40px)' }}>
+      {/* Badge — only on accent card */}
+      {badge && (
+        <p
+          style={{
+            fontSize: '10px',
+            letterSpacing: '0.2em',
+            textTransform: 'uppercase',
+            color: 'var(--kambo-accent)',
+            fontFamily: 'var(--font-onest)',
+            fontWeight: 500,
+            opacity: 0.82,
+            marginBottom: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+          }}
+        >
+          <span style={{ flex: '0 0 20px', height: '1px', background: 'rgba(196,146,42,0.45)' }} />
+          {badge}
+          <span style={{ flex: '0 0 20px', height: '1px', background: 'rgba(196,146,42,0.45)' }} />
+        </p>
+      )}
+
+      {/* Tag */}
+      <p
+        style={{
+          fontSize: '10px',
+          letterSpacing: '0.22em',
+          textTransform: 'uppercase',
+          color: 'var(--kambo-accent)',
+          opacity: 0.55,
+          marginBottom: 'clamp(16px, 2.5vw, 22px)',
+          fontFamily: 'var(--font-onest)',
+          fontWeight: 400,
+        }}
+      >
+        {tag}
+      </p>
+
+      {/* Title */}
+      <h3
+        style={{
+          fontFamily: 'var(--font-cormorant)',
+          fontSize: 'clamp(26px, 3.2vw, 40px)',
+          color: 'var(--kambo-text-hi)',
+          fontWeight: 400,
+          lineHeight: 1.08,
+          letterSpacing: '-0.01em',
+          marginBottom: 'clamp(12px, 1.8vw, 18px)',
+        }}
+      >
+        {title}
+      </h3>
+
+      {/* Description */}
+      <p
+        style={{
+          fontSize: '15px',
+          color: 'var(--kambo-text-lo)',
+          lineHeight: 1.8,
+        }}
+      >
+        {body}
+      </p>
+
+      {/* Divider */}
+      <div
+        style={{
+          height: '1px',
+          background: 'linear-gradient(to right, rgba(196,146,42,0.22), transparent 65%)',
+          marginBlock: 'clamp(28px, 4vw, 40px)',
+        }}
+      />
+
+      {/* Price — main accent */}
+      <div style={{ marginBottom: 'clamp(36px, 5vw, 52px)' }}>
         <div
           style={{
-            height: '1px',
-            background: 'linear-gradient(to right, rgba(196,146,42,0.32), transparent)',
-            marginBottom: 'clamp(18px, 2.5vw, 24px)',
-          }}
-        />
-        <p
-          style={{
             fontFamily: 'var(--font-cormorant)',
-            fontSize: 'clamp(38px, 5.5vw, 60px)',
+            fontSize: 'clamp(55px, 7.5vw, 83px)',
             color: 'var(--kambo-text-hi)',
-            lineHeight: 0.9,
+            lineHeight: 0.88,
             fontWeight: 400,
-            letterSpacing: '-0.01em',
-            marginBottom: priceUnit ? '8px' : '0',
+            letterSpacing: '-0.025em',
+            marginBottom: '12px',
           }}
         >
           {price}
-        </p>
+        </div>
         {priceUnit && (
-          <p style={{ fontSize: '13px', color: 'var(--kambo-text-lo)', letterSpacing: '0.04em', marginBottom: 'clamp(18px, 2.5vw, 24px)' }}>
+          <p
+            style={{
+              fontSize: '11px',
+              color: 'var(--kambo-text-lo)',
+              letterSpacing: '0.09em',
+              textTransform: 'uppercase',
+              opacity: 0.5,
+            }}
+          >
             {priceUnit}
           </p>
         )}
       </div>
 
-      {/* CTA */}
+      {/* Includes checklist */}
+      <ul
+        style={{
+          listStyle: 'none',
+          margin: 0,
+          padding: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '14px',
+          marginBottom: 'clamp(36px, 5vw, 52px)',
+        }}
+      >
+        {INCLUDES.map((item) => (
+          <li
+            key={item}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              fontSize: '13px',
+              color: 'rgba(178,194,180,0.76)',
+              lineHeight: 1.4,
+            }}
+          >
+            <span
+              style={{
+                width: '22px',
+                height: '22px',
+                borderRadius: '50%',
+                border: '1px solid rgba(196,146,42,0.38)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+              }}
+            >
+              <Check size={10} weight="bold" color="var(--kambo-accent)" />
+            </span>
+            {item}
+          </li>
+        ))}
+      </ul>
+
+      {/* CTA — 88% width, centred */}
       <a
         href={ctaHref}
         target="_blank"
         rel="noopener noreferrer"
-        className="booking-card-cta"
+        className="bk-cta"
         style={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '10px',
-          background: 'transparent',
-          border: '1px solid rgba(196,146,42,0.3)',
-          color: 'var(--kambo-text-hi)',
-          paddingLeft: '22px',
-          paddingRight: '8px',
+          justifyContent: 'center',
+          background: 'var(--kambo-accent)',
+          color: 'var(--kambo-bg)',
           height: '52px',
-          borderRadius: '999px',
-          fontSize: '15px',
-          letterSpacing: '0.01em',
-          transition: 'background 0.22s cubic-bezier(0.32,0.72,0,1), border-color 0.22s, transform 0.15s cubic-bezier(0.32,0.72,0,1)',
+          borderRadius: '3px',
+          fontSize: '14px',
+          fontWeight: 500,
+          letterSpacing: '0.05em',
           textDecoration: 'none',
-          marginTop: priceUnit ? '0' : 'clamp(18px, 2.5vw, 24px)',
+          marginTop: 'auto',
+          width: '88%',
+          marginInline: 'auto',
+          transition: 'background 0.25s ease, transform 0.15s ease',
+          whiteSpace: 'nowrap',
         }}
       >
-        <span>{cta}</span>
-        <span
-          className="booking-card-icon"
-          style={{
-            width: '36px',
-            height: '36px',
-            borderRadius: '50%',
-            background: 'rgba(196,146,42,0.1)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexShrink: 0,
-            transition: 'transform 0.3s cubic-bezier(0.32,0.72,0,1)',
-          }}
-        >
-          <ArrowUpRight size={14} weight="bold" style={{ color: 'var(--kambo-accent)' }} />
-        </span>
+        Записаться на личную консультацию
       </a>
     </motion.div>
   )
@@ -153,27 +248,30 @@ function BookingCard({ title, subtitle, body, price, priceUnit, cta, ctaHref, de
 
 export default function Booking() {
   const reduce = useReducedMotion()
+  const headlineLines = BOOKING.headline.split('\n')
 
   return (
     <section
       id="booking"
       style={{
         paddingBlock: 'var(--section-py)',
-        background: 'var(--kambo-surface)',
+        background: 'var(--kambo-bg)',
         borderTop: '1px solid var(--kambo-border)',
         position: 'relative',
+        overflow: 'hidden',
       }}
     >
-      {/* Ambient glow */}
+      {/* Ambient top glow */}
       <div
         aria-hidden
         style={{
           position: 'absolute',
-          top: 0,
-          right: 0,
-          width: '60%',
-          height: '70%',
-          background: 'radial-gradient(ellipse at 80% 10%, rgba(196,146,42,0.055) 0%, transparent 58%)',
+          top: '-120px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '900px',
+          height: '560px',
+          background: 'radial-gradient(ellipse at center top, rgba(196,146,42,0.04) 0%, transparent 58%)',
           pointerEvents: 'none',
         }}
       />
@@ -188,86 +286,94 @@ export default function Booking() {
       >
         {/* Section header */}
         <motion.div
-          initial={reduce ? {} : { opacity: 0, y: 24, filter: 'blur(6px)' }}
-          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          initial={reduce ? {} : { opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.75, ease: EASE }}
-          style={{ marginBottom: 'clamp(32px, 4.5vw, 56px)' }}
+          style={{ marginBottom: 'clamp(44px, 6.5vw, 72px)' }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '18px' }}>
-            <div style={{ width: '32px', height: '2px', background: 'var(--kambo-accent)', flexShrink: 0 }} />
-            <span className="eyebrow">{BOOKING.eyebrow}</span>
-          </div>
+          <div style={{ width: '32px', height: '2px', background: 'var(--kambo-accent)', marginBottom: '20px' }} />
           <h2
             style={{
               fontSize: 'var(--text-h2)',
               fontFamily: 'var(--font-cormorant)',
               color: 'var(--kambo-text-hi)',
               fontWeight: 400,
-              lineHeight: 1.05,
+              lineHeight: 1.1,
+              marginBottom: 'clamp(18px, 2.5vw, 26px)',
             }}
           >
-            {BOOKING.headline}
+            {headlineLines.map((line, i) => (
+              <span key={i}>{i > 0 && <br />}{line}</span>
+            ))}
           </h2>
+          <p
+            style={{
+              fontSize: 'clamp(15px, 1.7vw, 17px)',
+              color: 'var(--kambo-text-lo)',
+              lineHeight: 1.82,
+              maxWidth: '520px',
+            }}
+          >
+            {BOOKING.intro}
+          </p>
         </motion.div>
 
         {/* Cards */}
         <div
-          className="booking-cards"
-          style={{ display: 'flex', gap: 'clamp(14px, 2.5vw, 28px)', alignItems: 'stretch' }}
+          className="bk-cards"
+          style={{ display: 'flex', gap: 'clamp(16px, 3vw, 32px)', alignItems: 'stretch' }}
         >
-          <BookingCard
+          <ExperienceCard
+            tag="Групповой формат"
             title={BOOKING.group.title}
-            subtitle={BOOKING.group.subtitle}
             body={BOOKING.group.body}
             price={BOOKING.group.price}
             priceUnit={BOOKING.group.priceUnit}
-            cta={BOOKING.group.cta}
             ctaHref={BOOKING.group.ctaHref}
             delay={0.06}
             reduce={reduce}
           />
-          <BookingCard
+          <ExperienceCard
+            badge="Рекомендуемый формат"
+            tag="Индивидуальный формат"
             title={BOOKING.individual.title}
             body={BOOKING.individual.body}
             price={BOOKING.individual.price}
-            cta={BOOKING.individual.cta}
             ctaHref={BOOKING.individual.ctaHref}
-            delay={0.16}
+            delay={0.18}
             reduce={reduce}
+            accent
           />
         </div>
-
-        {/* Note */}
-        <motion.p
-          initial={reduce ? {} : { opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
-          style={{
-            fontSize: '13px',
-            color: 'var(--kambo-text-lo)',
-            textAlign: 'center',
-            marginTop: 'clamp(18px, 2.5vw, 28px)',
-            letterSpacing: '0.03em',
-            opacity: 0.58,
-          }}
-        >
-          {BOOKING.note}
-        </motion.p>
       </div>
 
       <style>{`
-        @media (max-width: 600px) {
-          .booking-cards { flex-direction: column !important; }
+        @media (max-width: 640px) {
+          .bk-cards { flex-direction: column !important; }
         }
-        .booking-card-cta:hover {
-          background: rgba(196,146,42,0.07) !important;
-          border-color: rgba(196,146,42,0.52) !important;
+        .bk-card {
+          transition:
+            transform 350ms cubic-bezier(.22,.61,.36,1),
+            box-shadow 350ms cubic-bezier(.22,.61,.36,1);
+        }
+        .bk-card:hover {
+          transform: translateY(-5px);
+          box-shadow:
+            0 24px 60px rgba(0,0,0,.44),
+            0 0 0 1px rgba(196,146,42,0.24);
+        }
+        .bk-card--accent:hover {
+          transform: translateY(-5px);
+          box-shadow:
+            0 28px 70px rgba(0,0,0,.50),
+            0 0 0 1px rgba(196,146,42,0.36);
+        }
+        .bk-cta:hover {
+          background: #d4a030 !important;
           transform: translateY(-1px);
         }
-        .booking-card-cta:active { transform: translateY(1px) !important; }
-        .booking-card-cta:hover .booking-card-icon { transform: translate(2px, -2px); }
+        .bk-cta:active { transform: translateY(1px) !important; }
       `}</style>
     </section>
   )
