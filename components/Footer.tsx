@@ -4,27 +4,6 @@ import Link from 'next/link'
 import { TelegramLogo } from '@phosphor-icons/react'
 import { FOOTER } from '@/lib/constants'
 
-function LeafMark() {
-  return (
-    <svg
-      aria-hidden
-      width="24"
-      height="34"
-      viewBox="0 0 100 145"
-      fill="none"
-      style={{ opacity: 0.32 }}
-    >
-      <path
-        d="M50 140 C50 140 10 108 7 70 C4 34 24 6 50 2 C76 6 96 34 93 70 C90 108 50 140 50 140Z"
-        fill="var(--kambo-accent)"
-      />
-      <line x1="50" y1="140" x2="50" y2="2" stroke="rgba(196,146,42,0.7)" strokeWidth="1" />
-      <path d="M50 60 C36 53 18 57 12 70" stroke="rgba(196,146,42,0.5)" strokeWidth="0.8" />
-      <path d="M50 90 C64 83 80 86 86 98" stroke="rgba(196,146,42,0.5)" strokeWidth="0.8" />
-    </svg>
-  )
-}
-
 export default function Footer() {
   return (
     <footer style={{ position: 'relative', overflow: 'hidden' }}>
@@ -44,36 +23,47 @@ export default function Footer() {
           alignItems: 'center',
         }}
       >
-        {/* Mark */}
-        <LeafMark />
-
-        {/* Name */}
+        {/* Brand */}
         <p
           style={{
             fontFamily: 'var(--font-cormorant)',
-            fontSize: 'clamp(26px, 3.2vw, 36px)',
-            color: 'var(--kambo-text-hi)',
-            fontWeight: 400,
-            letterSpacing: '0.02em',
+            textTransform: 'uppercase',
+            fontSize: 'clamp(38px, 6vw, 62px)',
+            color: '#F3EBDD',
+            fontWeight: 500,
+            letterSpacing: '0.08em',
             lineHeight: 1.1,
-            marginTop: '22px',
+            textAlign: 'center',
           }}
         >
-          {FOOTER.name}
+          {FOOTER.brand.title}
         </p>
 
-        {/* Tagline */}
+        {/* Brand subtitle */}
         <p
           style={{
-            fontSize: '12.5px',
-            color: 'var(--kambo-accent-hi)',
-            letterSpacing: '0.1em',
-            marginTop: '9px',
-            opacity: 0.85,
+            fontFamily: 'var(--font-inter)',
+            fontSize: 'clamp(15px, 1.6vw, 20px)',
+            color: 'rgba(243,235,221,0.72)',
+            fontWeight: 300,
+            letterSpacing: '0.12em',
+            marginTop: '24px',
+            textAlign: 'center',
           }}
         >
-          {FOOTER.tagline}
+          {FOOTER.brand.subtitle}
         </p>
+
+        {/* Gold rule */}
+        <div
+          style={{
+            width: '90px',
+            height: '1px',
+            background: 'linear-gradient(to right, transparent, rgba(196,146,42,0.55), transparent)',
+            marginTop: '40px',
+            marginBottom: '28px',
+          }}
+        />
 
         {/* Social links */}
         <div
@@ -81,7 +71,7 @@ export default function Footer() {
             display: 'flex',
             gap: '14px',
             alignItems: 'center',
-            marginTop: '32px',
+            marginBottom: '32px',
           }}
         >
           <a
@@ -94,17 +84,6 @@ export default function Footer() {
             <TelegramLogo size={16} weight="light" />
           </a>
         </div>
-
-        {/* Gold rule */}
-        <div
-          style={{
-            width: '130px',
-            height: '1px',
-            background: 'linear-gradient(to right, transparent, rgba(196,146,42,0.55), transparent)',
-            marginTop: '44px',
-            marginBottom: '32px',
-          }}
-        />
 
         {/* Legal block */}
         <div style={{ maxWidth: '460px', marginBottom: '30px' }}>
@@ -193,20 +172,24 @@ export default function Footer() {
             linear-gradient(180deg, rgba(5,12,7,0.62) 0%, rgba(4,10,6,0.93) 100%);
         }
         .footer-social {
-          width: 34px;
-          height: 34px;
-          border-radius: 50%;
-          border: 1px solid rgba(178,194,180,0.22);
+          width: 52px;
+          height: 38px;
+          border-radius: 999px;
+          background: rgba(243,235,221,0.05);
+          backdrop-filter: blur(6px);
+          -webkit-backdrop-filter: blur(6px);
+          border: 1px solid rgba(196,146,42,0.32);
           color: var(--kambo-text-lo);
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: color 0.25s, border-color 0.25s, box-shadow 0.25s;
+          transition: color 0.25s, border-color 0.25s, box-shadow 0.25s, background 0.25s;
         }
         .footer-social:hover {
           color: var(--kambo-accent-hi);
-          border-color: rgba(196,146,42,0.55);
-          box-shadow: 0 0 14px rgba(196,146,42,0.28);
+          border-color: rgba(196,146,42,0.6);
+          background: rgba(196,146,42,0.08);
+          box-shadow: 0 0 16px rgba(196,146,42,0.3);
         }
         .footer-legal-link {
           transition: opacity 0.2s, color 0.2s;
