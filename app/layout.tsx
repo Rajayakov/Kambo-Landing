@@ -31,10 +31,17 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Церемония Камбо | Яков Раджуна",
     description:
-      "400+ церемоний на Ко Пангане. Традиционная практика Амазонии. Запись открыта.",
+      "Древняя практика очищения Амазонии. Глубокое очищение тела. Ясность ума. Возвращение внутренней силы. Для тебя.",
     locale: "ru_RU",
     type: "website",
-    images: [{ url: "/hero-kambo.png", width: 1200, height: 630 }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Церемония Камбо | Яков Раджуна",
+    description:
+      "Древняя практика очищения Амазонии. Глубокое очищение тела. Ясность ума. Возвращение внутренней силы. Для тебя.",
+    images: ["/og-image.png"],
   },
 };
 
