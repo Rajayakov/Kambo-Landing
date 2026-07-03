@@ -290,7 +290,7 @@ export default function Hero() {
               }
             >
               <Image
-                src="/hero-kambo.png"
+                src="/hero-kambo.jpg"
                 alt="Камбо — церемония очищения"
                 fill
                 priority

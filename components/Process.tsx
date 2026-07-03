@@ -225,7 +225,7 @@ export default function Process() {
         <div className="process-photo-col">
           <div className="process-photo-sticky">
             <Image
-              src="/kambo-ceremony.png"
+              src="/kambo-ceremony.jpg"
               alt="Церемония Камбо"
               width={600}
               height={800}
@@ -241,7 +241,7 @@ export default function Process() {
               sizes="(max-width: 767px) 100vw, 40vw"
             />
             <Image
-              src="/kambo-tools.png"
+              src="/kambo-tools.jpg"
               alt="Инструменты для церемонии Камбо"
               width={600}
               height={450}
