@@ -1,7 +1,8 @@
 'use client'
 
-import { motion, useReducedMotion } from 'motion/react'
-import { Check } from '@phosphor-icons/react'
+import { useState } from 'react'
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
+import { Check, X } from '@phosphor-icons/react'
 import { BOOKING } from '@/lib/constants'
 
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -12,42 +13,248 @@ const INCLUDES = [
   'Поддержка после церемонии',
 ]
 
+const CARD_BG = [
+  'radial-gradient(circle at top center, rgba(196,146,42,.04), transparent 55%)',
+  'linear-gradient(180deg, rgba(14,30,20,.96), rgba(10,22,15,.98))',
+].join(', ')
+
+const CARD_SHADOW = [
+  '0 1px 0 rgba(255,255,255,.04) inset',
+  '0 0 0 1px rgba(196,146,42,.08) inset',
+  '0 24px 64px rgba(0,0,0,.42)',
+].join(', ')
+
+// ── Modal form ────────────────────────────────────────────────────────────────
+
+function BookingModal({ onClose }: { onClose: () => void }) {
+  const [name, setName]       = useState('')
+  const [contact, setContact] = useState('')
+  const [sent, setSent]       = useState(false)
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    const subject = encodeURIComponent('Запись на консультацию Камбо')
+    const body = encodeURIComponent(
+      `Имя: ${name}\nКак связаться: ${contact}`
+    )
+    window.open(`mailto:rajunayakov@gmail.com?subject=${subject}&body=${body}`)
+    setSent(true)
+  }
+
+  return (
+    <motion.div
+      key="overlay"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+      onClick={onClose}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 9999,
+        background: 'rgba(3,8,5,0.82)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 'clamp(20px, 5vw, 48px)',
+      }}
+    >
+      <motion.div
+        key="modal"
+        initial={{ opacity: 0, y: 24, scale: 0.97 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 16, scale: 0.97 }}
+        transition={{ duration: 0.35, ease: EASE }}
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: 'linear-gradient(180deg, rgba(16,34,22,.99), rgba(10,22,15,1))',
+          border: '1px solid rgba(196,146,42,.22)',
+          borderRadius: '16px',
+          boxShadow: '0 1px 0 rgba(255,255,255,.04) inset, 0 32px 80px rgba(0,0,0,.6)',
+          padding: 'clamp(36px, 5vw, 56px)',
+          width: '100%',
+          maxWidth: '460px',
+          position: 'relative',
+        }}
+      >
+        {/* Close */}
+        <button
+          onClick={onClose}
+          aria-label="Закрыть"
+          style={{
+            position: 'absolute',
+            top: '20px',
+            right: '20px',
+            background: 'none',
+            border: 'none',
+            color: 'rgba(178,194,180,0.45)',
+            cursor: 'pointer',
+            padding: '4px',
+            display: 'flex',
+            alignItems: 'center',
+            transition: 'color 0.2s ease',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.color = 'rgba(196,146,42,0.8)')}
+          onMouseLeave={e => (e.currentTarget.style.color = 'rgba(178,194,180,0.45)')}
+        >
+          <X size={18} />
+        </button>
+
+        {/* Title */}
+        <div style={{ width: '28px', height: '1px', background: 'rgba(196,146,42,0.45)', marginBottom: '20px' }} />
+        <h3
+          style={{
+            fontFamily: 'var(--font-cormorant)',
+            fontSize: 'clamp(26px, 3.5vw, 36px)',
+            color: 'var(--kambo-text-hi)',
+            fontWeight: 400,
+            lineHeight: 1.1,
+            marginBottom: '8px',
+          }}
+        >
+          Запись на консультацию
+        </h3>
+        <p
+          style={{
+            fontSize: '13px',
+            color: 'var(--kambo-text-lo)',
+            opacity: 0.58,
+            lineHeight: 1.65,
+            marginBottom: '32px',
+          }}
+        >
+          5–15 минут. Без обязательств.
+        </p>
+
+        {sent ? (
+          <div style={{ textAlign: 'center', paddingBlock: '20px' }}>
+            <p
+              style={{
+                fontFamily: 'var(--font-cormorant)',
+                fontSize: '22px',
+                color: 'var(--kambo-text-hi)',
+                fontStyle: 'italic',
+                lineHeight: 1.5,
+                opacity: 0.88,
+              }}
+            >
+              Спасибо. Яков свяжется с вами в ближайшее время.
+            </p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <label style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <span style={{ fontSize: '11px', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--kambo-accent)', opacity: 0.65, fontFamily: 'var(--font-onest)' }}>
+                Ваше имя
+              </span>
+              <input
+                type="text"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                required
+                placeholder="Как вас зовут"
+                style={{
+                  background: 'rgba(255,255,255,.04)',
+                  border: '1px solid rgba(196,146,42,.18)',
+                  borderRadius: '6px',
+                  padding: '14px 16px',
+                  fontSize: '15px',
+                  color: 'var(--kambo-text-hi)',
+                  fontFamily: 'var(--font-onest)',
+                  outline: 'none',
+                  transition: 'border-color 0.2s ease',
+                }}
+                onFocus={e => (e.currentTarget.style.borderColor = 'rgba(196,146,42,.45)')}
+                onBlur={e => (e.currentTarget.style.borderColor = 'rgba(196,146,42,.18)')}
+              />
+            </label>
+
+            <label style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <span style={{ fontSize: '11px', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--kambo-accent)', opacity: 0.65, fontFamily: 'var(--font-onest)' }}>
+                Как с вами связаться
+              </span>
+              <input
+                type="text"
+                value={contact}
+                onChange={e => setContact(e.target.value)}
+                required
+                placeholder="Телефон или @Telegram"
+                style={{
+                  background: 'rgba(255,255,255,.04)',
+                  border: '1px solid rgba(196,146,42,.18)',
+                  borderRadius: '6px',
+                  padding: '14px 16px',
+                  fontSize: '15px',
+                  color: 'var(--kambo-text-hi)',
+                  fontFamily: 'var(--font-onest)',
+                  outline: 'none',
+                  transition: 'border-color 0.2s ease',
+                }}
+                onFocus={e => (e.currentTarget.style.borderColor = 'rgba(196,146,42,.45)')}
+                onBlur={e => (e.currentTarget.style.borderColor = 'rgba(196,146,42,.18)')}
+              />
+            </label>
+
+            <button
+              type="submit"
+              className="modal-submit"
+              style={{
+                marginTop: '8px',
+                height: '52px',
+                background: 'var(--kambo-accent)',
+                color: 'var(--kambo-bg)',
+                border: 'none',
+                borderRadius: '6px',
+                fontSize: '14px',
+                fontWeight: 500,
+                letterSpacing: '0.06em',
+                fontFamily: 'var(--font-onest)',
+                cursor: 'pointer',
+                transition: 'background 0.22s ease, transform 0.14s ease',
+              }}
+            >
+              Отправить заявку
+            </button>
+
+            <p style={{ fontSize: '11px', color: 'var(--kambo-text-lo)', opacity: 0.38, textAlign: 'center', lineHeight: 1.6 }}>
+              Консультация ни к чему вас не обязывает
+            </p>
+          </form>
+        )}
+      </motion.div>
+    </motion.div>
+  )
+}
+
+// ── Card ─────────────────────────────────────────────────────────────────────
+
 interface CardProps {
-  badge?: string
   tag: string
   title: string
   body: string
   price: string
   priceUnit?: string
-  ctaHref: string
+  onCta: () => void
   delay?: number
   reduce: boolean | null
-  accent?: boolean
 }
 
-function ExperienceCard({
-  badge, tag, title, body, price, priceUnit, ctaHref,
-  delay = 0, reduce, accent,
-}: CardProps) {
+function ExperienceCard({ tag, title, body, price, priceUnit, onCta, delay = 0, reduce }: CardProps) {
   return (
     <motion.div
       initial={reduce ? {} : { opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.8, delay, ease: EASE }}
-      className={`bk-card${accent ? ' bk-card--accent' : ''}`}
+      className="bk-card"
       style={{
         flex: 1,
-        background: accent
-          ? 'linear-gradient(180deg, rgba(17,36,23,.98) 0%, rgba(11,25,16,.99) 100%)'
-          : 'linear-gradient(180deg, rgba(15,32,20,.97) 0%, rgba(10,22,14,.98) 100%)',
-        border: accent
-          ? '1px solid rgba(196,146,42,0.28)'
-          : '1px solid rgba(196,146,42,0.18)',
-        borderRadius: '4px',
-        padding: accent
-          ? 'clamp(44px, 5.5vw, 66px) clamp(36px, 5vw, 56px)'
-          : 'clamp(36px, 5vw, 56px)',
+        background: CARD_BG,
+        border: '1px solid rgba(196,146,42,.22)',
+        borderRadius: '16px',
+        boxShadow: CARD_SHADOW,
+        padding: 'clamp(36px, 5vw, 56px)',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
@@ -60,36 +267,11 @@ function ExperienceCard({
         style={{
           position: 'absolute',
           top: 0, left: 0, right: 0,
-          height: accent ? '2px' : '1px',
-          background: accent
-            ? 'linear-gradient(to right, transparent 0%, var(--kambo-accent) 25%, var(--kambo-accent) 75%, transparent 100%)'
-            : 'linear-gradient(to right, transparent 0%, rgba(196,146,42,0.45) 35%, rgba(196,146,42,0.45) 65%, transparent 100%)',
+          height: '1px',
+          background: 'linear-gradient(to right, transparent 0%, rgba(196,146,42,.55) 35%, rgba(196,146,42,.55) 65%, transparent 100%)',
           pointerEvents: 'none',
         }}
       />
-
-      {/* Badge — only on accent card */}
-      {badge && (
-        <p
-          style={{
-            fontSize: '10px',
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-            color: 'var(--kambo-accent)',
-            fontFamily: 'var(--font-onest)',
-            fontWeight: 500,
-            opacity: 0.82,
-            marginBottom: '20px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-          }}
-        >
-          <span style={{ flex: '0 0 20px', height: '1px', background: 'rgba(196,146,42,0.45)' }} />
-          {badge}
-          <span style={{ flex: '0 0 20px', height: '1px', background: 'rgba(196,146,42,0.45)' }} />
-        </p>
-      )}
 
       {/* Tag */}
       <p
@@ -123,13 +305,7 @@ function ExperienceCard({
       </h3>
 
       {/* Description */}
-      <p
-        style={{
-          fontSize: '15px',
-          color: 'var(--kambo-text-lo)',
-          lineHeight: 1.8,
-        }}
-      >
+      <p style={{ fontSize: '15px', color: 'var(--kambo-text-lo)', lineHeight: 1.8 }}>
         {body}
       </p>
 
@@ -137,12 +313,12 @@ function ExperienceCard({
       <div
         style={{
           height: '1px',
-          background: 'linear-gradient(to right, rgba(196,146,42,0.22), transparent 65%)',
+          background: 'linear-gradient(to right, rgba(196,146,42,.22), transparent 65%)',
           marginBlock: 'clamp(28px, 4vw, 40px)',
         }}
       />
 
-      {/* Price — main accent */}
+      {/* Price */}
       <div style={{ marginBottom: 'clamp(36px, 5vw, 52px)' }}>
         <div
           style={{
@@ -172,7 +348,7 @@ function ExperienceCard({
         )}
       </div>
 
-      {/* Includes checklist */}
+      {/* Includes */}
       <ul
         style={{
           listStyle: 'none',
@@ -201,7 +377,7 @@ function ExperienceCard({
                 width: '22px',
                 height: '22px',
                 borderRadius: '50%',
-                border: '1px solid rgba(196,146,42,0.38)',
+                border: '1px solid rgba(196,146,42,.38)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -215,11 +391,9 @@ function ExperienceCard({
         ))}
       </ul>
 
-      {/* CTA — 88% width, centred */}
-      <a
-        href={ctaHref}
-        target="_blank"
-        rel="noopener noreferrer"
+      {/* CTA */}
+      <button
+        onClick={onCta}
         className="bk-cta"
         style={{
           display: 'flex',
@@ -228,27 +402,32 @@ function ExperienceCard({
           background: 'var(--kambo-accent)',
           color: 'var(--kambo-bg)',
           height: '52px',
-          borderRadius: '3px',
+          borderRadius: '6px',
           fontSize: '14px',
           fontWeight: 500,
           letterSpacing: '0.05em',
-          textDecoration: 'none',
+          fontFamily: 'var(--font-onest)',
+          border: 'none',
+          cursor: 'pointer',
           marginTop: 'auto',
           width: '88%',
           marginInline: 'auto',
-          transition: 'background 0.25s ease, transform 0.15s ease',
+          transition: 'background 0.22s ease, transform 0.14s ease',
           whiteSpace: 'nowrap',
         }}
       >
-        Записаться на личную консультацию
-      </a>
+        Записаться на консультацию
+      </button>
     </motion.div>
   )
 }
 
+// ── Section ───────────────────────────────────────────────────────────────────
+
 export default function Booking() {
-  const reduce = useReducedMotion()
-  const headlineLines = BOOKING.headline.split('\n')
+  const reduce               = useReducedMotion()
+  const [formOpen, setFormOpen] = useState(false)
+  const headlineLines        = BOOKING.headline.split('\n')
 
   return (
     <section
@@ -313,10 +492,33 @@ export default function Booking() {
               color: 'var(--kambo-text-lo)',
               lineHeight: 1.82,
               maxWidth: '520px',
+              marginBottom: '28px',
             }}
           >
             {BOOKING.intro}
           </p>
+
+          {/* Trust block */}
+          <div
+            style={{
+              borderLeft: '1px solid rgba(196,146,42,.25)',
+              paddingLeft: 'clamp(18px, 2.5vw, 26px)',
+              maxWidth: '480px',
+            }}
+          >
+            <p
+              style={{
+                fontSize: '13px',
+                color: 'var(--kambo-text-lo)',
+                lineHeight: 1.85,
+                opacity: 0.65,
+              }}
+            >
+              Каждая церемония начинается с личной консультации.
+              {' '}Консультация занимает 5–15 минут и ни к чему вас не обязывает.
+              {' '}Если во время разговора станет понятно, что Камбо сейчас вам не подходит — я честно скажу об этом.
+            </p>
+          </div>
         </motion.div>
 
         {/* Cards */}
@@ -330,23 +532,26 @@ export default function Booking() {
             body={BOOKING.group.body}
             price={BOOKING.group.price}
             priceUnit={BOOKING.group.priceUnit}
-            ctaHref={BOOKING.group.ctaHref}
+            onCta={() => setFormOpen(true)}
             delay={0.06}
             reduce={reduce}
           />
           <ExperienceCard
-            badge="Рекомендуемый формат"
             tag="Индивидуальный формат"
             title={BOOKING.individual.title}
             body={BOOKING.individual.body}
             price={BOOKING.individual.price}
-            ctaHref={BOOKING.individual.ctaHref}
+            onCta={() => setFormOpen(true)}
             delay={0.18}
             reduce={reduce}
-            accent
           />
         </div>
       </div>
+
+      {/* Modal */}
+      <AnimatePresence>
+        {formOpen && <BookingModal onClose={() => setFormOpen(false)} />}
+      </AnimatePresence>
 
       <style>{`
         @media (max-width: 640px) {
@@ -360,20 +565,18 @@ export default function Booking() {
         .bk-card:hover {
           transform: translateY(-5px);
           box-shadow:
-            0 24px 60px rgba(0,0,0,.44),
-            0 0 0 1px rgba(196,146,42,0.24);
-        }
-        .bk-card--accent:hover {
-          transform: translateY(-5px);
-          box-shadow:
-            0 28px 70px rgba(0,0,0,.50),
-            0 0 0 1px rgba(196,146,42,0.36);
+            0 1px 0 rgba(255,255,255,.05) inset,
+            0 0 0 1px rgba(196,146,42,.14) inset,
+            0 28px 72px rgba(0,0,0,.48),
+            0 0 0 1px rgba(196,146,42,.28);
         }
         .bk-cta:hover {
           background: #d4a030 !important;
           transform: translateY(-1px);
         }
         .bk-cta:active { transform: translateY(1px) !important; }
+        .modal-submit:hover { background: #d4a030 !important; }
+        .modal-submit:active { transform: translateY(1px) !important; }
       `}</style>
     </section>
   )
