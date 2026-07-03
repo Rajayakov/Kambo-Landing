@@ -44,7 +44,7 @@ export default function Process() {
             scrollTrigger: {
               trigger: step,
               start: 'top 80%',
-              toggleActions: 'play none none reverse',
+              once: true,
             },
           }
         )
@@ -64,7 +64,7 @@ export default function Process() {
             scrollTrigger: {
               trigger: dot,
               start: 'top 82%',
-              toggleActions: 'play none none reverse',
+              once: true,
             },
           }
         )

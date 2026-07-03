@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useReducedMotion } from 'motion/react'
-import { TESTIMONIALS, COUNTERS } from '@/lib/constants'
+import { TESTIMONIALS } from '@/lib/constants'
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
@@ -42,60 +42,6 @@ export default function SocialProof() {
           position: 'relative',
         }}
       >
-        {/* ── Counters ── */}
-        <div className="sp-counters">
-          {COUNTERS.map((c, i) => (
-            <motion.div
-              key={c.label}
-              initial={reduce ? {} : { opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.6, delay: i * 0.1, ease: EASE }}
-              style={{
-                flex: 1,
-                paddingRight: i < COUNTERS.length - 1 ? 'clamp(24px, 5vw, 56px)' : '0',
-                marginRight: i < COUNTERS.length - 1 ? 'clamp(24px, 5vw, 56px)' : '0',
-                borderRight: i < COUNTERS.length - 1 ? '1px solid var(--kambo-border)' : 'none',
-              }}
-            >
-              <div
-                style={{
-                  fontFamily: 'var(--font-cormorant)',
-                  fontSize: 'clamp(52px, 7.5vw, 88px)',
-                  color: 'var(--kambo-accent)',
-                  lineHeight: 0.9,
-                  fontWeight: 400,
-                  letterSpacing: '-0.02em',
-                  fontVariantNumeric: 'tabular-nums',
-                  marginBottom: '12px',
-                }}
-              >
-                {c.value}{c.suffix}
-              </div>
-              <div
-                style={{
-                  fontSize: '12px',
-                  color: 'var(--kambo-text-lo)',
-                  letterSpacing: '0.09em',
-                  textTransform: 'uppercase',
-                  lineHeight: 1.4,
-                }}
-              >
-                {c.label}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* ── Divider ── */}
-        <div
-          style={{
-            height: '1px',
-            background: 'var(--kambo-border)',
-            marginBlock: 'clamp(52px, 7vw, 80px)',
-          }}
-        />
-
         {/* ── Testimonials header ── */}
         <motion.div
           initial={reduce ? {} : { opacity: 0, y: 16 }}
@@ -114,7 +60,7 @@ export default function SocialProof() {
               lineHeight: 1.05,
             }}
           >
-            Что говорят
+            Отзывы о церемонии
           </h2>
         </motion.div>
 
@@ -133,21 +79,6 @@ export default function SocialProof() {
               paddingInline: 'clamp(0px, 8vw, 80px)',
             }}
           >
-            <span
-              aria-hidden
-              style={{
-                fontFamily: 'var(--font-cormorant)',
-                fontSize: '88px',
-                color: 'var(--kambo-accent)',
-                opacity: 0.15,
-                lineHeight: 0.6,
-                display: 'block',
-                marginBottom: '16px',
-                userSelect: 'none',
-              }}
-            >
-              &ldquo;
-            </span>
             <p
               style={{
                 fontFamily: 'var(--font-cormorant)',
@@ -160,16 +91,19 @@ export default function SocialProof() {
                 marginInline: 'auto',
               }}
             >
-              {TESTIMONIALS.quotes[0].quote}
+              «{TESTIMONIALS.quotes[0].quote}»
             </p>
-            <p style={{ fontSize: '13px', color: 'var(--kambo-accent)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-              — {TESTIMONIALS.quotes[0].name}{TESTIMONIALS.quotes[0].age ? `, ${TESTIMONIALS.quotes[0].age}` : ''}
-              {TESTIMONIALS.quotes[0].role && (
-                <span style={{ color: 'var(--kambo-text-lo)', textTransform: 'none', letterSpacing: '0.02em' }}>
-                  {' '}· {TESTIMONIALS.quotes[0].role}
-                </span>
-              )}
-            </p>
+            <div>
+              <div style={{ width: '20px', height: '1px', background: 'rgba(196,146,42,0.4)', marginBottom: '10px', marginInline: 'auto' }} />
+              <p style={{ fontSize: '14px', color: 'var(--kambo-text-hi)', fontWeight: 500, letterSpacing: '0.02em' }}>
+                {TESTIMONIALS.quotes[0].name}{TESTIMONIALS.quotes[0].age ? `, ${TESTIMONIALS.quotes[0].age}` : ''}
+                {TESTIMONIALS.quotes[0].role && (
+                  <span style={{ color: 'var(--kambo-text-lo)', fontWeight: 400 }}>
+                    {' · '}{TESTIMONIALS.quotes[0].role}
+                  </span>
+                )}
+              </p>
+            </div>
           </motion.div>
         )}
 

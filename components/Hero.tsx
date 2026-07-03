@@ -323,11 +323,10 @@ export default function Hero() {
             fontSize: '12px',
             letterSpacing: '0.32em',
             textTransform: 'uppercase',
-            color: '#C89A2B',
+            color: '#D4A94E',
             fontFamily: 'var(--font-onest)',
             fontWeight: 500,
             marginBottom: '18px',
-            opacity: 0.55,
           }}>
             Проводник
           </p>
