@@ -133,6 +133,19 @@ export default function Footer() {
           ))}
         </div>
 
+        {/* Operator */}
+        <div style={{ maxWidth: '460px', marginBottom: '22px', textAlign: 'center' }}>
+          <p style={{ fontSize: '11px', color: 'var(--kambo-text-lo)', lineHeight: 1.7, opacity: 0.45 }}>
+            {FOOTER.operator.legalName} · {FOOTER.operator.status} ·{' '}
+            <a href={`mailto:${FOOTER.operator.email}`} style={{ color: 'inherit', textDecoration: 'underline' }}>
+              {FOOTER.operator.email}
+            </a>
+          </p>
+          <p style={{ fontSize: '11px', color: 'var(--kambo-text-lo)', lineHeight: 1.7, opacity: 0.4, marginTop: '4px' }}>
+            {FOOTER.operator.note}
+          </p>
+        </div>
+
         {/* Note */}
         <p
           style={{
