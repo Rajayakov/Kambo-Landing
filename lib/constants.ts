@@ -248,11 +248,20 @@ export const BOOKING = {
 }
 
 export const FOOTER = {
-  name:       'Яков Раджуна',
-  location:   'Церемонии Камбо',
-  disclaimer: 'Камбо — не медицинская процедура. Не является заменой врачебной помощи.',
-  year:       2026,
-  copyright:  'The Open Sky',
-  telegram:   'https://t.me/Rajuna_Yakov',
-  instagram:  'https://www.instagram.com/yakov_rajuna?igsh=NGoxbzRoaGFtbm51&utm_source=qr',
+  name:    'Яков Раджуна',
+  tagline: 'Проводник церемоний Камбо',
+  legal: [
+    'Информация, представленная на сайте, носит исключительно ознакомительный характер.',
+    'Практика Камбо не является медицинской услугой, методом лечения или заменой квалифицированной медицинской помощи.',
+    'Перед участием обязательна предварительная консультация и проверка противопоказаний.',
+  ],
+  note: 'Работа начинается с доверия.',
+  year: 2026,
+  telegram:  'https://t.me/Rajuna_Yakov',
+  instagram: 'https://www.instagram.com/yakov_rajuna?igsh=NGoxbzRoaGFtbm51&utm_source=qr',
+  links: [
+    { label: 'Политика конфиденциальности',                href: '/privacy-policy' },
+    { label: 'Согласие на обработку персональных данных',  href: '/data-consent' },
+    { label: 'Отказ от ответственности',                    href: '/disclaimer' },
+  ],
 }
