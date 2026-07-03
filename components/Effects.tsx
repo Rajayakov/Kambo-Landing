@@ -104,10 +104,10 @@ export default function Effects() {
         overflow: 'hidden',
       }}
     >
-      {/* Section overlay — denser to make cards read as distinct objects */}
+      {/* Section overlay */}
       <div aria-hidden style={{
         position: 'absolute', inset: 0,
-        background: 'linear-gradient(180deg, rgba(6,16,10,.45), rgba(6,16,10,.62))',
+        background: 'linear-gradient(180deg, rgba(7,18,12,.48), rgba(7,18,12,.65))',
         pointerEvents: 'none', zIndex: 0,
       }} />
       {/* Ambient top shimmer */}
@@ -176,17 +176,15 @@ export default function Effects() {
             style={{
               gridColumn: 'span 2',
               background: [
-                'radial-gradient(circle at top left, rgba(191,157,73,.08), transparent 45%)',
-                'linear-gradient(180deg, rgba(13,30,19,.96), rgba(9,23,15,.94))',
+                'radial-gradient(circle at top left, rgba(190,150,70,.05), transparent 50%)',
+                'linear-gradient(180deg, rgba(13,28,21,.97), rgba(9,21,16,.96))',
               ].join(', '),
-              backdropFilter: 'blur(12px)',
-              WebkitBackdropFilter: 'blur(12px)',
-              border: '1px solid rgba(191,157,73,.22)',
+              border: '1px solid rgba(191,157,73,.24)',
               borderRadius: '20px',
               boxShadow: [
-                '0 1px 0 rgba(255,255,255,.04) inset',
-                '0 0 0 1px rgba(191,157,73,.14) inset',
-                '0 28px 70px rgba(0,0,0,.48)',
+                '0 1px 0 rgba(255,255,255,.05) inset',
+                '0 0 0 1px rgba(191,157,73,.06) inset',
+                '0 28px 72px rgba(0,0,0,.46)',
               ].join(', '),
               padding: 'clamp(36px, 5vw, 56px)',
               position: 'relative',
@@ -212,8 +210,8 @@ export default function Effects() {
             <div style={{ position: 'relative', zIndex: 1 }}>
               <div style={{
                 color: 'var(--kambo-accent)',
-                marginBottom: '22px',
-                filter: 'drop-shadow(0 0 5px rgba(196,146,42,0.42))',
+                marginBottom: '24px',
+                filter: 'drop-shadow(0 0 4px rgba(196,146,42,0.32))',
                 transform: 'scale(1.2)',
                 transformOrigin: 'left center',
                 display: 'inline-block',
@@ -222,19 +220,19 @@ export default function Effects() {
               </div>
               <h3 style={{
                 fontFamily: 'var(--font-cormorant)',
-                fontSize: 'clamp(35px, 5.2vw, 60px)',
+                fontSize: 'clamp(36px, 5.4vw, 62px)',
                 color: 'var(--kambo-text-hi)',
                 fontWeight: 400,
                 lineHeight: 1.2,
                 letterSpacing: '0.01em',
-                marginBottom: 'clamp(14px, 1.8vw, 20px)',
+                marginBottom: '24px',
               }}>
                 {featured.title}
               </h3>
               <p style={{
                 fontSize: 'clamp(14px, 1.6vw, 16px)',
                 color: 'rgba(255,255,255,0.82)',
-                lineHeight: 1.75,
+                lineHeight: 1.78,
                 maxWidth: '400px',
               }}>
                 {featured.body}
@@ -253,17 +251,15 @@ export default function Effects() {
               transition={{ duration: 0.7, delay: (i + 1) * 0.065, ease: EASE }}
               style={{
                 background: [
-                  'radial-gradient(circle at top left, rgba(191,157,73,.06), transparent 45%)',
-                  'linear-gradient(180deg, rgba(10,24,16,.94), rgba(7,19,13,.92))',
+                  'radial-gradient(circle at top left, rgba(190,150,70,.05), transparent 50%)',
+                  'linear-gradient(180deg, rgba(11,24,18,.96), rgba(8,18,14,.95))',
                 ].join(', '),
-                backdropFilter: 'blur(12px)',
-                WebkitBackdropFilter: 'blur(12px)',
-                border: '1px solid rgba(191,157,73,.16)',
+                border: '1px solid rgba(191,157,73,.20)',
                 borderRadius: '20px',
                 boxShadow: [
                   '0 1px 0 rgba(255,255,255,.03) inset',
-                  '0 0 0 1px rgba(191,157,73,.10) inset',
-                  '0 20px 60px rgba(0,0,0,.40)',
+                  '0 0 0 1px rgba(191,157,73,.05) inset',
+                  '0 24px 70px rgba(0,0,0,.42)',
                 ].join(', '),
                 padding: 'clamp(22px, 3vw, 34px)',
                 position: 'relative',
@@ -275,8 +271,8 @@ export default function Effects() {
               <div style={{ position: 'relative', zIndex: 1, flex: 1, display: 'flex', flexDirection: 'column' }}>
                 <div style={{
                   color: 'var(--kambo-accent)',
-                  marginBottom: '16px',
-                  filter: 'drop-shadow(0 0 4px rgba(196,146,42,0.35))',
+                  marginBottom: '24px',
+                  filter: 'drop-shadow(0 0 3px rgba(196,146,42,0.28))',
                   transform: 'scale(1.18)',
                   transformOrigin: 'left center',
                   display: 'inline-block',
@@ -285,19 +281,19 @@ export default function Effects() {
                 </div>
                 <h3 style={{
                   fontFamily: 'var(--font-cormorant)',
-                  fontSize: 'clamp(20px, 2.4vw, 27px)',
+                  fontSize: 'clamp(20px, 2.4vw, 28px)',
                   color: 'var(--kambo-text-hi)',
                   fontWeight: 400,
                   lineHeight: 1.2,
                   letterSpacing: '0.01em',
-                  marginBottom: '10px',
+                  marginBottom: '24px',
                 }}>
                   {cell.title}
                 </h3>
                 <p style={{
                   fontSize: '14px',
                   color: 'rgba(255,255,255,0.82)',
-                  lineHeight: 1.75,
+                  lineHeight: 1.78,
                 }}>
                   {cell.body}
                 </p>
@@ -386,24 +382,26 @@ export default function Effects() {
 
         /* ── Featured hover ── */
         .eff-card--featured:hover {
-          transform: translateY(-5px) scale(1.01);
-          border-color: rgba(191,157,73,.36) !important;
+          transform: translateY(-4px) scale(1.01);
+          background: radial-gradient(circle at top left, rgba(190,150,70,.07), transparent 50%),
+                      linear-gradient(180deg, rgba(15,32,24,.98), rgba(11,25,18,.97)) !important;
+          border-color: rgba(191,157,73,.34) !important;
           box-shadow:
             0 1px 0 rgba(255,255,255,.06) inset,
-            0 0 0 1px rgba(191,157,73,.22) inset,
-            0 32px 80px rgba(0,0,0,.55),
-            0 0 24px rgba(191,157,73,.06) !important;
+            0 0 0 1px rgba(191,157,73,.10) inset,
+            0 32px 80px rgba(0,0,0,.52) !important;
         }
 
         /* ── Small card hover ── */
         .eff-card--small:hover {
-          transform: translateY(-5px) scale(1.01);
+          transform: translateY(-4px) scale(1.01);
+          background: radial-gradient(circle at top left, rgba(190,150,70,.07), transparent 50%),
+                      linear-gradient(180deg, rgba(13,27,20,.97), rgba(10,21,16,.96)) !important;
           border-color: rgba(191,157,73,.28) !important;
           box-shadow:
-            0 1px 0 rgba(255,255,255,.05) inset,
-            0 0 0 1px rgba(191,157,73,.18) inset,
-            0 24px 64px rgba(0,0,0,.46),
-            0 0 18px rgba(191,157,73,.05) !important;
+            0 1px 0 rgba(255,255,255,.04) inset,
+            0 0 0 1px rgba(191,157,73,.08) inset,
+            0 28px 74px rgba(0,0,0,.46) !important;
         }
 
         /* ── CTA ── */
