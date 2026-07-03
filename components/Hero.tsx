@@ -1,7 +1,13 @@
 'use client'
 
 import Image from 'next/image'
-import { motion, useReducedMotion } from 'motion/react'
+import {
+  motion,
+  useReducedMotion,
+  useMotionValue,
+  useTransform,
+  useSpring,
+} from 'motion/react'
 import { ArrowDown } from '@phosphor-icons/react'
 import { HERO } from '@/lib/constants'
 
@@ -12,344 +18,387 @@ function LeafIcon() {
     <svg width="13" height="16" viewBox="0 0 13 16" fill="none" aria-hidden>
       <path
         d="M6.5 15C6.5 15 1.5 11.5 1.5 7.5C1.5 4 3.7 1.2 6.5 1C9.3 1.2 11.5 4 11.5 7.5C11.5 11.5 6.5 15 6.5 15Z"
-        fill="rgba(196,146,42,0.75)"
+        fill="rgba(196,146,42,0.95)"
       />
-      <line x1="6.5" y1="15" x2="6.5" y2="2.5" stroke="rgba(196,146,42,0.45)" strokeWidth="0.8" />
-      <path d="M6.5 8.5C4.5 7.5 2.5 8 1.8 9.5" stroke="rgba(196,146,42,0.38)" strokeWidth="0.7" />
+      <line x1="6.5" y1="15" x2="6.5" y2="2.5" stroke="rgba(196,146,42,0.55)" strokeWidth="0.8" />
+      <path d="M6.5 8.5C4.5 7.5 2.5 8 1.8 9.5" stroke="rgba(196,146,42,0.48)" strokeWidth="0.7" />
     </svg>
   )
 }
 
-function ShieldIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden style={{ flexShrink: 0, marginTop: '1px' }}>
-      <path
-        d="M7 1L12.5 3.5V7.5C12.5 10.5 10 12.8 7 13.5C4 12.8 1.5 10.5 1.5 7.5V3.5L7 1Z"
-        stroke="rgba(196,146,42,0.45)"
-        strokeWidth="0.85"
-      />
-    </svg>
-  )
-}
+const TRUST = [
+  'Каждая церемония начинается с личного разговора.',
+  'Консультация занимает 10–15 минут и ни к чему не обязывает.',
+  'Если вам Камбо не подходит — мы честно скажем об этом.',
+]
 
-const BOTTOM_STATS = [
-  { value: '400+',   label: 'ЦЕРЕМОНИЙ',    sub: 'проведено с вниманием и заботой' },
-  { value: '4000+',  label: 'ЧЕЛОВЕК',      sub: 'прошли церемонию и получили поддержку' },
-  { value: '20 лет', label: 'ПРАКТИКИ',     sub: 'духовный путь, знания и служение людям' },
+const STATS = [
+  { value: '400+',  label: 'церемоний' },
+  { value: '4000+', label: 'участников' },
+  { value: '20',    label: 'лет практики' },
 ]
 
 export default function Hero() {
   const reduce = useReducedMotion()
 
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  const rawX   = useTransform(mouseX, [-0.5, 0.5], [-8, 8])
+  const rawY   = useTransform(mouseY, [-0.5, 0.5], [-4, 4])
+  const bgX    = useSpring(rawX, { stiffness: 55, damping: 22 })
+  const bgY    = useSpring(rawY, { stiffness: 55, damping: 22 })
+
+  function onMouseMove(e: React.MouseEvent<HTMLElement>) {
+    if (reduce) return
+    const r = e.currentTarget.getBoundingClientRect()
+    mouseX.set((e.clientX - r.left) / r.width - 0.5)
+    mouseY.set((e.clientY - r.top) / r.height - 0.5)
+  }
+  function onMouseLeave() {
+    mouseX.set(0)
+    mouseY.set(0)
+  }
+
+  function scrollToBooking(e: React.MouseEvent) {
+    e.preventDefault()
+    document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
-    <section
-      id="hero"
-      style={{ position: 'relative', overflow: 'hidden', background: 'var(--kambo-bg)' }}
-    >
-      {/* ── Main two-column grid ── */}
-      <div
-        className="hero-grid"
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '54% 46%',
-          maxWidth: 'var(--max-w)',
-          marginInline: 'auto',
-          width: '100%',
-          paddingInline: 'clamp(24px, 5vw, 52px)',
-          paddingTop: 'clamp(130px, 15vw, 172px)',
-          paddingBottom: 'clamp(48px, 6vw, 72px)',
-          minHeight: '88dvh',
-          alignItems: 'center',
-        }}
+    <>
+      {/* ── Hero ── */}
+      <section
+        id="hero"
+        style={{ position: 'relative', overflow: 'hidden', background: 'var(--kambo-bg)' }}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
       >
-        {/* ── Left: Text column ── */}
-        <motion.div
-          initial={reduce ? {} : { opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, ease: EASE }}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            paddingRight: 'clamp(20px, 4vw, 52px)',
-          }}
-        >
-          {/* Eyebrow */}
-          <p
-            style={{
-              fontSize: '11px',
-              letterSpacing: '0.26em',
-              textTransform: 'uppercase',
-              color: 'var(--kambo-accent)',
-              fontFamily: 'var(--font-onest)',
-              fontWeight: 500,
-              marginBottom: '14px',
-              opacity: 0.9,
-            }}
-          >
-            {HERO.eyebrow}
-          </p>
 
-          {/* H1 */}
-          <h1
-            style={{
-              fontFamily: 'var(--font-cormorant)',
-              fontSize: 'clamp(80px, 13vw, 156px)',
-              fontWeight: 400,
-              color: 'var(--kambo-text-hi)',
-              lineHeight: 0.9,
-              letterSpacing: '-0.025em',
-              marginBottom: '20px',
-            }}
-          >
-            {HERO.h1}
-          </h1>
-
-          {/* Gold rule */}
-          <div
-            style={{
-              width: '44px',
-              height: '1px',
-              background: 'var(--kambo-accent)',
-              opacity: 0.65,
-              marginBottom: '20px',
-            }}
-          />
-
-          {/* Italic subtitle */}
-          <p
-            style={{
-              fontFamily: 'var(--font-cormorant)',
-              fontSize: 'clamp(20px, 2.8vw, 30px)',
-              fontStyle: 'italic',
-              color: 'var(--kambo-text-hi)',
-              lineHeight: 1.3,
-              opacity: 0.88,
-              marginBottom: 'clamp(28px, 4vw, 44px)',
-            }}
-          >
-            {HERO.subtitle}
-          </p>
-
-          {/* Bullets */}
-          <ul
-            style={{
-              listStyle: 'none',
-              padding: 0,
-              margin: '0',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '13px',
-              marginBottom: 'clamp(32px, 4.5vw, 52px)',
-            }}
-          >
-            {HERO.bullets.map((item) => (
-              <li
-                key={item}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '11px',
-                  fontSize: '15px',
-                  color: 'var(--kambo-text-lo)',
-                  lineHeight: 1.45,
-                  fontFamily: 'var(--font-onest)',
-                }}
-              >
-                <LeafIcon />
-                {item}
-              </li>
-            ))}
-          </ul>
-
-          {/* CTA button */}
-          <div style={{ marginBottom: '16px' }}>
-            <a
-              href={HERO.cta1href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hero-cta-pill"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                background: 'var(--kambo-accent)',
-                color: 'var(--kambo-bg)',
-                paddingLeft: '28px',
-                paddingRight: '8px',
-                height: '52px',
-                borderRadius: '999px',
-                fontSize: '15px',
-                fontWeight: 500,
-                fontFamily: 'var(--font-onest)',
-                letterSpacing: '0.01em',
-                whiteSpace: 'nowrap',
-                transition: 'background 0.22s ease, transform 0.14s ease',
-                textDecoration: 'none',
-              }}
-            >
-              {HERO.cta1}
-              <span
-                className="hero-cta-icon"
-                style={{
-                  width: '38px',
-                  height: '38px',
-                  borderRadius: '50%',
-                  background: 'rgba(8,18,10,0.22)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
-                  transition: 'transform 0.28s ease',
-                }}
-              >
-                <ArrowDown size={16} weight="bold" />
-              </span>
-            </a>
-          </div>
-
-          {/* Trust note */}
-          <p
-            style={{
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: '8px',
-              fontSize: '12px',
-              color: 'var(--kambo-text-lo)',
-              lineHeight: 1.7,
-              opacity: 0.56,
-              maxWidth: '340px',
-            }}
-          >
-            <ShieldIcon />
-            {HERO.trust}
-          </p>
-        </motion.div>
-
-        {/* ── Right: Photo ── */}
-        <motion.div
-          initial={reduce ? {} : { opacity: 0, scale: 1.03 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.15, ease: EASE }}
-          className="hero-photo-wrap"
-          style={{
-            position: 'relative',
-            borderRadius: '6px',
-            overflow: 'hidden',
-            aspectRatio: '4/5',
-            alignSelf: 'stretch',
-          }}
-        >
+        {/* Jungle — full-bleed under BOTH columns so the mask on the right reveals it */}
+        <div aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
           <Image
-            src="/hero-kambo.png"
-            alt="Яков Раджуна — проводник Камбо"
+            src="/jungle-bg.jpg"
+            alt=""
             fill
             priority
-            style={{ objectFit: 'cover', objectPosition: '64% 20%' }}
-            sizes="(max-width: 767px) 0px, 46vw"
+            style={{ objectFit: 'cover', objectPosition: '50% 50%' }}
+            sizes="100vw"
           />
-          {/* fade left edge into bg */}
-          <div
-            aria-hidden
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'linear-gradient(to right, rgba(8,18,10,0.55) 0%, transparent 32%)',
-              pointerEvents: 'none',
-            }}
-          />
-          {/* fade bottom */}
-          <div
-            aria-hidden
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'linear-gradient(to bottom, transparent 60%, rgba(8,18,10,0.48) 100%)',
-              pointerEvents: 'none',
-            }}
-          />
-        </motion.div>
-      </div>
+          {/* Overlay: dark on the left for text legibility, nearly clear on the right
+              so jungle shows through where the frog photo's mask fades in */}
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: 'linear-gradient(to right, rgba(8,18,10,0.80) 0%, rgba(8,18,10,0.80) 42%, rgba(8,18,10,0.32) 52%, rgba(8,18,10,0.08) 62%, transparent 76%)',
+          }} />
+        </div>
 
-      {/* ── Bottom strip: Проводник + 3 stats ── */}
-      <div
-        style={{
-          borderTop: '1px solid var(--kambo-border)',
-          background: 'rgba(8,18,10,0.35)',
-        }}
-      >
         <div
-          className="hero-bottom"
+          className="h-grid"
           style={{
-            maxWidth: 'var(--max-w)',
-            marginInline: 'auto',
+            position: 'relative',
+            zIndex: 1,
             display: 'grid',
-            gridTemplateColumns: '1.1fr 1fr 1fr 1fr',
-            paddingInline: 'clamp(24px, 5vw, 52px)',
+            gridTemplateColumns: '48% 52%',
+            minHeight: '92dvh',
+            alignItems: 'stretch',
           }}
         >
-          {/* Проводник cell */}
-          <div
+          {/* ── Left: text only ── */}
+          <motion.div
+            initial={reduce ? {} : { opacity: 0, x: -18 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.95, ease: EASE }}
             style={{
-              padding: 'clamp(20px, 2.8vw, 30px) clamp(16px, 2vw, 28px) clamp(20px, 2.8vw, 30px) 0',
-              borderRight: '1px solid var(--kambo-border)',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              paddingTop: 'clamp(100px, 10vw, 140px)',
+              paddingBottom: 'clamp(100px, 10vw, 140px)',
+              paddingLeft: 'clamp(28px, 5vw, 80px)',
+              paddingRight: 'clamp(24px, 4vw, 56px)',
             }}
           >
+            {/* Eyebrow — increased ~27%, wider tracking */}
             <p
               style={{
-                fontSize: '10px',
-                letterSpacing: '0.22em',
+                fontSize: '19px',
+                letterSpacing: '0.38em',
                 textTransform: 'uppercase',
                 color: 'var(--kambo-accent)',
                 fontFamily: 'var(--font-onest)',
                 fontWeight: 500,
-                marginBottom: '8px',
-                opacity: 0.8,
+                marginBottom: '18px',
+                opacity: 0.9,
               }}
             >
-              Проводник
+              {HERO.eyebrow}
             </p>
+
+            {/* H1 — unchanged */}
+            <h1
+              style={{
+                fontFamily: 'var(--font-cormorant)',
+                fontSize: 'clamp(72px, 9.5vw, 130px)',
+                fontWeight: 400,
+                color: 'var(--kambo-text-hi)',
+                lineHeight: 0.88,
+                letterSpacing: '-0.025em',
+                marginBottom: '22px',
+              }}
+            >
+              {HERO.h1}
+            </h1>
+
+            {/* Gold rule */}
+            <div
+              style={{
+                width: '48px',
+                height: '1px',
+                background: 'var(--kambo-accent)',
+                opacity: 0.6,
+                marginBottom: '22px',
+              }}
+            />
+
+            {/* Subtitle */}
             <p
               style={{
                 fontFamily: 'var(--font-cormorant)',
-                fontSize: 'clamp(18px, 2vw, 24px)',
+                fontSize: 'clamp(20px, 2.6vw, 32px)',
+                fontStyle: 'italic',
                 color: 'var(--kambo-text-hi)',
-                fontWeight: 400,
-                lineHeight: 1.1,
-                letterSpacing: '-0.01em',
-                marginBottom: '7px',
+                lineHeight: 1.24,
+                maxWidth: '400px',
+                marginBottom: 'clamp(30px, 4vw, 46px)',
               }}
             >
-              Яков Раджуна
+              Возвращение<br />к собственной природе
             </p>
-            <p
-              style={{
-                fontSize: '12px',
-                color: 'var(--kambo-text-lo)',
-                lineHeight: 1.6,
-                opacity: 0.65,
-              }}
-            >
-              Более 20 лет духовной практики
-            </p>
-          </div>
 
-          {/* 3 stat cells */}
-          {BOTTOM_STATS.map((s, i) => (
+            {/* Bullets */}
+            <ul
+              style={{
+                listStyle: 'none',
+                padding: 0,
+                margin: 0,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '16px',
+                marginBottom: 'clamp(40px, 5vw, 58px)',
+              }}
+            >
+              {HERO.bullets.map((item) => (
+                <li
+                  key={item}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    fontSize: '15px',
+                    color: 'var(--kambo-text-lo)',
+                    fontFamily: 'var(--font-onest)',
+                    lineHeight: 1.4,
+                  }}
+                >
+                  <LeafIcon />
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            {/* CTA — scroll to #booking */}
+            <div style={{ marginBottom: '22px' }}>
+              <a
+                href="#booking"
+                onClick={scrollToBooking}
+                className="h-cta"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  background: 'var(--kambo-accent)',
+                  color: 'var(--kambo-bg)',
+                  paddingLeft: '28px',
+                  paddingRight: '8px',
+                  height: '52px',
+                  borderRadius: '999px',
+                  fontSize: '15px',
+                  fontWeight: 500,
+                  fontFamily: 'var(--font-onest)',
+                  textDecoration: 'none',
+                  whiteSpace: 'nowrap',
+                  transition: 'background 0.2s ease, transform 0.14s ease',
+                }}
+              >
+                {HERO.cta1}
+                <span
+                  style={{
+                    width: '38px',
+                    height: '38px',
+                    borderRadius: '50%',
+                    background: 'rgba(8,18,10,0.22)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
+                >
+                  <ArrowDown size={16} weight="bold" />
+                </span>
+              </a>
+            </div>
+
+            {/* Trust */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', maxWidth: '360px' }}>
+              {TRUST.map((line) => (
+                <p
+                  key={line}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '8px',
+                    fontSize: '12px',
+                    color: 'var(--kambo-text-lo)',
+                    fontFamily: 'var(--font-onest)',
+                    lineHeight: 1.65,
+                    opacity: 0.68,
+                  }}
+                >
+                  <span style={{ color: 'var(--kambo-accent)', flexShrink: 0, marginTop: '1px', opacity: 0.85 }}>
+                    ✓
+                  </span>
+                  {line}
+                </p>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* ── Right: photo column — mask fade on left edge, no overlay ── */}
+          <div style={{
+            position: 'relative',
+            overflow: 'hidden',
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0px, black 220px)',
+            maskImage: 'linear-gradient(to right, transparent 0px, black 220px)',
+          }}>
+            <motion.div
+              style={{ position: 'absolute', inset: '-5%', x: bgX, y: bgY }}
+              animate={reduce ? {} : { scale: [1, 1.02] }}
+              transition={
+                reduce
+                  ? {}
+                  : { duration: 28, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }
+              }
+            >
+              <Image
+                src="/hero-kambo.png"
+                alt="Камбо — церемония очищения"
+                fill
+                priority
+                style={{ objectFit: 'cover', objectPosition: '50% 50%' }}
+                sizes="52vw"
+              />
+            </motion.div>
+            <div aria-hidden style={{
+              position: 'absolute', inset: 0, pointerEvents: 'none',
+              background: 'linear-gradient(to right, rgba(8,18,10,0.38) 0%, transparent 32%)',
+            }} />
+          </div>
+        </div>
+
+      </section>
+
+      {/* ── Guide intro — trust block ── */}
+      <section style={{ background: 'var(--kambo-bg)', textAlign: 'center' }}>
+        <div style={{
+          maxWidth: '600px',
+          marginInline: 'auto',
+          paddingInline: 'clamp(24px, 5vw, 48px)',
+          paddingTop: 'clamp(36px, 4.5vw, 52px)',
+          paddingBottom: 'clamp(32px, 4vw, 44px)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}>
+          <p style={{
+            fontSize: '12px',
+            letterSpacing: '0.32em',
+            textTransform: 'uppercase',
+            color: '#C89A2B',
+            fontFamily: 'var(--font-onest)',
+            fontWeight: 500,
+            marginBottom: '18px',
+            opacity: 0.55,
+          }}>
+            Проводник
+          </p>
+
+          <h2 style={{
+            fontFamily: 'var(--font-cormorant)',
+            fontSize: 'clamp(38px, 4.4vw, 52px)',
+            fontWeight: 500,
+            color: '#F3EBDD',
+            lineHeight: 1.05,
+            letterSpacing: '-0.01em',
+            marginBottom: '18px',
+          }}>
+            Яков Раджуна
+          </h2>
+
+          <p style={{
+            fontFamily: 'var(--font-cormorant)',
+            fontSize: 'clamp(16px, 1.7vw, 18px)',
+            fontStyle: 'italic',
+            color: 'rgba(243,235,221,0.7)',
+            lineHeight: 1.5,
+            maxWidth: '460px',
+            marginBottom: '22px',
+          }}>
+            Более 20 лет пути, практики и сопровождения людей.
+          </p>
+
+          <div style={{
+            width: '70px',
+            height: '1px',
+            background: '#C89A2B',
+            opacity: 0.4,
+          }} />
+        </div>
+      </section>
+
+      {/* ── Stats — separate section ── */}
+      <section
+        style={{
+          borderTop: '1px solid var(--kambo-border)',
+          background: 'var(--kambo-bg)',
+        }}
+      >
+        <div
+          className="h-stats"
+          style={{
+            maxWidth: 'var(--max-w)',
+            marginInline: 'auto',
+            paddingInline: 'clamp(24px, 5vw, 64px)',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr 1fr',
+          }}
+        >
+          {STATS.map((s, i) => (
             <motion.div
               key={s.label}
               initial={reduce ? {} : { opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.55, delay: 0.1 + i * 0.09, ease: EASE }}
+              transition={{ duration: 0.5, delay: i * 0.1, ease: EASE }}
               style={{
-                padding: 'clamp(20px, 2.8vw, 30px) clamp(16px, 2vw, 28px)',
+                padding: 'clamp(24px, 3vw, 40px) clamp(16px, 2.5vw, 32px)',
                 borderRight: i < 2 ? '1px solid var(--kambo-border)' : 'none',
+                textAlign: 'center',
               }}
             >
               <p
                 style={{
                   fontFamily: 'var(--font-cormorant)',
-                  fontSize: 'clamp(30px, 4vw, 50px)',
+                  fontSize: 'clamp(36px, 5vw, 60px)',
                   color: 'var(--kambo-accent)',
                   lineHeight: 0.9,
                   letterSpacing: '-0.02em',
@@ -360,72 +409,44 @@ export default function Hero() {
               </p>
               <p
                 style={{
-                  fontSize: '9px',
-                  letterSpacing: '0.16em',
-                  textTransform: 'uppercase',
-                  color: 'var(--kambo-accent)',
+                  fontSize: '11px',
+                  letterSpacing: '0.14em',
+                  color: 'var(--kambo-text-lo)',
                   fontFamily: 'var(--font-onest)',
-                  opacity: 0.65,
-                  marginBottom: '5px',
+                  opacity: 0.6,
                 }}
               >
                 {s.label}
               </p>
-              <p
-                style={{
-                  fontSize: '12px',
-                  color: 'var(--kambo-text-lo)',
-                  lineHeight: 1.55,
-                  opacity: 0.6,
-                }}
-              >
-                {s.sub}
-              </p>
             </motion.div>
           ))}
         </div>
-      </div>
+      </section>
 
       <style>{`
-        .hero-cta-pill:hover {
-          background: #d4a030 !important;
-          transform: translateY(-1px);
-        }
-        .hero-cta-pill:active { transform: translateY(1px) !important; }
-        .hero-cta-pill:hover .hero-cta-icon { transform: translateY(2px); }
+        .h-cta:hover { background: #d4a030 !important; transform: translateY(-1px); }
+        .h-cta:active { transform: translateY(1px) !important; }
 
         @media (max-width: 767px) {
-          .hero-grid {
+          .h-grid {
             grid-template-columns: 1fr !important;
             min-height: auto !important;
-            padding-top: clamp(100px, 18vw, 130px) !important;
           }
-          .hero-photo-wrap { display: none !important; }
-          .hero-bottom {
-            grid-template-columns: 1fr 1fr !important;
+          .h-grid > div:last-child {
+            height: 56vw;
           }
-          .hero-bottom > div:nth-child(1) {
-            grid-column: 1 / -1;
-            border-right: none !important;
-            border-bottom: 1px solid var(--kambo-border);
-            padding-right: 0 !important;
-          }
-          .hero-bottom > div:nth-child(3) { border-right: none !important; }
-          .hero-bottom > div:nth-child(4) { border-right: none !important; }
-        }
-        @media (max-width: 479px) {
-          .hero-bottom {
+          .h-stats {
             grid-template-columns: 1fr !important;
           }
-          .hero-bottom > div {
+          .h-stats > div {
             border-right: none !important;
             border-bottom: 1px solid var(--kambo-border) !important;
           }
-          .hero-bottom > div:last-child {
+          .h-stats > div:last-child {
             border-bottom: none !important;
           }
         }
       `}</style>
-    </section>
+    </>
   )
 }
