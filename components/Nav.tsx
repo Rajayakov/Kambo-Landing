@@ -1,13 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
-import { List, X, ArrowUpRight } from '@phosphor-icons/react'
+import { motion, useReducedMotion } from 'motion/react'
+import { ArrowUpRight } from '@phosphor-icons/react'
 import { NAV_LINKS } from '@/lib/constants'
 
 export default function Nav() {
   const [scrolled, setScrolled]     = useState(false)
-  const [menuOpen, setMenuOpen]     = useState(false)
   const [activeId, setActiveId]     = useState<string>('')
   const reduce                      = useReducedMotion()
 
@@ -36,11 +35,6 @@ export default function Nav() {
     })
     return () => observers.forEach((o) => o?.disconnect())
   }, [])
-
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [menuOpen])
 
   return (
     <>
@@ -102,13 +96,23 @@ export default function Nav() {
               whiteSpace: 'nowrap',
             }}
           >
-            <svg width="20" height="20" viewBox="0 0 22 22" fill="none" aria-hidden>
+            <svg className="nav-logo-desktop" width="20" height="20" viewBox="0 0 22 22" fill="none" aria-hidden>
               <ellipse cx="11" cy="14" rx="7" ry="5" fill="none" stroke="var(--kambo-accent)" strokeWidth="1.2"/>
               <ellipse cx="11" cy="10" rx="4" ry="3" fill="none" stroke="var(--kambo-accent)" strokeWidth="1.2"/>
               <circle cx="8.5" cy="9" r="1" fill="var(--kambo-accent)"/>
               <circle cx="13.5" cy="9" r="1" fill="var(--kambo-accent)"/>
             </svg>
-            Яков Раджуна
+            {/* Mobile logo — a clearer frog face: bulging eyes on a wide head */}
+            <svg className="nav-logo-mobile" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <ellipse cx="12" cy="15" rx="9" ry="6.5" fill="none" stroke="var(--kambo-accent)" strokeWidth="1.3"/>
+              <circle cx="7.2" cy="7.4" r="3.2" fill="none" stroke="var(--kambo-accent)" strokeWidth="1.3"/>
+              <circle cx="16.8" cy="7.4" r="3.2" fill="none" stroke="var(--kambo-accent)" strokeWidth="1.3"/>
+              <circle cx="7.2" cy="7.4" r="1.1" fill="var(--kambo-accent)"/>
+              <circle cx="16.8" cy="7.4" r="1.1" fill="var(--kambo-accent)"/>
+              <path d="M7.5 17.5C8.9 18.6 10.4 19.1 12 19.1C13.6 19.1 15.1 18.6 16.5 17.5" stroke="var(--kambo-accent)" strokeWidth="1.1" strokeLinecap="round"/>
+            </svg>
+            <span className="nav-brand-desktop">Яков Раджуна</span>
+            <span className="nav-brand-mobile">Церемония Камбо</span>
           </a>
 
           {/* Desktop links */}
@@ -139,7 +143,7 @@ export default function Nav() {
             })}
           </nav>
 
-          {/* CTA + hamburger */}
+          {/* CTA (desktop) / direct booking CTA (mobile) */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <a
               href="#booking"
@@ -182,148 +186,52 @@ export default function Nav() {
               </span>
             </a>
 
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="show-mobile"
-              aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
+            {/* Mobile: direct CTA replaces the hamburger drawer entirely */}
+            <a
+              href="#booking"
+              className="show-mobile nav-mobile-cta"
               style={{
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                color: 'var(--kambo-text-hi)',
-                padding: '4px',
-                position: 'relative',
-                zIndex: 110,
+                alignItems: 'center',
+                gap: '6px',
+                background: 'var(--kambo-accent)',
+                color: 'var(--kambo-bg)',
+                paddingInline: '14px',
+                height: '34px',
+                borderRadius: '999px',
+                fontSize: '12.5px',
+                fontWeight: 500,
+                letterSpacing: '0.02em',
+                whiteSpace: 'nowrap',
+                textDecoration: 'none',
               }}
             >
-              <AnimatePresence mode="wait" initial={false}>
-                {menuOpen ? (
-                  <motion.span
-                    key="close"
-                    initial={reduce ? {} : { rotate: -45, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={reduce ? {} : { rotate: 45, opacity: 0 }}
-                    transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
-                    style={{ display: 'block' }}
-                  >
-                    <X size={22} />
-                  </motion.span>
-                ) : (
-                  <motion.span
-                    key="open"
-                    initial={reduce ? {} : { rotate: 45, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={reduce ? {} : { rotate: -45, opacity: 0 }}
-                    transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
-                    style={{ display: 'block' }}
-                  >
-                    <List size={22} />
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </button>
+              <span className="nav-mobile-cta-full">Записаться на консультацию</span>
+              <span className="nav-mobile-cta-short">Записаться</span>
+            </a>
           </div>
         </motion.div>
       </div>
-
-      {/* Mobile full-screen overlay */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={reduce ? { opacity: 0 } : { clipPath: 'inset(0 0 100% 0)' }}
-            animate={{ clipPath: 'inset(0 0 0% 0)', opacity: 1 }}
-            exit={reduce ? { opacity: 0 } : { clipPath: 'inset(0 0 100% 0)' }}
-            transition={{ duration: 0.55, ease: [0.32, 0.72, 0, 1] }}
-            style={{
-              position: 'fixed',
-              inset: 0,
-              zIndex: 90,
-              background: 'rgba(11,26,15,0.97)',
-              backdropFilter: 'blur(24px)',
-              WebkitBackdropFilter: 'blur(24px)',
-              display: 'flex',
-              flexDirection: 'column',
-              paddingTop: '100px',
-              paddingInline: 'clamp(24px, 7vw, 52px)',
-            }}
-          >
-            {NAV_LINKS.map((link, i) => (
-              <motion.a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                initial={reduce ? {} : { opacity: 0, y: 20, filter: 'blur(6px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.08 + i * 0.08,
-                  ease: [0.32, 0.72, 0, 1],
-                }}
-                style={{
-                  fontFamily: 'var(--font-cormorant)',
-                  fontSize: 'clamp(34px, 9vw, 52px)',
-                  color: 'var(--kambo-text-hi)',
-                  paddingBlock: '18px',
-                  borderBottom: '1px solid rgba(46,74,50,0.5)',
-                  display: 'block',
-                  lineHeight: 1.1,
-                }}
-              >
-                {link.label}
-              </motion.a>
-            ))}
-            <motion.a
-              href="#booking"
-              onClick={() => setMenuOpen(false)}
-              initial={reduce ? {} : { opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 0.36, ease: [0.32, 0.72, 0, 1] }}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                background: 'var(--kambo-accent)',
-                color: 'var(--kambo-bg)',
-                paddingLeft: '24px',
-                paddingRight: '8px',
-                height: '48px',
-                borderRadius: '999px',
-                fontSize: '15px',
-                fontWeight: 500,
-                marginTop: '40px',
-                alignSelf: 'flex-start',
-              }}
-            >
-              Записаться
-              <span
-                style={{
-                  width: '34px',
-                  height: '34px',
-                  borderRadius: '50%',
-                  background: 'rgba(11,26,15,0.2)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <ArrowUpRight size={15} weight="bold" />
-              </span>
-            </motion.a>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <style>{`
         @media (min-width: 768px) {
           .hidden-mobile { display: flex !important; }
           .show-mobile   { display: none !important; }
+          .nav-logo-mobile, .nav-brand-mobile { display: none !important; }
         }
         @media (max-width: 767px) {
           .hidden-mobile { display: none !important; }
           .show-mobile   { display: flex !important; }
+          .nav-logo-desktop, .nav-brand-desktop { display: none !important; }
         }
         .pill-cta:hover .pill-cta-icon {
           transform: translate(2px, -2px);
+        }
+
+        /* Mobile CTA: full label by default, "Записаться" only if it's tight */
+        .nav-mobile-cta-short { display: none; }
+        @media (max-width: 400px) {
+          .nav-mobile-cta-full  { display: none; }
+          .nav-mobile-cta-short { display: inline; }
         }
       `}</style>
     </>
