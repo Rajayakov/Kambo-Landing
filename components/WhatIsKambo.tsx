@@ -229,14 +229,17 @@ export default function WhatIsKambo() {
 
       <style>{`
         @media (max-width: 767px) {
-          .what-grid { grid-template-columns: 1fr !important; }
+          .what-grid {
+            grid-template-columns: 1fr !important;
+            margin-bottom: 20px !important;
+          }
           .what-photo-wrap { min-height: clamp(300px, 75vw, 520px) !important; }
 
           /* Item 3 — stats stay in a horizontal row on mobile, just smaller
              and tighter than the desktop version */
           .what-stats { grid-template-columns: repeat(3, 1fr) !important; }
           .what-stats > div {
-            padding-top: 16px !important;
+            padding-top: 11px !important;
             padding-inline: 4px 10px !important;
           }
           .what-stats > div:first-child { padding-inline: 0 10px !important; }

@@ -44,6 +44,7 @@ export default function SocialProof() {
       >
         {/* ── Testimonials header ── */}
         <motion.div
+          className="sp-header"
           initial={reduce ? {} : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
@@ -73,6 +74,7 @@ export default function SocialProof() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.75, ease: EASE }}
+            className="sp-featured"
             style={{
               textAlign: 'center',
               paddingBottom: 'clamp(40px, 6vw, 64px)',
@@ -108,7 +110,7 @@ export default function SocialProof() {
         )}
 
         {/* Thin divider */}
-        <div style={{ height: '1px', background: 'var(--kambo-border)', marginBottom: 'clamp(40px, 6vw, 64px)' }} />
+        <div className="sp-divider" style={{ height: '1px', background: 'var(--kambo-border)', marginBottom: 'clamp(40px, 6vw, 64px)' }} />
 
         {/* Two supporting quotes */}
         <div className="sp-testimonials">
@@ -168,8 +170,13 @@ export default function SocialProof() {
         @media (max-width: 640px) {
           .sp-testimonials {
             grid-template-columns: 1fr;
-            gap: 36px;
+            gap: 24px;
           }
+        }
+        @media (max-width: 767px) {
+          .sp-header { margin-bottom: 24px !important; }
+          .sp-featured { padding-bottom: 24px !important; }
+          .sp-divider { margin-bottom: 24px !important; }
         }
         @media (max-width: 479px) {
           .sp-counters {

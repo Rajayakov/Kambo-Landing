@@ -210,7 +210,7 @@ export default function Hero() {
             </ul>
 
             {/* CTA — scroll to #booking */}
-            <div style={{ marginBottom: '22px' }}>
+            <div className="h-cta-wrap" style={{ marginBottom: '22px' }}>
               <a
                 href="#booking"
                 onClick={scrollToBooking}
@@ -467,13 +467,24 @@ export default function Hero() {
 
           /* Item 2 — intro caption: gold, tighter block, numbers hidden below */
           .h-intro-wrap {
-            padding-top: 22px !important;
-            padding-bottom: 22px !important;
+            padding-top: 16px !important;
+            padding-bottom: 12px !important;
           }
           .h-intro-caption {
             color: var(--kambo-accent) !important;
+            margin-bottom: 0 !important;
           }
-          .h-stats-section { display: none !important; }
+
+          /* CTA — bullets sit tight under the button, no extra air */
+          .h-cta-wrap { margin-bottom: 8px !important; }
+
+          /* Stats — kept visible, pulled close to the hero photo above */
+          .h-stats-section { border-top: none !important; }
+          .h-stats { padding-inline: clamp(16px, 5vw, 32px) !important; }
+          .h-stats > div {
+            padding-block: 12px !important;
+            padding-inline: 6px !important;
+          }
         }
       `}</style>
     </>

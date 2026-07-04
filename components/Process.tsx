@@ -162,6 +162,7 @@ export default function Process() {
                 {/* Dot */}
                 <div
                   ref={(el) => { if (el) dotsRef.current[i] = el }}
+                  className="process-dot"
                   style={{
                     width: '8px',
                     height: '8px',
@@ -191,6 +192,7 @@ export default function Process() {
               {/* Step content */}
               <div
                 ref={(el) => { if (el) stepsRef.current[i] = el }}
+                className="process-step-content"
                 style={{
                   paddingBottom: i < PROCESS.steps.length - 1 ? 'clamp(28px, 4vw, 44px)' : '0',
                   opacity: reduce ? 1 : 0,
@@ -300,6 +302,14 @@ export default function Process() {
           .process-photo-sticky {
             position: static;
           }
+
+          /* Critical fix — the GSAP ScrollTrigger fade-in that gates this
+             text can fail to fire in production when the section is reached
+             via instant/anchor navigation instead of a gradual scroll,
+             leaving opacity stuck at 0 forever. Force the text and dots
+             visible on mobile; the reveal animation stays desktop-only. */
+          .process-step-content { opacity: 1 !important; transform: none !important; }
+          .process-dot { opacity: 1 !important; transform: scale(1) !important; }
 
           /* Item 6 — one photo only on mobile */
           .process-photo-second { display: none !important; }

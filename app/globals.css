@@ -32,10 +32,11 @@
 }
 
 /* Item 7 (mobile spec) — tighter section rhythm on phones/small tablets only;
-   desktop keeps --section-py as defined in :root above. */
+   desktop keeps --section-py as defined in :root above.
+   Further cut ~30% (2026-07 mobile compression pass). */
 @media (max-width: 767px) {
   :root {
-    --section-py: clamp(40px, 9vw, 64px);
+    --section-py: clamp(28px, 6vw, 45px);
   }
 }
 

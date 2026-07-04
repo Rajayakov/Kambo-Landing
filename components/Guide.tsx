@@ -117,6 +117,7 @@ export default function Guide() {
 
           {/* Pull quote */}
           <blockquote
+            className="guide-quote"
             style={{
               fontFamily: 'var(--font-cormorant)',
               fontSize: 'clamp(19px, 2.4vw, 27px)',
@@ -134,6 +135,7 @@ export default function Guide() {
 
           {/* Bio */}
           <p
+            className="guide-bio"
             style={{
               fontFamily: 'var(--font-onest)',
               fontSize: 'clamp(15px, 1.6vw, 17px)',
@@ -203,6 +205,7 @@ export default function Guide() {
 
       {/* ── BOTTOM: full-width closing quote ── */}
       <div
+        className="guide-closing"
         style={{
           borderTop: '1px solid var(--kambo-border)',
           paddingBlock: 'clamp(56px, 9vw, 108px)',
@@ -294,12 +297,24 @@ export default function Guide() {
             min-height: unset;
           }
           .guide-photo {
-            min-height: 52vw;
-            height: clamp(260px, 70vw, 400px);
+            min-height: 40vw;
+            height: clamp(200px, 54vw, 300px);
           }
           .guide-content {
             padding-inline: clamp(20px, 5vw, 40px) !important;
-            padding-block: 48px 40px !important;
+            padding-block: 28px 24px !important;
+          }
+          .guide-quote {
+            line-height: 1.32 !important;
+            margin-bottom: 16px !important;
+          }
+          .guide-bio {
+            line-height: 1.55 !important;
+            margin-bottom: 24px !important;
+          }
+          .guide-closing {
+            padding-block: 32px !important;
+            gap: 18px !important;
           }
         }
       `}</style>

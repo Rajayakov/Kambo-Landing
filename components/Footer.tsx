@@ -1,6 +1,7 @@
 'use client'
 // v7
 import Link from 'next/link'
+import Image from 'next/image'
 
 const LEGAL = [
   'Информация, представленная на сайте, носит исключительно ознакомительный характер.',
@@ -18,6 +19,15 @@ const LINKS = [
 export default function Footer() {
   return (
     <footer style={{ position: 'relative', overflow: 'hidden' }}>
+      <div className="f-photo" aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 0, display: 'none' }}>
+        <Image
+          src="/hero-kambo.jpg"
+          alt=""
+          fill
+          style={{ objectFit: 'cover', objectPosition: '65% 30%' }}
+          sizes="100vw"
+        />
+      </div>
       <div className="f-veil" aria-hidden />
 
       <div style={{
@@ -33,6 +43,20 @@ export default function Footer() {
         alignItems: 'center',
         textAlign: 'center',
       }}>
+
+        {/* ── Brand — mobile only, sits over the photo, high-contrast ── */}
+        <p className="f-brand-top" style={{
+          display: 'none',
+          fontFamily: 'var(--font-cormorant)',
+          fontSize: '30px',
+          fontWeight: 600,
+          letterSpacing: '0.04em',
+          textTransform: 'uppercase',
+          color: '#F8F1DE',
+          textShadow: '0 2px 18px rgba(0,0,0,0.85), 0 1px 3px rgba(0,0,0,0.9)',
+        }}>
+          Открытое Небо
+        </p>
 
         {/* ── Legal paragraphs — one line on desktop, wraps on mobile ── */}
         <div style={{ width: '100%', marginBottom: 'clamp(44px, 6vw, 64px)' }}>
@@ -104,6 +128,16 @@ export default function Footer() {
         .f-llink { transition: color 0.22s; }
         .f-llink:hover { color: rgba(196,183,163,0.70) !important; }
         @media (min-width: 768px) { .f-legal { white-space: nowrap; } }
+
+        @media (max-width: 767px) {
+          .f-photo { display: block !important; }
+          .f-brand-top { display: block !important; margin-bottom: 22px !important; }
+          .f-veil {
+            background:
+              radial-gradient(ellipse at center, rgba(0,0,0,0.30) 20%, rgba(2,7,4,0.86) 100%),
+              linear-gradient(180deg, rgba(5,12,7,0.55) 0%, rgba(4,10,6,0.94) 62%, rgba(4,10,6,0.97) 100%) !important;
+          }
+        }
       `}</style>
     </footer>
   )

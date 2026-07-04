@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useReducedMotion } from 'motion/react'
-import { ArrowRight } from '@phosphor-icons/react'
+import { ArrowRight, ArrowDown } from '@phosphor-icons/react'
 import { EFFECTS } from '@/lib/constants'
 
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -349,13 +349,15 @@ export default function Effects() {
               whiteSpace: 'nowrap',
             }}
           >
-            Записаться на церемонию
+            <span className="eff-cta-text-desktop">Записаться на церемонию</span>
+            <span className="eff-cta-text-mobile">Записаться на консультацию</span>
             <span style={{
               width: '38px', height: '38px', borderRadius: '50%',
               background: 'rgba(11,26,15,0.2)',
               display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
             }}>
-              <ArrowRight size={16} weight="bold" />
+              <span className="eff-cta-icon-desktop"><ArrowRight size={16} weight="bold" /></span>
+              <span className="eff-cta-icon-mobile"><ArrowDown size={16} weight="bold" /></span>
             </span>
           </a>
         </motion.div>
@@ -409,6 +411,7 @@ export default function Effects() {
         /* ── CTA ── */
         .eff-cta:hover { background: #d4a030 !important; transform: translateY(-1px); }
         .eff-cta:active { transform: translateY(1px) !important; }
+        .eff-cta-text-mobile, .eff-cta-icon-mobile { display: none; }
 
         /* ── Responsive ── */
         @media (max-width: 860px) {
@@ -423,6 +426,10 @@ export default function Effects() {
         /* Item 4 — mobile cards: lighter than the section backdrop, with a
            visible gold ring so they don't blend into the dark jungle photo */
         @media (max-width: 767px) {
+          .eff-cta-text-desktop, .eff-cta-icon-desktop { display: none !important; }
+          .eff-cta-text-mobile { display: inline !important; }
+          .eff-cta-icon-mobile { display: flex !important; align-items: center; justify-content: center; }
+
           .eff-grid {
             row-gap: 14px !important;
             column-gap: 12px !important;
