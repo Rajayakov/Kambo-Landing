@@ -297,8 +297,9 @@ export default function Guide() {
             min-height: unset;
           }
           .guide-photo {
-            min-height: 40vw;
-            height: clamp(200px, 54vw, 300px);
+            min-height: unset;
+            height: auto;
+            aspect-ratio: 1351 / 1164;
           }
           .guide-content {
             padding-inline: clamp(20px, 5vw, 40px) !important;
