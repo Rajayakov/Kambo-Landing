@@ -26,12 +26,6 @@ function LeafIcon() {
   )
 }
 
-const TRUST = [
-  'Каждая церемония начинается с личного разговора.',
-  'Консультация занимает 10–15 минут и ни к чему не обязывает.',
-  'Если вам Камбо не подходит — мы честно скажем об этом.',
-]
-
 const STATS = [
   { value: '400+',  label: 'церемоний' },
   { value: '4000+', label: 'участников' },
@@ -92,8 +86,6 @@ export default function Hero() {
             background: 'linear-gradient(to right, rgba(8,18,10,0.80) 0%, rgba(8,18,10,0.80) 42%, rgba(8,18,10,0.32) 52%, rgba(8,18,10,0.08) 62%, transparent 76%)',
           }} />
         </div>
-        {/* Mobile-only solid backdrop behind the text column, replacing the jungle photo */}
-        <div className="h-mobile-bg" aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 0, background: 'var(--kambo-bg)' }} />
 
         <div
           className="h-grid"
@@ -108,6 +100,7 @@ export default function Hero() {
         >
           {/* ── Left: text only ── */}
           <motion.div
+            className="h-text-col"
             initial={reduce ? {} : { opacity: 0, x: -18 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.95, ease: EASE }}
@@ -251,30 +244,6 @@ export default function Hero() {
                 </span>
               </a>
             </div>
-
-            {/* Trust */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', maxWidth: '360px' }}>
-              {TRUST.map((line) => (
-                <p
-                  key={line}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '8px',
-                    fontSize: '12px',
-                    color: 'var(--kambo-text-lo)',
-                    fontFamily: 'var(--font-onest)',
-                    lineHeight: 1.65,
-                    opacity: 0.68,
-                  }}
-                >
-                  <span style={{ color: 'var(--kambo-accent)', flexShrink: 0, marginTop: '1px', opacity: 0.85 }}>
-                    ✓
-                  </span>
-                  {line}
-                </p>
-              ))}
-            </div>
           </motion.div>
 
           {/* ── Right: photo column — mask fade on left edge, no overlay ──
@@ -308,6 +277,10 @@ export default function Hero() {
             <div className="h-photo-overlay" aria-hidden style={{
               position: 'absolute', inset: 0, pointerEvents: 'none',
               background: 'linear-gradient(to right, rgba(8,18,10,0.38) 0%, transparent 32%)',
+            }} />
+            {/* Mobile-only: dark scrim so the text column sitting on top of the photo stays legible */}
+            <div className="h-photo-scrim-mobile" aria-hidden style={{
+              position: 'absolute', inset: 0, pointerEvents: 'none', display: 'none',
             }} />
           </div>
         </div>
@@ -434,36 +407,48 @@ export default function Hero() {
         .h-cta:hover { background: #d4a030 !important; transform: translateY(-1px); }
         .h-cta:active { transform: translateY(1px) !important; }
         .h-cta-text-mobile { display: none; }
-        .h-mobile-bg { display: none; }
 
         @media (max-width: 767px) {
+          .h-cta-text-desktop { display: none !important; }
+          .h-cta-text-mobile { display: inline !important; }
+
           .h-grid {
             grid-template-columns: 1fr !important;
             min-height: auto !important;
           }
+
+          /* Item 1 — the frog/hands photo becomes a full-bleed backdrop that
+             sits BEHIND the text column instead of a separate block below it.
+             Text column stays in normal flow (defines the section height);
+             photo column is pulled out of flow and stretched to cover it. */
+          .h-jungle-layer { display: none !important; }
+
+          .h-text-col {
+            position: relative !important;
+            z-index: 2 !important;
+          }
           .h-grid > div:last-child {
-            height: 62vw;
+            position: absolute !important;
+            inset: 0 !important;
+            height: 100% !important;
+            z-index: 0 !important;
           }
 
-          /* Item 1 — one photo only: hide the jungle layer, show a plain
-             backdrop behind the text column instead */
-          .h-jungle-layer { display: none !important; }
-          .h-mobile-bg { display: block !important; }
-
-          /* Item 1 — no mask fade / no darkening overlay on the frog photo,
-             shift the crop right so the frog clears the text above it */
+          /* No left-edge fade mask on mobile — the photo fills the whole area */
           .h-photo-mask {
             -webkit-mask-image: none !important;
             mask-image: none !important;
           }
           .h-photo-img {
-            object-position: 78% 32% !important;
+            object-position: 50% 38% !important;
           }
           .h-photo-overlay { display: none !important; }
 
-          /* Item 5 — mobile CTA copy */
-          .h-cta-text-desktop { display: none !important; }
-          .h-cta-text-mobile { display: inline !important; }
+          /* Item 1 — dark scrim over the full photo so the overlaid text reads clearly */
+          .h-photo-scrim-mobile {
+            display: block !important;
+            background: linear-gradient(180deg, rgba(11,26,15,0.55) 0%, rgba(11,26,15,0.72) 45%, rgba(11,26,15,0.88) 100%) !important;
+          }
 
           /* Item 2 — intro caption: gold, tighter block, numbers hidden below */
           .h-intro-wrap {
