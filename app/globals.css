@@ -31,6 +31,14 @@
   --text-eyebrow: 11px;
 }
 
+/* Item 7 (mobile spec) — tighter section rhythm on phones/small tablets only;
+   desktop keeps --section-py as defined in :root above. */
+@media (max-width: 767px) {
+  :root {
+    --section-py: clamp(40px, 9vw, 64px);
+  }
+}
+
 @theme inline {
   --color-background: var(--kambo-bg);
   --color-foreground: var(--kambo-text-hi);

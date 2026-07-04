@@ -419,6 +419,34 @@ export default function Effects() {
           .eff-grid { grid-template-columns: 1fr; }
           .eff-card--featured { grid-column: span 1 !important; }
         }
+
+        /* Item 4 — mobile cards: lighter than the section backdrop, with a
+           visible gold ring so they don't blend into the dark jungle photo */
+        @media (max-width: 767px) {
+          .eff-grid {
+            row-gap: 14px !important;
+            column-gap: 12px !important;
+          }
+          .eff-card {
+            background: linear-gradient(180deg, rgba(34,50,36,0.95), rgba(26,40,28,0.94)) !important;
+            border: 1px solid rgba(196,146,42,0.42) !important;
+            box-shadow:
+              0 0 0 1px rgba(196,146,42,0.10) inset,
+              0 10px 26px rgba(0,0,0,0.32),
+              0 0 16px rgba(196,146,42,0.08) !important;
+          }
+          .eff-card--featured {
+            padding: 22px 20px !important;
+            min-height: auto !important;
+          }
+          .eff-card--small {
+            padding: 18px 18px !important;
+          }
+          .eff-card--featured h3 { margin-bottom: 12px !important; }
+          .eff-card--featured > div > div:first-child { margin-bottom: 14px !important; }
+          .eff-card--small h3 { margin-bottom: 12px !important; }
+          .eff-card--small > div > div:first-child { margin-bottom: 14px !important; }
+        }
       `}</style>
     </section>
   )

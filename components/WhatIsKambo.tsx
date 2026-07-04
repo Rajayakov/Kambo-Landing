@@ -195,6 +195,7 @@ export default function WhatIsKambo() {
               }}
             >
               <div
+                className="what-stat-value"
                 style={{
                   fontFamily: 'var(--font-cormorant)',
                   fontSize: 'clamp(52px, 7.5vw, 88px)',
@@ -209,6 +210,7 @@ export default function WhatIsKambo() {
                 {stat.value}
               </div>
               <div
+                className="what-stat-label"
                 style={{
                   fontSize: '12px',
                   color: 'var(--kambo-text-lo)',
@@ -229,9 +231,17 @@ export default function WhatIsKambo() {
         @media (max-width: 767px) {
           .what-grid { grid-template-columns: 1fr !important; }
           .what-photo-wrap { min-height: clamp(300px, 75vw, 520px) !important; }
-          .what-stats { grid-template-columns: 1fr !important; }
-          .what-stats > div { border-left: none !important; border-top: 1px solid var(--kambo-border); padding-inline: 0 !important; }
-          .what-stats > div:first-child { border-top: none; }
+
+          /* Item 3 — stats stay in a horizontal row on mobile, just smaller
+             and tighter than the desktop version */
+          .what-stats { grid-template-columns: repeat(3, 1fr) !important; }
+          .what-stats > div {
+            padding-top: 16px !important;
+            padding-inline: 4px 10px !important;
+          }
+          .what-stats > div:first-child { padding-inline: 0 10px !important; }
+          .what-stat-value { font-size: 26px !important; margin-bottom: 4px !important; }
+          .what-stat-label { font-size: 9.5px !important; letter-spacing: 0.05em !important; }
         }
       `}</style>
     </section>

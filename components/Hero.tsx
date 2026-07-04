@@ -74,8 +74,9 @@ export default function Hero() {
         onMouseLeave={onMouseLeave}
       >
 
-        {/* Jungle — full-bleed under BOTH columns so the mask on the right reveals it */}
-        <div aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+        {/* Jungle — full-bleed under BOTH columns so the mask on the right reveals it.
+            Mobile: hidden — the frog/hands photo is the only image on small screens. */}
+        <div className="h-jungle-layer" aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
           <Image
             src="/jungle-bg.jpg"
             alt=""
@@ -86,11 +87,13 @@ export default function Hero() {
           />
           {/* Overlay: dark on the left for text legibility, nearly clear on the right
               so jungle shows through where the frog photo's mask fades in */}
-          <div style={{
+          <div className="h-jungle-overlay" style={{
             position: 'absolute', inset: 0,
             background: 'linear-gradient(to right, rgba(8,18,10,0.80) 0%, rgba(8,18,10,0.80) 42%, rgba(8,18,10,0.32) 52%, rgba(8,18,10,0.08) 62%, transparent 76%)',
           }} />
         </div>
+        {/* Mobile-only solid backdrop behind the text column, replacing the jungle photo */}
+        <div className="h-mobile-bg" aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 0, background: 'var(--kambo-bg)' }} />
 
         <div
           className="h-grid"
@@ -230,7 +233,8 @@ export default function Hero() {
                   transition: 'background 0.2s ease, transform 0.14s ease',
                 }}
               >
-                {HERO.cta1}
+                <span className="h-cta-text-desktop">{HERO.cta1}</span>
+                <span className="h-cta-text-mobile">Записаться на консультацию</span>
                 <span
                   style={{
                     width: '38px',
@@ -273,8 +277,10 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          {/* ── Right: photo column — mask fade on left edge, no overlay ── */}
-          <div style={{
+          {/* ── Right: photo column — mask fade on left edge, no overlay ──
+              Mobile: mask + overlay removed, frame shifted right so the frog
+              isn't tucked under the text column above it. */}
+          <div className="h-photo-mask" style={{
             position: 'relative',
             overflow: 'hidden',
             WebkitMaskImage: 'linear-gradient(to right, transparent 0px, black 220px)',
@@ -294,11 +300,12 @@ export default function Hero() {
                 alt="Камбо — церемония очищения"
                 fill
                 priority
+                className="h-photo-img"
                 style={{ objectFit: 'cover', objectPosition: '50% 50%' }}
-                sizes="52vw"
+                sizes="(max-width: 767px) 100vw, 52vw"
               />
             </motion.div>
-            <div aria-hidden style={{
+            <div className="h-photo-overlay" aria-hidden style={{
               position: 'absolute', inset: 0, pointerEvents: 'none',
               background: 'linear-gradient(to right, rgba(8,18,10,0.38) 0%, transparent 32%)',
             }} />
@@ -309,7 +316,7 @@ export default function Hero() {
 
       {/* ── Guide intro — trust block ── */}
       <section style={{ background: 'var(--kambo-bg)', textAlign: 'center' }}>
-        <div style={{
+        <div className="h-intro-wrap" style={{
           maxWidth: '600px',
           marginInline: 'auto',
           paddingInline: 'clamp(24px, 5vw, 48px)',
@@ -343,7 +350,7 @@ export default function Hero() {
             Яков Раджуна
           </h2>
 
-          <p style={{
+          <p className="h-intro-caption" style={{
             fontFamily: 'var(--font-cormorant)',
             fontSize: 'clamp(16px, 1.7vw, 18px)',
             fontStyle: 'italic',
@@ -364,8 +371,9 @@ export default function Hero() {
         </div>
       </section>
 
-      {/* ── Stats — separate section ── */}
+      {/* ── Stats — separate section (hidden on mobile, see item 2 of mobile spec) ── */}
       <section
+        className="h-stats-section"
         style={{
           borderTop: '1px solid var(--kambo-border)',
           background: 'var(--kambo-bg)',
@@ -425,6 +433,8 @@ export default function Hero() {
       <style>{`
         .h-cta:hover { background: #d4a030 !important; transform: translateY(-1px); }
         .h-cta:active { transform: translateY(1px) !important; }
+        .h-cta-text-mobile { display: none; }
+        .h-mobile-bg { display: none; }
 
         @media (max-width: 767px) {
           .h-grid {
@@ -432,18 +442,38 @@ export default function Hero() {
             min-height: auto !important;
           }
           .h-grid > div:last-child {
-            height: 56vw;
+            height: 62vw;
           }
-          .h-stats {
-            grid-template-columns: 1fr !important;
+
+          /* Item 1 — one photo only: hide the jungle layer, show a plain
+             backdrop behind the text column instead */
+          .h-jungle-layer { display: none !important; }
+          .h-mobile-bg { display: block !important; }
+
+          /* Item 1 — no mask fade / no darkening overlay on the frog photo,
+             shift the crop right so the frog clears the text above it */
+          .h-photo-mask {
+            -webkit-mask-image: none !important;
+            mask-image: none !important;
           }
-          .h-stats > div {
-            border-right: none !important;
-            border-bottom: 1px solid var(--kambo-border) !important;
+          .h-photo-img {
+            object-position: 78% 32% !important;
           }
-          .h-stats > div:last-child {
-            border-bottom: none !important;
+          .h-photo-overlay { display: none !important; }
+
+          /* Item 5 — mobile CTA copy */
+          .h-cta-text-desktop { display: none !important; }
+          .h-cta-text-mobile { display: inline !important; }
+
+          /* Item 2 — intro caption: gold, tighter block, numbers hidden below */
+          .h-intro-wrap {
+            padding-top: 22px !important;
+            padding-bottom: 22px !important;
           }
+          .h-intro-caption {
+            color: var(--kambo-accent) !important;
+          }
+          .h-stats-section { display: none !important; }
         }
       `}</style>
     </>

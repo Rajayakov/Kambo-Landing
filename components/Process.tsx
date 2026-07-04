@@ -127,6 +127,7 @@ export default function Process() {
             >
               {/* Number */}
               <div
+                className="process-num-wrap"
                 style={{
                   paddingTop: '2px',
                   display: 'flex',
@@ -134,6 +135,7 @@ export default function Process() {
                 }}
               >
                 <span
+                  className="process-num"
                   style={{
                     fontFamily: 'var(--font-cormorant)',
                     fontSize: 'clamp(20px, 2.5vw, 28px)',
@@ -207,6 +209,7 @@ export default function Process() {
                   {step.title}
                 </h3>
                 <p
+                  className="process-body-full"
                   style={{
                     fontSize: '15px',
                     color: 'var(--kambo-text-lo)',
@@ -215,6 +218,18 @@ export default function Process() {
                   }}
                 >
                   {parseBold(step.body)}
+                </p>
+                <p
+                  className="process-body-short"
+                  style={{
+                    fontSize: '15px',
+                    color: 'var(--kambo-text-lo)',
+                    lineHeight: 1.7,
+                    maxWidth: '520px',
+                    display: 'none',
+                  }}
+                >
+                  {parseBold(step.bodyShort)}
                 </p>
               </div>
             </div>
@@ -241,6 +256,7 @@ export default function Process() {
               sizes="(max-width: 767px) 100vw, 40vw"
             />
             <Image
+              className="process-photo-second"
               src="/kambo-tools.jpg"
               alt="Инструменты для церемонии Камбо"
               width={600}
@@ -283,6 +299,28 @@ export default function Process() {
           }
           .process-photo-sticky {
             position: static;
+          }
+
+          /* Item 6 — one photo only on mobile */
+          .process-photo-second { display: none !important; }
+
+          /* Item 6 — shorter step copy, same warm tone */
+          .process-body-full { display: none !important; }
+          .process-body-short { display: block !important; }
+
+          /* Item 6 — stronger visual weight on the step number */
+          .process-num-wrap { justify-content: center !important; }
+          .process-num {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(196,146,42,0.12);
+            border: 1px solid rgba(196,146,42,0.4);
+            font-size: 15px !important;
+            opacity: 1 !important;
           }
         }
       `}</style>
