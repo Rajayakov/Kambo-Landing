@@ -24,7 +24,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kambo-landing.vercel.app"),
+  metadataBase: new URL("https://kambu.ru"),
   title: "Церемония Камбо — очищение амазонской лягушкой | Яков Раджуна",
   description:
     "Церемония Камбо в России. 400+ проведённых церемоний. Традиционная практика народов Амазонии. Запись через личный разговор.",
