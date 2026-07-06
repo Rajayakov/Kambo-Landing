@@ -215,6 +215,28 @@ function ExperienceCard({ tag, title, body, price, priceUnit, ctaHref, delay = 0
       >
         Записаться на консультацию
       </a>
+      <p
+        style={{
+          fontSize: '11px',
+          lineHeight: 1.5,
+          color: 'var(--kambo-text-lo)',
+          opacity: 0.55,
+          textAlign: 'center',
+          marginTop: '10px',
+          marginInline: 'auto',
+          width: '88%',
+        }}
+      >
+        Переходя в Telegram, вы соглашаетесь с{' '}
+        <a href="/privacy-policy" style={{ color: 'inherit', textDecoration: 'underline' }}>
+          политикой конфиденциальности
+        </a>{' '}
+        и{' '}
+        <a href="/oferta" style={{ color: 'inherit', textDecoration: 'underline' }}>
+          публичной офертой
+        </a>
+        .
+      </p>
     </motion.div>
   )
 }
