@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --kambo-bg:         rgba(11,26,15,0.86);
-  --kambo-surface:    rgba(18,32,22,0.84);
-  --kambo-surface-hi: rgba(28,48,32,0.88);
+  --kambo-bg:         rgba(11,26,15,0.58);
+  --kambo-surface:    rgba(18,32,22,0.56);
+  --kambo-surface-hi: rgba(28,48,32,0.60);
   --kambo-border:     #2E4A32;
 
   --kambo-accent:     #C4922A;
@@ -12,10 +12,10 @@
   --kambo-text-hi:    #F0E6C8;
   --kambo-text-lo:    #B2C2B4;
 
-  --kambo-bento-1:    rgba(13,46,26,0.82);
-  --kambo-bento-2:    rgba(74,122,78,0.82);
-  --kambo-bento-3:    rgba(26,18,8,0.82);
-  --kambo-bento-4:    rgba(107,63,26,0.82);
+  --kambo-bento-1:    rgba(13,46,26,0.55);
+  --kambo-bento-2:    rgba(74,122,78,0.55);
+  --kambo-bento-3:    rgba(26,18,8,0.55);
+  --kambo-bento-4:    rgba(107,63,26,0.55);
 
   --radius-sm:  2px;
   --radius-md:  4px;
@@ -56,6 +56,7 @@
 html {
   scroll-behavior: smooth;
   background-color: #0b1a0f;
+  overscroll-behavior-y: none;
 }
 
 body {
@@ -66,6 +67,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  overscroll-behavior-y: none;
 }
 
 /* Jungle fixed background */
@@ -73,10 +75,10 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url('/jungle-bg.jpg');
+  background-image: url('/amazon-rainforest-bg.jpg');
   background-size: cover;
   background-position: center;
-  filter: brightness(0.42) saturate(0.85);
+  filter: brightness(0.65) saturate(0.85);
   pointer-events: none;
   z-index: -1;
 }

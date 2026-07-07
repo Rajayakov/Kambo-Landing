@@ -3,6 +3,7 @@ import LegalPage from '@/components/LegalPage'
 
 export const metadata: Metadata = {
   title: 'Отказ от ответственности | Яков Раджуна',
+  alternates: { canonical: '/disclaimer' },
 }
 
 export default function DisclaimerPage() {

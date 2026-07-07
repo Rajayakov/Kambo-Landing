@@ -3,6 +3,7 @@ import LegalPage from '@/components/LegalPage'
 
 export const metadata: Metadata = {
   title: 'Публичная оферта | Яков Раджуна',
+  alternates: { canonical: '/oferta' },
 }
 
 export default function OfertaPage() {

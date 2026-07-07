@@ -22,8 +22,7 @@ export default function Safety() {
       id="safety"
       style={{
         paddingBlock: 'var(--section-py)',
-        background: 'var(--kambo-bg)',
-        borderTop: '1px solid var(--kambo-border)',
+        background: 'linear-gradient(to bottom, rgba(7,18,12,0.4), transparent 110px), var(--kambo-bg)',
       }}
     >
       <div
@@ -64,6 +63,7 @@ export default function Safety() {
       >
         {/* Left: contraindications */}
         <motion.div
+          className="safety-contra"
           initial={reduce ? {} : { opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.3 }}
@@ -153,6 +153,7 @@ export default function Safety() {
 
         {/* Right: how we work */}
         <motion.div
+          className="safety-howwework"
           initial={reduce ? {} : { opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.3 }}
@@ -218,6 +219,8 @@ export default function Safety() {
           .safety-grid {
             grid-template-columns: 1fr !important;
           }
+          .safety-howwework { order: 1; }
+          .safety-contra { order: 2; }
         }
       `}</style>
     </section>

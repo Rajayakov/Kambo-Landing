@@ -13,8 +13,7 @@ export default function Guide() {
     <section
       id="guide"
       style={{
-        background: 'var(--kambo-bg)',
-        borderTop: '1px solid var(--kambo-border)',
+        background: 'linear-gradient(to bottom, rgba(7,18,12,0.4), transparent 110px), var(--kambo-bg)',
         overflow: 'hidden',
       }}
     >

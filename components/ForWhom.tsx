@@ -1,386 +1,141 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
+import { Check } from '@phosphor-icons/react'
 import { FOR_WHOM } from '@/lib/constants'
 
-// Stacked layout — used for mobile and prefers-reduced-motion
-function StackedCards({ reduce }: { reduce: boolean | null }) {
-  return (
-    <div
-      style={{
-        maxWidth: 'var(--max-w)',
-        marginInline: 'auto',
-        paddingInline: 'clamp(20px, 5vw, 48px)',
-      }}
-    >
-      <div style={{ marginBottom: 'clamp(32px, 5vw, 56px)' }}>
-        <div style={{ width: '32px', height: '2px', background: 'var(--kambo-accent)', marginBottom: '18px' }} />
-        <h2
-          style={{
-            fontSize: 'var(--text-h2)',
-            fontFamily: 'var(--font-cormorant)',
-            color: 'var(--kambo-text-hi)',
-            fontWeight: 400,
-          }}
-        >
-          {FOR_WHOM.title}
-        </h2>
-      </div>
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
-        {FOR_WHOM.items.map((item, i) => (
-          <motion.div
-            key={item.n}
-            initial={reduce ? {} : { opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.55, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              background: 'var(--kambo-surface)',
-              borderRadius: 'var(--radius-lg)',
-              padding: 'clamp(20px, 4vw, 32px)',
-              borderLeft: '2px solid var(--kambo-accent)',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '18px' }}>
-              <span
-                style={{
-                  fontFamily: 'var(--font-cormorant)',
-                  fontSize: '52px',
-                  color: 'var(--kambo-accent)',
-                  opacity: 0.28,
-                  lineHeight: 1,
-                  fontVariantNumeric: 'tabular-nums',
-                }}
-              >
-                {item.n}
-              </span>
-              <span
-                style={{
-                  fontSize: '11px',
-                  letterSpacing: '0.13em',
-                  textTransform: 'uppercase',
-                  color: 'var(--kambo-accent)',
-                  fontWeight: 500,
-                }}
-              >
-                {item.tag}
-              </span>
-            </div>
-            <p style={{ fontSize: '15px', color: 'var(--kambo-text-lo)', lineHeight: 1.75, marginBottom: '16px' }}>
-              {item.before}
-            </p>
-            <div style={{ height: '1px', background: 'var(--kambo-border)', marginBottom: '16px' }} />
-            <p
-              style={{
-                fontSize: 'clamp(17px, 2vw, 20px)',
-                fontFamily: 'var(--font-cormorant)',
-                color: 'var(--kambo-accent)',
-                lineHeight: 1.6,
-              }}
-            >
-              {item.after}
-            </p>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  )
-}
+const EASE = [0.16, 1, 0.3, 1] as const
 
 export default function ForWhom() {
-  const stickyRef  = useRef<HTMLDivElement>(null)
-  const reduce     = useReducedMotion()
-
-  const numberRef  = useRef<HTMLSpanElement>(null)
-  const tagRef     = useRef<HTMLSpanElement>(null)
-  const dotsRef    = useRef<(HTMLDivElement | null)[]>([])
-  const itemRefs   = useRef<(HTMLDivElement | null)[]>([])
-  const beforeRefs = useRef<(HTMLParagraphElement | null)[]>([])
-  const afterRefs  = useRef<(HTMLParagraphElement | null)[]>([])
-
-  function updateActiveItem(idx: number) {
-    const item = FOR_WHOM.items[idx]
-    if (!item) return
-    if (numberRef.current) numberRef.current.textContent = item.n
-    if (tagRef.current) tagRef.current.textContent = item.tag
-    dotsRef.current.forEach((dot, i) => {
-      if (!dot) return
-      const active = i === idx
-      dot.style.width = active ? '24px' : '8px'
-      dot.style.borderRadius = active ? '4px' : '50%'
-      dot.style.background = active ? 'var(--kambo-accent)' : 'var(--kambo-border)'
-    })
-  }
-
-  useEffect(() => {
-    if (reduce) return
-    if (typeof window !== 'undefined' && window.innerWidth < 768) return
-
-    let mounted = true
-
-    const init = async () => {
-      const { gsap }          = await import('gsap')
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
-      gsap.registerPlugin(ScrollTrigger)
-      if (!mounted || !stickyRef.current) return
-
-      const items = FOR_WHOM.items
-      const N     = items.length
-      const SEG   = 1 / N
-
-      // Initial states
-      items.forEach((_, i) => {
-        const itemEl   = itemRefs.current[i]
-        const beforeEl = beforeRefs.current[i]
-        const afterEl  = afterRefs.current[i]
-        if (itemEl)   gsap.set(itemEl, { opacity: i === 0 ? 1 : 0 })
-        if (beforeEl) gsap.set(beforeEl, { opacity: 1, y: 0 })
-        if (afterEl)  gsap.set(afterEl, { opacity: 0, y: 22 })
-      })
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: stickyRef.current,
-          pin: true,
-          anticipatePin: 1,
-          start: 'top top',
-          end: '+=300vh',
-          scrub: 0.8,
-          onUpdate: (self) => {
-            const idx = Math.min(Math.floor(self.progress * N), N - 1)
-            updateActiveItem(idx)
-          },
-        },
-      })
-
-      items.forEach((_, i) => {
-        const seg      = i * SEG
-        const beforeEl = beforeRefs.current[i]
-        const afterEl  = afterRefs.current[i]
-        const itemEl   = itemRefs.current[i]
-        const nextEl   = i < N - 1 ? itemRefs.current[i + 1] : null
-
-        if (beforeEl) tl.to(beforeEl, { opacity: 0, y: -22, duration: SEG * 0.42 }, seg + SEG * 0.12)
-        if (afterEl)  tl.fromTo(afterEl, { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: SEG * 0.38 }, seg + SEG * 0.40)
-
-        if (nextEl && itemEl) {
-          tl.to(itemEl, { opacity: 0, duration: SEG * 0.07 }, seg + SEG * 0.91)
-          tl.set(nextEl, { opacity: 1 }, seg + SEG)
-        }
-      })
-
-      document.fonts.ready.then(() => {
-        if (mounted) ScrollTrigger.refresh()
-      })
-
-      return () => {
-        tl.scrollTrigger?.kill()
-        tl.kill()
-        ScrollTrigger.getAll().forEach((t) => t.kill())
-      }
-    }
-
-    const cleanupPromise = init()
-    return () => {
-      mounted = false
-      cleanupPromise.then((fn) => fn?.())
-    }
-  }, [reduce])
-
-  if (reduce) {
-    return (
-      <section
-        id="for-whom"
-        style={{
-          paddingBlock: 'var(--section-py)',
-          background: 'var(--kambo-bg)',
-          borderTop: '1px solid var(--kambo-border)',
-        }}
-      >
-        <StackedCards reduce={reduce} />
-      </section>
-    )
-  }
+  const reduce = useReducedMotion()
 
   return (
     <section
       id="for-whom"
-      style={{ background: 'var(--kambo-bg)', borderTop: '1px solid var(--kambo-border)' }}
+      style={{
+        background:
+          'linear-gradient(to bottom, rgba(7,18,12,0.4), transparent 110px), linear-gradient(to top, rgba(7,18,12,0.4), transparent 110px), var(--kambo-bg)',
+        paddingBlock: 'clamp(40px, 5vw, 56px)',
+      }}
     >
-      {/* Desktop: GSAP-pinned scroll section — hidden on mobile via CSS */}
-      <div className="fw-desktop" ref={stickyRef} style={{ height: '100dvh', position: 'relative', overflow: 'hidden' }}>
-        {/* Section header — fixed top */}
-        <div style={{ position: 'absolute', top: '88px', left: 0, right: 0, zIndex: 2 }}>
-          <div style={{ maxWidth: 'var(--max-w)', marginInline: 'auto', paddingInline: 'clamp(20px, 5vw, 48px)' }}>
-            <div style={{ width: '32px', height: '2px', background: 'var(--kambo-accent)', marginBottom: '18px' }} />
-            <h2
-              style={{
-                fontSize: 'var(--text-h2)',
-                fontFamily: 'var(--font-cormorant)',
-                color: 'var(--kambo-text-hi)',
-                fontWeight: 400,
-              }}
-            >
-              {FOR_WHOM.title}
-            </h2>
-          </div>
-        </div>
-
-        {/* Centered card area */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
+      <div
+        style={{
+          maxWidth: 'min(1800px, 96vw)',
+          marginInline: 'auto',
+          paddingInline: 'clamp(20px, 5vw, 48px)',
+        }}
+      >
+        <motion.div
+          initial={reduce ? {} : { opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.6, ease: EASE }}
+          style={{ textAlign: 'center', marginBottom: 'clamp(40px, 5vw, 56px)' }}
         >
-          <div
+          <p
             style={{
-              maxWidth: 'var(--max-w)',
-              width: '100%',
-              paddingInline: 'clamp(20px, 5vw, 48px)',
-              position: 'relative',
+              fontFamily: 'var(--font-onest)',
+              fontSize: '13px',
+              fontWeight: 700,
+              letterSpacing: '0.36em',
+              textTransform: 'uppercase',
+              color: 'var(--kambo-accent-hi)',
+              marginBottom: '18px',
             }}
           >
-            {/* Large background number */}
-            <span
-              ref={numberRef}
-              aria-hidden
-              style={{
-                position: 'absolute',
-                left: '50%',
-                top: '50%',
-                transform: 'translate(-50%, -45%)',
-                fontFamily: 'var(--font-cormorant)',
-                fontSize: 'clamp(150px, 22vw, 200px)',
-                color: 'var(--kambo-text-hi)',
-                opacity: 0.06,
-                lineHeight: 1,
-                fontWeight: 400,
-                userSelect: 'none',
-                pointerEvents: 'none',
-                fontVariantNumeric: 'tabular-nums',
-              }}
-            >
-              {FOR_WHOM.items[0].n}
-            </span>
+            Показания
+          </p>
+          <h2
+            style={{
+              fontFamily: 'var(--font-onest)',
+              fontWeight: 600,
+              fontSize: 'clamp(32px, 3.4vw, 41px)',
+              lineHeight: 1.15,
+              color: '#F5E7C6',
+              maxWidth: '720px',
+              marginInline: 'auto',
+            }}
+          >
+            Эта церемония для вас,<br />если вы испытываете
+          </h2>
+        </motion.div>
 
-            {/* Tag label */}
-            <span
-              ref={tagRef}
-              style={{
-                display: 'inline-block',
-                fontSize: '11px',
-                letterSpacing: '0.14em',
-                textTransform: 'uppercase',
-                color: 'var(--kambo-accent)',
-                fontWeight: 500,
-                marginBottom: '20px',
-              }}
-            >
-              {FOR_WHOM.items[0].tag}
-            </span>
-
-            {/* Text crossfade layer */}
-            <div style={{ position: 'relative', height: 'clamp(130px, 18vh, 200px)' }}>
-              {FOR_WHOM.items.map((item, i) => (
-                <div
-                  key={item.n}
-                  ref={(el) => { itemRefs.current[i] = el }}
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    willChange: 'opacity',
-                    opacity: i === 0 ? 1 : 0,
-                  }}
-                >
-                  <p
-                    ref={(el) => { beforeRefs.current[i] = el }}
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      fontSize: 'clamp(16px, 1.9vw, 21px)',
-                      color: 'var(--kambo-text-lo)',
-                      lineHeight: 1.75,
-                      maxWidth: '620px',
-                      willChange: 'opacity, transform',
-                    }}
-                  >
-                    {item.before}
-                  </p>
-                  <p
-                    ref={(el) => { afterRefs.current[i] = el }}
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      fontSize: 'clamp(18px, 2.2vw, 26px)',
-                      fontFamily: 'var(--font-cormorant)',
-                      color: 'var(--kambo-accent)',
-                      lineHeight: 1.55,
-                      maxWidth: '620px',
-                      opacity: 0,
-                      willChange: 'opacity, transform',
-                    }}
-                  >
-                    {item.after}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Progress dots */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '48px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            zIndex: 2,
-          }}
+        <motion.ul
+          className="fw-grid"
+          initial={reduce ? {} : { opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, ease: EASE, delay: 0.1 }}
+          style={{ listStyle: 'none', margin: 0, padding: 0 }}
         >
-          {FOR_WHOM.items.map((_, i) => (
-            <div
-              key={i}
-              ref={(el) => { dotsRef.current[i] = el }}
-              style={{
-                width: i === 0 ? '24px' : '8px',
-                height: '8px',
-                borderRadius: i === 0 ? '4px' : '50%',
-                background: i === 0 ? 'var(--kambo-accent)' : 'var(--kambo-border)',
-                transition:
-                  'width 0.38s cubic-bezier(0.16,1,0.3,1), border-radius 0.38s cubic-bezier(0.16,1,0.3,1), background 0.25s ease',
-                flexShrink: 0,
-              }}
-            />
+          {FOR_WHOM.items.map((item) => (
+            <li key={item} className="fw-item">
+              <Check size={24} weight="bold" className="fw-check" />
+              <span>{item}</span>
+            </li>
           ))}
-        </div>
-      </div>
-
-      {/* Mobile stacked layout */}
-      <div
-        className="fw-mobile"
-        style={{ display: 'none', paddingBlock: 'var(--section-py)' }}
-      >
-        <StackedCards reduce={reduce} />
+        </motion.ul>
       </div>
 
       <style>{`
-        @media (max-width: 767px) {
-          .fw-desktop { display: none !important; }
-          .fw-mobile  { display: block !important; }
+        .fw-grid {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          column-gap: clamp(14px, 1.8vw, 22px);
+          row-gap: clamp(20px, 2.8vw, 28px);
+        }
+        .fw-item {
+          display: flex;
+          align-items: flex-start;
+          gap: 14px;
+          height: 100%;
+          font-family: var(--font-onest);
+          font-weight: 600;
+          font-size: clamp(19px, 1.35vw, 23px);
+          line-height: 1.35;
+          color: #F7ECD4;
+          background:
+            radial-gradient(130% 150% at 50% 0%, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0) 58%),
+            linear-gradient(160deg, rgba(72,112,76,0.56) 0%, rgba(46,74,50,0.5) 100%);
+          border: 2px solid rgba(196, 146, 42, 0.55);
+          border-radius: 16px;
+          padding: clamp(20px, 2vw, 26px) clamp(20px, 2vw, 24px);
+          box-shadow:
+            inset 0 0 0 1px rgba(232, 184, 75, 0.07),
+            inset 0 1px 32px rgba(232, 184, 75, 0.06);
+          transition: background 0.22s ease, border-color 0.22s ease, color 0.22s ease, box-shadow 0.22s ease;
+        }
+        .fw-item:hover {
+          background:
+            radial-gradient(130% 150% at 50% 0%, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 58%),
+            linear-gradient(160deg, rgba(82,126,86,0.62) 0%, rgba(54,84,58,0.56) 100%);
+          border-color: rgba(232, 184, 75, 0.85);
+          color: #FFF6E0;
+          box-shadow:
+            inset 0 0 0 1px rgba(232, 184, 75, 0.14),
+            inset 0 1px 40px rgba(232, 184, 75, 0.11);
+        }
+        .fw-check {
+          flex-shrink: 0;
+          margin-top: 2px;
+          padding: 6px;
+          border-radius: 50%;
+          color: #FFDD8A;
+          background: radial-gradient(circle, rgba(232,184,75,0.4) 0%, rgba(196,146,42,0.14) 68%, rgba(196,146,42,0) 100%);
+          box-shadow: 0 0 0 1px rgba(232,184,75,0.32), 0 0 14px rgba(232,184,75,0.24);
+          transition: background 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+        }
+        .fw-item:hover .fw-check {
+          background: radial-gradient(circle, rgba(232,184,75,0.58) 0%, rgba(196,146,42,0.22) 68%, rgba(196,146,42,0) 100%);
+          box-shadow: 0 0 0 1px rgba(232,184,75,0.6), 0 0 20px rgba(232,184,75,0.34);
+          filter: brightness(1.1);
+        }
+        @media (max-width: 1023px) {
+          .fw-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 599px) {
+          .fw-grid { grid-template-columns: 1fr; }
+          .fw-item { font-size: 18px; }
         }
       `}</style>
     </section>

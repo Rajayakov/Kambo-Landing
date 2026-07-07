@@ -3,6 +3,7 @@ import LegalPage from '@/components/LegalPage'
 
 export const metadata: Metadata = {
   title: 'Согласие на обработку персональных данных | Яков Раджуна',
+  alternates: { canonical: '/data-consent' },
 }
 
 export default function DataConsentPage() {

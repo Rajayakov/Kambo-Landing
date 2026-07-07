@@ -26,12 +26,6 @@ function LeafIcon() {
   )
 }
 
-const STATS = [
-  { value: '400+',  label: 'церемоний' },
-  { value: '4000+', label: 'участников' },
-  { value: '20',    label: 'лет практики' },
-]
-
 export default function Hero() {
   const reduce = useReducedMotion()
 
@@ -75,7 +69,7 @@ export default function Hero() {
             src="/jungle-bg.jpg"
             alt=""
             fill
-            priority
+            loading="lazy"
             style={{ objectFit: 'cover', objectPosition: '50% 50%' }}
             sizes="100vw"
           />
@@ -268,10 +262,11 @@ export default function Hero() {
                 src="/hero-kambo.jpg"
                 alt="Камбо — церемония очищения"
                 fill
-                priority
+                preload
+                fetchPriority="high"
                 className="h-photo-img"
                 style={{ objectFit: 'cover', objectPosition: '50% 50%' }}
-                sizes="(max-width: 767px) 100vw, 52vw"
+                sizes="(max-width: 767px) 110vw, 58vw"
               />
             </motion.div>
             <div className="h-photo-overlay" aria-hidden style={{
@@ -285,122 +280,6 @@ export default function Hero() {
           </div>
         </div>
 
-      </section>
-
-      {/* ── Guide intro — trust block ── */}
-      <section style={{ background: 'var(--kambo-bg)', textAlign: 'center' }}>
-        <div className="h-intro-wrap" style={{
-          maxWidth: '600px',
-          marginInline: 'auto',
-          paddingInline: 'clamp(24px, 5vw, 48px)',
-          paddingTop: 'clamp(36px, 4.5vw, 52px)',
-          paddingBottom: 'clamp(32px, 4vw, 44px)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}>
-          <p style={{
-            fontSize: '12px',
-            letterSpacing: '0.32em',
-            textTransform: 'uppercase',
-            color: '#D4A94E',
-            fontFamily: 'var(--font-onest)',
-            fontWeight: 500,
-            marginBottom: '18px',
-          }}>
-            Проводник
-          </p>
-
-          <h2 style={{
-            fontFamily: 'var(--font-cormorant)',
-            fontSize: 'clamp(38px, 4.4vw, 52px)',
-            fontWeight: 500,
-            color: '#F3EBDD',
-            lineHeight: 1.05,
-            letterSpacing: '-0.01em',
-            marginBottom: '18px',
-          }}>
-            Яков Раджуна
-          </h2>
-
-          <p className="h-intro-caption" style={{
-            fontFamily: 'var(--font-cormorant)',
-            fontSize: 'clamp(16px, 1.7vw, 18px)',
-            fontStyle: 'italic',
-            color: 'rgba(243,235,221,0.7)',
-            lineHeight: 1.5,
-            maxWidth: '460px',
-            marginBottom: '22px',
-          }}>
-            Более 20 лет пути, практики и сопровождения людей.
-          </p>
-
-          <div style={{
-            width: '70px',
-            height: '1px',
-            background: '#C89A2B',
-            opacity: 0.4,
-          }} />
-        </div>
-      </section>
-
-      {/* ── Stats — separate section (hidden on mobile, see item 2 of mobile spec) ── */}
-      <section
-        className="h-stats-section"
-        style={{
-          borderTop: '1px solid var(--kambo-border)',
-          background: 'var(--kambo-bg)',
-        }}
-      >
-        <div
-          className="h-stats"
-          style={{
-            maxWidth: 'var(--max-w)',
-            marginInline: 'auto',
-            paddingInline: 'clamp(24px, 5vw, 64px)',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr',
-          }}
-        >
-          {STATS.map((s, i) => (
-            <motion.div
-              key={s.label}
-              initial={reduce ? {} : { opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1, ease: EASE }}
-              style={{
-                padding: 'clamp(24px, 3vw, 40px) clamp(16px, 2.5vw, 32px)',
-                borderRight: i < 2 ? '1px solid var(--kambo-border)' : 'none',
-                textAlign: 'center',
-              }}
-            >
-              <p
-                style={{
-                  fontFamily: 'var(--font-cormorant)',
-                  fontSize: 'clamp(36px, 5vw, 60px)',
-                  color: 'var(--kambo-accent)',
-                  lineHeight: 0.9,
-                  letterSpacing: '-0.02em',
-                  marginBottom: '8px',
-                }}
-              >
-                {s.value}
-              </p>
-              <p
-                style={{
-                  fontSize: '11px',
-                  letterSpacing: '0.14em',
-                  color: 'var(--kambo-text-lo)',
-                  fontFamily: 'var(--font-onest)',
-                  opacity: 0.6,
-                }}
-              >
-                {s.label}
-              </p>
-            </motion.div>
-          ))}
-        </div>
       </section>
 
       <style>{`
@@ -450,26 +329,8 @@ export default function Hero() {
             background: linear-gradient(180deg, rgba(11,26,15,0.55) 0%, rgba(11,26,15,0.72) 45%, rgba(11,26,15,0.88) 100%) !important;
           }
 
-          /* Item 2 — intro caption: gold, tighter block, numbers hidden below */
-          .h-intro-wrap {
-            padding-top: 16px !important;
-            padding-bottom: 12px !important;
-          }
-          .h-intro-caption {
-            color: var(--kambo-accent) !important;
-            margin-bottom: 0 !important;
-          }
-
           /* CTA — bullets sit tight under the button, no extra air */
           .h-cta-wrap { margin-bottom: 8px !important; }
-
-          /* Stats — kept visible, pulled close to the hero photo above */
-          .h-stats-section { border-top: none !important; }
-          .h-stats { padding-inline: clamp(16px, 5vw, 32px) !important; }
-          .h-stats > div {
-            padding-block: 12px !important;
-            padding-inline: 6px !important;
-          }
         }
       `}</style>
     </>

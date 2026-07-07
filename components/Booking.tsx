@@ -252,8 +252,7 @@ export default function Booking() {
       id="booking"
       style={{
         paddingBlock: 'var(--section-py)',
-        background: 'var(--kambo-bg)',
-        borderTop: '1px solid var(--kambo-border)',
+        background: 'linear-gradient(to bottom, rgba(7,18,12,0.4), transparent 110px), var(--kambo-bg)',
         position: 'relative',
         overflow: 'hidden',
       }}

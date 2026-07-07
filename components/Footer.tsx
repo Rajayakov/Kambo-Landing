@@ -7,7 +7,6 @@ const LEGAL = [
   'Информация, представленная на сайте, носит исключительно ознакомительный характер.',
   'Практика Камбо не является медицинской услугой, методом лечения или заменой обращения к врачу.',
   'Участие возможно только после предварительной личной консультации и оценки противопоказаний.',
-  'Церемонии проводятся на территории Российской Федерации. Участие — с 18 лет.',
 ]
 
 const LINKS = [
@@ -22,10 +21,10 @@ export default function Footer() {
     <footer style={{ position: 'relative', overflow: 'hidden' }}>
       <div className="f-photo" aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 0, display: 'none' }}>
         <Image
-          src="/hero-kambo.jpg"
+          src="/amazon-rainforest-bg.jpg"
           alt=""
           fill
-          style={{ objectFit: 'cover', objectPosition: '65% 30%' }}
+          style={{ objectFit: 'cover', objectPosition: '50% 40%' }}
           sizes="100vw"
         />
       </div>

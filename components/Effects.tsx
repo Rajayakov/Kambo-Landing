@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useReducedMotion } from 'motion/react'
-import { ArrowRight, ArrowDown } from '@phosphor-icons/react'
+import { ArrowRight } from '@phosphor-icons/react'
 import { EFFECTS } from '@/lib/constants'
 
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -99,7 +99,6 @@ export default function Effects() {
       style={{
         paddingBlock: 'var(--section-py)',
         background: 'transparent',
-        borderTop: '1px solid var(--kambo-border)',
         position: 'relative',
         overflow: 'hidden',
       }}
@@ -107,7 +106,7 @@ export default function Effects() {
       {/* Section overlay */}
       <div aria-hidden style={{
         position: 'absolute', inset: 0,
-        background: 'linear-gradient(180deg, rgba(7,18,12,.48), rgba(7,18,12,.65))',
+        background: 'linear-gradient(180deg, rgba(7,18,12,.85) 0%, rgba(7,18,12,.48) 110px, rgba(7,18,12,.65) 100%)',
         pointerEvents: 'none', zIndex: 0,
       }} />
       {/* Ambient top shimmer */}
@@ -301,7 +300,7 @@ export default function Effects() {
           ))}
         </div>
 
-        {/* ── Closing note + CTA ── */}
+        {/* ── CTA ── */}
         <motion.div
           initial={reduce ? {} : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -311,23 +310,11 @@ export default function Effects() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            marginTop: 'clamp(44px, 6.5vw, 72px)',
-            gap: 'clamp(18px, 2.5vw, 26px)',
+            marginTop: 'clamp(28px, 4vw, 44px)',
+            gap: 'clamp(14px, 1.8vw, 20px)',
           }}
         >
           <div style={{ width: '24px', height: '1px', background: 'rgba(196,146,42,0.25)' }} />
-          <p style={{
-            fontFamily: 'var(--font-cormorant)',
-            fontSize: 'clamp(16px, 1.8vw, 19px)',
-            fontStyle: 'italic',
-            color: 'var(--kambo-text-lo)',
-            textAlign: 'center',
-            opacity: 0.75,
-            maxWidth: '400px',
-            lineHeight: 1.9,
-          }}>
-            {EFFECTS.closing}
-          </p>
           <a
             href="#booking"
             className="eff-cta"
@@ -356,8 +343,7 @@ export default function Effects() {
               background: 'rgba(11,26,15,0.2)',
               display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
             }}>
-              <span className="eff-cta-icon-desktop"><ArrowRight size={16} weight="bold" /></span>
-              <span className="eff-cta-icon-mobile"><ArrowDown size={16} weight="bold" /></span>
+              <ArrowRight size={16} weight="bold" />
             </span>
           </a>
         </motion.div>
@@ -411,7 +397,7 @@ export default function Effects() {
         /* ── CTA ── */
         .eff-cta:hover { background: #d4a030 !important; transform: translateY(-1px); }
         .eff-cta:active { transform: translateY(1px) !important; }
-        .eff-cta-text-mobile, .eff-cta-icon-mobile { display: none; }
+        .eff-cta-text-mobile { display: none; }
 
         /* ── Responsive ── */
         @media (max-width: 860px) {
@@ -426,9 +412,8 @@ export default function Effects() {
         /* Item 4 — mobile cards: lighter than the section backdrop, with a
            visible gold ring so they don't blend into the dark jungle photo */
         @media (max-width: 767px) {
-          .eff-cta-text-desktop, .eff-cta-icon-desktop { display: none !important; }
+          .eff-cta-text-desktop { display: none !important; }
           .eff-cta-text-mobile { display: inline !important; }
-          .eff-cta-icon-mobile { display: flex !important; align-items: center; justify-content: center; }
 
           .eff-grid {
             row-gap: 14px !important;

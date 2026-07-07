@@ -24,7 +24,7 @@ export default function LegalPage({
           style={{
             fontSize: '12px',
             color: 'var(--kambo-text-lo)',
-            opacity: 0.6,
+            opacity: 0.7,
             textDecoration: 'none',
             letterSpacing: '0.04em',
           }}
@@ -50,7 +50,7 @@ export default function LegalPage({
           style={{
             fontSize: '12.5px',
             color: 'var(--kambo-text-lo)',
-            opacity: 0.5,
+            opacity: 0.7,
             letterSpacing: '0.04em',
             marginBottom: '56px',
           }}
