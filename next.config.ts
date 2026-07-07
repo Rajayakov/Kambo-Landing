@@ -1,30 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: 'export',
+  trailingSlash: true,
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'picsum.photos',
-      },
-    ],
+    unoptimized: true,
   },
   turbopack: {
     root: __dirname,
   },
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'X-Frame-Options', value: 'DENY' },
-          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
-        ],
-      },
-    ];
-  },
+  // Security headers can't run on a static export (no server) — they live in public/.htaccess instead.
 };
 
 export default nextConfig;

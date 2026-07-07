@@ -1,6 +1,8 @@
 import type { MetadataRoute } from 'next'
 
-const BASE_URL = 'https://kambo-landing.vercel.app'
+export const dynamic = 'force-static'
+
+const BASE_URL = 'https://kambu.ru'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = ['', '/privacy-policy', '/data-consent', '/oferta', '/disclaimer']

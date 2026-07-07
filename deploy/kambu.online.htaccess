@@ -1,0 +1,4 @@
+# One-time manual upload to /www/kambu.online/.htaccess in ISPmanager.
+# Not deployed by CI — this domain has no build of its own, it only redirects.
+RewriteEngine On
+RewriteRule ^(.*)$ https://kambu.ru/$1 [R=301,L]
