@@ -1,7 +1,8 @@
-# Force HTTPS
+# HTTP->HTTPS is enforced at the nginx layer (Reg.ru's panel handles SSL
+# termination in front of Apache) — do NOT force it here too. Apache sees
+# every request as plain HTTP regardless of what the client used, so a
+# RewriteCond %{HTTPS} off check at this level loops forever.
 RewriteEngine On
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 # Canonical host: www -> apex
 RewriteCond %{HTTP_HOST} ^www\.kambu\.ru$ [NC]
