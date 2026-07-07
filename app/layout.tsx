@@ -39,13 +39,13 @@ export const metadata: Metadata = {
     description: "Традиционная практика Амазонии. Запись открыта.",
     locale: "ru_RU",
     type: "website",
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Церемония Камбо | Яков Раджуна",
     description: "Традиционная практика Амазонии. Запись открыта.",
-    images: ["/og-image.png"],
+    images: ["/og-image.jpg"],
   },
 };
 
