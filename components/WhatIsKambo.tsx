@@ -1,7 +1,6 @@
 'use client'
 
 import { m, useReducedMotion } from 'motion/react'
-import Image from 'next/image'
 import { WHAT_KAMBO } from '@/lib/constants'
 
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -150,13 +149,28 @@ export default function WhatIsKambo() {
                 boxShadow: '0 28px 72px rgba(0,0,0,0.55), 0 0 0 1px rgba(196,146,42,0.14)',
               }}
             >
-              <Image
-                src="/kambo-frog.webp"
-                alt="Phyllomedusa bicolor — лягушка Камбо"
-                fill
-                style={{ objectFit: 'cover', objectPosition: 'center' }}
-                sizes="(max-width: 767px) 100vw, 46vw"
-              />
+              {/* Plain <picture> instead of next/image: images.unoptimized means
+                  next/image can't generate a srcset, so mobile was downloading
+                  the same 1400px file sized for the 46vw desktop column. */}
+              <picture>
+                <source media="(max-width: 767px)" srcSet="/kambo-frog-mobile.webp" />
+                <source media="(min-width: 768px)" srcSet="/kambo-frog.webp" />
+                <img
+                  src="/kambo-frog.webp"
+                  alt="Phyllomedusa bicolor — лягушка Камбо"
+                  loading="lazy"
+                  decoding="async"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                    color: 'transparent',
+                  }}
+                />
+              </picture>
               <div
                 aria-hidden
                 style={{

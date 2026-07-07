@@ -255,15 +255,29 @@ export default function Hero() {
               <m.div
                 style={{ width: '100%', height: '100%', x: bgX, y: bgY }}
               >
-                <Image
+                {/* Plain <img srcSet> instead of next/image: images.unoptimized
+                    means next/image can't generate one itself, and mobile was
+                    downloading the same 1600px file sized for the 58vw desktop
+                    column (LCP element — the 36% waste directly delays LCP).
+                    Next auto-generates the matching <link rel=preload> for a
+                    high-fetchPriority img with srcSet/sizes — no manual one needed. */}
+                <img
                   src="/hero-kambo.webp"
-                  alt="Камбо — церемония очищения"
-                  fill
-                  priority
-                  fetchPriority="high"
-                  className="h-photo-img"
-                  style={{ objectFit: 'cover', objectPosition: '50% 50%' }}
+                  srcSet="/hero-kambo-mobile.webp 900w, /hero-kambo.webp 1600w"
                   sizes="(max-width: 767px) 110vw, 58vw"
+                  alt="Камбо — церемония очищения"
+                  fetchPriority="high"
+                  decoding="async"
+                  className="h-photo-img"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: '50% 50%',
+                    color: 'transparent',
+                  }}
                 />
               </m.div>
             </div>
