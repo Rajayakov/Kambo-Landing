@@ -24,6 +24,11 @@ export default function Process() {
     if (reduce) return
     if (!sectionRef.current) return
 
+    // Below 768px the CSS breakpoint forces opacity/transform to their
+    // final values with !important (see the mobile media query below) —
+    // the fade-in has zero visual effect there, so don't even load GSAP.
+    if (window.matchMedia('(max-width: 767px)').matches) return
+
     let cancelled = false
     let cleanup: (() => void) | undefined
 
