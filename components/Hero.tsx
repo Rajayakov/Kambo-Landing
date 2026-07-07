@@ -248,26 +248,25 @@ export default function Hero() {
             WebkitMaskImage: 'linear-gradient(to right, transparent 0px, black 220px)',
             maskImage: 'linear-gradient(to right, transparent 0px, black 220px)',
           }}>
-            <motion.div
-              style={{ position: 'absolute', inset: '-5%', x: bgX, y: bgY }}
-              animate={reduce ? {} : { scale: [1, 1.02] }}
-              transition={
-                reduce
-                  ? {}
-                  : { duration: 28, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }
-              }
-            >
-              <Image
-                src="/hero-kambo.webp"
-                alt="Камбо — церемония очищения"
-                fill
-                priority
-                fetchPriority="high"
-                className="h-photo-img"
-                style={{ objectFit: 'cover', objectPosition: '50% 50%' }}
-                sizes="(max-width: 767px) 110vw, 58vw"
-              />
-            </motion.div>
+            {/* Slow Ken-Burns zoom — pure CSS, not motion-driven: this loops
+                forever for as long as the page is open, so it must run on the
+                compositor thread instead of ticking JS every frame. */}
+            <div className="h-photo-zoom" style={{ position: 'absolute', inset: '-5%' }}>
+              <motion.div
+                style={{ width: '100%', height: '100%', x: bgX, y: bgY }}
+              >
+                <Image
+                  src="/hero-kambo.webp"
+                  alt="Камбо — церемония очищения"
+                  fill
+                  priority
+                  fetchPriority="high"
+                  className="h-photo-img"
+                  style={{ objectFit: 'cover', objectPosition: '50% 50%' }}
+                  sizes="(max-width: 767px) 110vw, 58vw"
+                />
+              </motion.div>
+            </div>
             <div className="h-photo-overlay" aria-hidden style={{
               position: 'absolute', inset: 0, pointerEvents: 'none',
               background: 'linear-gradient(to right, rgba(8,18,10,0.38) 0%, transparent 32%)',
@@ -284,6 +283,12 @@ export default function Hero() {
       <style>{`
         .h-cta:hover { background: #d4a030 !important; transform: translateY(-1px); }
         .h-cta:active { transform: translateY(1px) !important; }
+
+        .h-photo-zoom { animation: h-zoom 28s ease-in-out infinite alternate; }
+        @keyframes h-zoom { from { transform: scale(1); } to { transform: scale(1.02); } }
+        @media (prefers-reduced-motion: reduce) {
+          .h-photo-zoom { animation: none; }
+        }
 
         @media (max-width: 767px) {
           .h-grid {
