@@ -336,8 +336,7 @@ export default function Effects() {
               whiteSpace: 'nowrap',
             }}
           >
-            <span className="eff-cta-text-desktop">Записаться на церемонию</span>
-            <span className="eff-cta-text-mobile">Записаться на консультацию</span>
+            <span>Записаться на консультацию</span>
             <span style={{
               width: '38px', height: '38px', borderRadius: '50%',
               background: 'rgba(11,26,15,0.2)',
@@ -397,7 +396,6 @@ export default function Effects() {
         /* ── CTA ── */
         .eff-cta:hover { background: #d4a030 !important; transform: translateY(-1px); }
         .eff-cta:active { transform: translateY(1px) !important; }
-        .eff-cta-text-mobile { display: none; }
 
         /* ── Responsive ── */
         @media (max-width: 860px) {
@@ -412,9 +410,6 @@ export default function Effects() {
         /* Item 4 — mobile cards: lighter than the section backdrop, with a
            visible gold ring so they don't blend into the dark jungle photo */
         @media (max-width: 767px) {
-          .eff-cta-text-desktop { display: none !important; }
-          .eff-cta-text-mobile { display: inline !important; }
-
           .eff-grid {
             row-gap: 14px !important;
             column-gap: 12px !important;

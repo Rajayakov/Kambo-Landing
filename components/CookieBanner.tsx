@@ -19,7 +19,14 @@ export default function CookieBanner() {
 
   function accept() {
     try {
-      localStorage.setItem(STORAGE_KEY, '1')
+      localStorage.setItem(STORAGE_KEY, 'accepted')
+    } catch {}
+    setVisible(false)
+  }
+
+  function decline() {
+    try {
+      localStorage.setItem(STORAGE_KEY, 'declined')
     } catch {}
     setVisible(false)
   }
@@ -77,23 +84,40 @@ export default function CookieBanner() {
           </Link>
           .
         </p>
-        <button
-          onClick={accept}
-          style={{
-            flexShrink: 0,
-            padding: '9px 20px',
-            fontSize: '13px',
-            fontWeight: 500,
-            letterSpacing: '0.02em',
-            color: '#0b1610',
-            background: 'rgba(196,183,163,0.95)',
-            border: 'none',
-            borderRadius: '999px',
-            cursor: 'pointer',
-          }}
-        >
-          Понятно
-        </button>
+        <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+          <button
+            onClick={decline}
+            style={{
+              padding: '9px 18px',
+              fontSize: '13px',
+              fontWeight: 500,
+              letterSpacing: '0.02em',
+              color: 'rgba(226,220,206,0.75)',
+              background: 'transparent',
+              border: '1px solid rgba(178,194,180,0.22)',
+              borderRadius: '999px',
+              cursor: 'pointer',
+            }}
+          >
+            Отклонить
+          </button>
+          <button
+            onClick={accept}
+            style={{
+              padding: '9px 20px',
+              fontSize: '13px',
+              fontWeight: 500,
+              letterSpacing: '0.02em',
+              color: '#0b1610',
+              background: 'rgba(196,183,163,0.95)',
+              border: 'none',
+              borderRadius: '999px',
+              cursor: 'pointer',
+            }}
+          >
+            Принять
+          </button>
+        </div>
       </div>
     </div>
   )

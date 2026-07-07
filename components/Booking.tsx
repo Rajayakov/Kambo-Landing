@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from 'motion/react'
 import { Check } from '@phosphor-icons/react'
 import { BOOKING } from '@/lib/constants'
+import ConsentGate from '@/components/ConsentGate'
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
@@ -187,11 +188,9 @@ function ExperienceCard({ tag, title, body, price, priceUnit, ctaHref, delay = 0
         ))}
       </ul>
 
-      {/* CTA → Telegram */}
-      <a
+      {/* CTA → Telegram, gated behind explicit consent */}
+      <ConsentGate
         href={ctaHref}
-        target="_blank"
-        rel="noopener noreferrer"
         className="bk-cta"
         style={{
           display: 'flex',
@@ -205,7 +204,6 @@ function ExperienceCard({ tag, title, body, price, priceUnit, ctaHref, delay = 0
           fontWeight: 500,
           letterSpacing: '0.05em',
           fontFamily: 'var(--font-onest)',
-          textDecoration: 'none',
           marginTop: 'auto',
           width: '88%',
           marginInline: 'auto',
@@ -214,29 +212,7 @@ function ExperienceCard({ tag, title, body, price, priceUnit, ctaHref, delay = 0
         }}
       >
         Записаться на консультацию
-      </a>
-      <p
-        style={{
-          fontSize: '11px',
-          lineHeight: 1.5,
-          color: 'var(--kambo-text-lo)',
-          opacity: 0.55,
-          textAlign: 'center',
-          marginTop: '10px',
-          marginInline: 'auto',
-          width: '88%',
-        }}
-      >
-        Переходя в Telegram, вы соглашаетесь с{' '}
-        <a href="/privacy-policy" style={{ color: 'inherit', textDecoration: 'underline' }}>
-          политикой конфиденциальности
-        </a>{' '}
-        и{' '}
-        <a href="/oferta" style={{ color: 'inherit', textDecoration: 'underline' }}>
-          публичной офертой
-        </a>
-        .
-      </p>
+      </ConsentGate>
     </motion.div>
   )
 }

@@ -220,8 +220,7 @@ export default function Hero() {
                   transition: 'background 0.2s ease, transform 0.14s ease',
                 }}
               >
-                <span className="h-cta-text-desktop">{HERO.cta1}</span>
-                <span className="h-cta-text-mobile">Записаться на консультацию</span>
+                <span>{HERO.cta1}</span>
                 <span
                   style={{
                     width: '38px',
@@ -285,12 +284,8 @@ export default function Hero() {
       <style>{`
         .h-cta:hover { background: #d4a030 !important; transform: translateY(-1px); }
         .h-cta:active { transform: translateY(1px) !important; }
-        .h-cta-text-mobile { display: none; }
 
         @media (max-width: 767px) {
-          .h-cta-text-desktop { display: none !important; }
-          .h-cta-text-mobile { display: inline !important; }
-
           .h-grid {
             grid-template-columns: 1fr !important;
             min-height: auto !important;
