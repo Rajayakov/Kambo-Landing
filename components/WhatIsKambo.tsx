@@ -151,7 +151,7 @@ export default function WhatIsKambo() {
               }}
             >
               <Image
-                src="/kambo-frog.jpg"
+                src="/kambo-frog.webp"
                 alt="Phyllomedusa bicolor — лягушка Камбо"
                 fill
                 style={{ objectFit: 'cover', objectPosition: 'center' }}

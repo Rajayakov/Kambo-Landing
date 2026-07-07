@@ -22,10 +22,15 @@ export default function Process() {
 
   useEffect(() => {
     if (reduce) return
+    if (!sectionRef.current) return
+
+    let cancelled = false
+    let cleanup: (() => void) | undefined
 
     const init = async () => {
       const { gsap }         = await import('gsap')
       const { ScrollTrigger } = await import('gsap/ScrollTrigger')
+      if (cancelled) return
       gsap.registerPlugin(ScrollTrigger)
 
       if (!sectionRef.current) return
@@ -70,11 +75,27 @@ export default function Process() {
         )
       })
 
-      return () => ScrollTrigger.getAll().forEach((t) => t.kill())
+      cleanup = () => ScrollTrigger.getAll().forEach((t) => t.kill())
     }
 
-    const cleanup = init()
-    return () => { cleanup.then((fn) => fn?.()) }
+    // GSAP/ScrollTrigger is only needed once this section is about to enter
+    // the viewport — deferring the import keeps it out of the initial load.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          observer.disconnect()
+          init()
+        }
+      },
+      { rootMargin: '200px' }
+    )
+    observer.observe(sectionRef.current)
+
+    return () => {
+      cancelled = true
+      observer.disconnect()
+      cleanup?.()
+    }
   }, [reduce])
 
   return (
@@ -241,7 +262,7 @@ export default function Process() {
         <div className="process-photo-col">
           <div className="process-photo-sticky">
             <Image
-              src="/kambo-ceremony.jpg"
+              src="/kambo-ceremony.webp"
               alt="Церемония Камбо"
               width={600}
               height={800}
@@ -258,7 +279,7 @@ export default function Process() {
             />
             <Image
               className="process-photo-second"
-              src="/kambo-tools.jpg"
+              src="/kambo-tools.webp"
               alt="Инструменты для церемонии Камбо"
               width={600}
               height={450}

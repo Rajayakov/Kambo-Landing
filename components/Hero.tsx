@@ -66,7 +66,7 @@ export default function Hero() {
             Mobile: hidden — the frog/hands photo is the only image on small screens. */}
         <div className="h-jungle-layer" aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
           <Image
-            src="/jungle-bg.jpg"
+            src="/jungle-bg.webp"
             alt=""
             fill
             loading="lazy"
@@ -258,10 +258,10 @@ export default function Hero() {
               }
             >
               <Image
-                src="/hero-kambo.jpg"
+                src="/hero-kambo.webp"
                 alt="Камбо — церемония очищения"
                 fill
-                preload
+                priority
                 fetchPriority="high"
                 className="h-photo-img"
                 style={{ objectFit: 'cover', objectPosition: '50% 50%' }}

@@ -30,7 +30,7 @@ export default function Guide() {
           style={{ position: 'relative', overflow: 'hidden' }}
         >
           <Image
-            src="/yakov-guide.png"
+            src="/yakov-guide.webp"
             alt="Яков Раджуна — проводник церемоний Камбо"
             fill
             style={{ objectFit: 'cover', objectPosition: 'center 20%' }}

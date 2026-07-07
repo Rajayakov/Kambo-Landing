@@ -21,7 +21,7 @@ export default function Footer() {
     <footer style={{ position: 'relative', overflow: 'hidden' }}>
       <div className="f-photo" aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 0, display: 'none' }}>
         <Image
-          src="/amazon-rainforest-bg.jpg"
+          src="/amazon-rainforest-bg.webp"
           alt=""
           fill
           style={{ objectFit: 'cover', objectPosition: '50% 40%' }}
