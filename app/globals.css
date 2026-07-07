@@ -70,17 +70,26 @@ body {
   overscroll-behavior-y: none;
 }
 
-/* Jungle fixed background */
+/* Jungle fixed background — mobile gets a much lighter file: this is a
+   full-bleed CSS background (no lazy-loading, no srcset possible), so on a
+   throttled mobile connection the desktop-res file alone was taking 5+
+   seconds and starving the hero image's bandwidth. */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url('/amazon-rainforest-bg.webp');
+  background-image: url('/amazon-rainforest-bg-mobile.webp');
   background-size: cover;
   background-position: center;
   filter: brightness(0.65) saturate(0.85);
   pointer-events: none;
   z-index: -1;
+}
+
+@media (min-width: 768px) {
+  body::before {
+    background-image: url('/amazon-rainforest-bg.webp');
+  }
 }
 
 /* Anchor scroll offset — floating pill nav is ~82px tall */

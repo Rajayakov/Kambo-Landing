@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useReducedMotion } from 'motion/react'
+import { m, useReducedMotion } from 'motion/react'
 import { TESTIMONIALS } from '@/lib/constants'
 
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -42,7 +42,7 @@ export default function SocialProof() {
         }}
       >
         {/* ── Testimonials header ── */}
-        <motion.div
+        <m.div
           className="sp-header"
           initial={reduce ? {} : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -62,13 +62,13 @@ export default function SocialProof() {
           >
             Отзывы о церемонии
           </h2>
-        </motion.div>
+        </m.div>
 
         {/* ── Testimonials: editorial — 1 featured + 2 supporting ── */}
 
         {/* Featured quote */}
         {TESTIMONIALS.quotes[0] && (
-          <motion.div
+          <m.div
             initial={reduce ? {} : { opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -105,7 +105,7 @@ export default function SocialProof() {
                 )}
               </p>
             </div>
-          </motion.div>
+          </m.div>
         )}
 
         {/* Thin divider */}
@@ -114,7 +114,7 @@ export default function SocialProof() {
         {/* Two supporting quotes */}
         <div className="sp-testimonials">
           {TESTIMONIALS.quotes.slice(1).map((q, i) => (
-            <motion.div
+            <m.div
               key={q.name}
               initial={reduce ? {} : { opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -151,7 +151,7 @@ export default function SocialProof() {
                   </p>
                 )}
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

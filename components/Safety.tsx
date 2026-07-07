@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useReducedMotion } from 'motion/react'
+import { m, useReducedMotion } from 'motion/react'
 import { Warning, ShieldCheck } from '@phosphor-icons/react'
 import { SAFETY } from '@/lib/constants'
 
@@ -33,7 +33,7 @@ export default function Safety() {
         }}
       >
         {/* Section header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
@@ -51,7 +51,7 @@ export default function Safety() {
           >
             {SAFETY.title}
           </h2>
-        </motion.div>
+        </m.div>
 
       <div
         style={{
@@ -62,7 +62,7 @@ export default function Safety() {
         className="safety-grid"
       >
         {/* Left: contraindications */}
-        <motion.div
+        <m.div
           className="safety-contra"
           initial={reduce ? {} : { opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -149,10 +149,10 @@ export default function Safety() {
           >
             {parseBold(SAFETY.contraindicationsNote)}
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Right: how we work */}
-        <motion.div
+        <m.div
           className="safety-howwework"
           initial={reduce ? {} : { opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -210,7 +210,7 @@ export default function Safety() {
               </li>
             ))}
           </ul>
-        </motion.div>
+        </m.div>
       </div>
       </div>
 

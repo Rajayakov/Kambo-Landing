@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useReducedMotion } from 'motion/react'
+import { m, useReducedMotion } from 'motion/react'
 import { ArrowRight } from '@phosphor-icons/react'
 import { EFFECTS } from '@/lib/constants'
 
@@ -131,7 +131,7 @@ export default function Effects() {
       }}>
 
         {/* ── Header + intro ── */}
-        <motion.div
+        <m.div
           initial={reduce ? {} : { opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.35 }}
@@ -160,13 +160,13 @@ export default function Effects() {
               <span key={i}>{i > 0 && <br />}{line}</span>
             ))}
           </p>
-        </motion.div>
+        </m.div>
 
         {/* ── Unified card grid: featured spans 2 of 3 columns ── */}
         <div className="eff-grid">
 
           {/* Featured: Жизненная энергия */}
-          <motion.article
+          <m.article
             className="eff-card eff-card--featured"
             initial={reduce ? {} : { opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -236,11 +236,11 @@ export default function Effects() {
                 {featured.body}
               </p>
             </div>
-          </motion.article>
+          </m.article>
 
           {/* 7 compact cards */}
           {rest.map((cell, i) => (
-            <motion.article
+            <m.article
               key={cell.id}
               className="eff-card eff-card--small"
               initial={reduce ? {} : { opacity: 0, y: 22 }}
@@ -296,12 +296,12 @@ export default function Effects() {
                   {cell.body}
                 </p>
               </div>
-            </motion.article>
+            </m.article>
           ))}
         </div>
 
         {/* ── CTA ── */}
-        <motion.div
+        <m.div
           initial={reduce ? {} : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
@@ -345,7 +345,7 @@ export default function Effects() {
               <ArrowRight size={16} weight="bold" />
             </span>
           </a>
-        </motion.div>
+        </m.div>
       </div>
 
       <style>{`

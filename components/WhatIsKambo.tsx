@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useReducedMotion } from 'motion/react'
+import { m, useReducedMotion } from 'motion/react'
 import Image from 'next/image'
 import { WHAT_KAMBO } from '@/lib/constants'
 
@@ -70,7 +70,7 @@ export default function WhatIsKambo() {
           }}
         >
           {/* Left: title + quote */}
-          <motion.div
+          <m.div
             initial={reduce ? {} : { opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -130,10 +130,10 @@ export default function WhatIsKambo() {
                 </p>
               ))}
             </div>
-          </motion.div>
+          </m.div>
 
           {/* Right: photo — fills full column height */}
-          <motion.div
+          <m.div
             className="what-photo-wrap"
             initial={reduce ? {} : { opacity: 0, x: 24 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -166,7 +166,7 @@ export default function WhatIsKambo() {
                 }}
               />
             </div>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* ── BOTTOM: horizontal stats row ── */}
@@ -179,7 +179,7 @@ export default function WhatIsKambo() {
           className="what-stats"
         >
           {WHAT_KAMBO.stats.map((stat, i) => (
-            <motion.div
+            <m.div
               key={stat.value}
               initial={reduce ? {} : { opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -221,7 +221,7 @@ export default function WhatIsKambo() {
               >
                 {stat.label}
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

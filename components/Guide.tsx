@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useReducedMotion } from 'motion/react'
+import { m, useReducedMotion } from 'motion/react'
 import Image from 'next/image'
 import { GUIDE } from '@/lib/constants'
 
@@ -21,7 +21,7 @@ export default function Guide() {
       <div className="guide-top">
 
         {/* LEFT: Portrait — edge-to-edge, no padding */}
-        <motion.div
+        <m.div
           className="guide-photo"
           initial={reduce ? {} : { opacity: 0, scale: 1.04 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -56,10 +56,10 @@ export default function Guide() {
               pointerEvents: 'none',
             }}
           />
-        </motion.div>
+        </m.div>
 
         {/* RIGHT: Content */}
-        <motion.div
+        <m.div
           className="guide-content"
           initial={reduce ? {} : { opacity: 0, x: 28 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -158,7 +158,7 @@ export default function Guide() {
             }}
           >
             {GUIDE.stats.map((stat, i) => (
-              <motion.div
+              <m.div
                 key={stat.value}
                 initial={reduce ? {} : { opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -196,10 +196,10 @@ export default function Guide() {
                 >
                   {stat.label}
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
-        </motion.div>
+        </m.div>
       </div>
 
       {/* ── BOTTOM: full-width closing quote ── */}
@@ -227,7 +227,7 @@ export default function Guide() {
           }}
         />
 
-        <motion.p
+        <m.p
           initial={reduce ? {} : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
@@ -246,10 +246,10 @@ export default function Guide() {
           }}
         >
           «{GUIDE.closing}»
-        </motion.p>
+        </m.p>
 
         {/* Attribution */}
-        <motion.p
+        <m.p
           initial={reduce ? {} : { opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -264,7 +264,7 @@ export default function Guide() {
           }}
         >
           — {GUIDE.name}
-        </motion.p>
+        </m.p>
       </div>
 
       <style>{`

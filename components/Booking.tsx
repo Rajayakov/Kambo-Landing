@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useReducedMotion } from 'motion/react'
+import { m, useReducedMotion } from 'motion/react'
 import { Check } from '@phosphor-icons/react'
 import { BOOKING } from '@/lib/constants'
 import ConsentGate from '@/components/ConsentGate'
@@ -39,7 +39,7 @@ interface CardProps {
 
 function ExperienceCard({ tag, title, body, price, priceUnit, ctaHref, delay = 0, reduce }: CardProps) {
   return (
-    <motion.div
+    <m.div
       initial={reduce ? {} : { opacity: 0, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
@@ -213,7 +213,7 @@ function ExperienceCard({ tag, title, body, price, priceUnit, ctaHref, delay = 0
       >
         Записаться на консультацию
       </ConsentGate>
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -257,7 +257,7 @@ export default function Booking() {
         }}
       >
         {/* Section header */}
-        <motion.div
+        <m.div
           initial={reduce ? {} : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
@@ -312,7 +312,7 @@ export default function Booking() {
               {' '}Если во время разговора станет понятно, что Камбо сейчас вам не подходит — я честно скажу об этом.
             </p>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Cards */}
         <div

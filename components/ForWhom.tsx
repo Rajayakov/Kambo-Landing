@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useReducedMotion } from 'motion/react'
+import { m, useReducedMotion } from 'motion/react'
 import { Check } from '@phosphor-icons/react'
 import { FOR_WHOM } from '@/lib/constants'
 
@@ -25,7 +25,7 @@ export default function ForWhom() {
           paddingInline: 'clamp(20px, 5vw, 48px)',
         }}
       >
-        <motion.div
+        <m.div
           initial={reduce ? {} : { opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
@@ -58,9 +58,9 @@ export default function ForWhom() {
           >
             Эта церемония для вас,<br />если вы испытываете
           </h2>
-        </motion.div>
+        </m.div>
 
-        <motion.ul
+        <m.ul
           className="fw-grid"
           initial={reduce ? {} : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -74,7 +74,7 @@ export default function ForWhom() {
               <span>{item}</span>
             </li>
           ))}
-        </motion.ul>
+        </m.ul>
       </div>
 
       <style>{`

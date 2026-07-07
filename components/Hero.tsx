@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import {
-  motion,
+  m,
   useReducedMotion,
   useMotionValue,
   useTransform,
@@ -93,7 +93,7 @@ export default function Hero() {
           }}
         >
           {/* ── Left: text only ── */}
-          <motion.div
+          <m.div
             className="h-text-col"
             initial={reduce ? {} : { opacity: 0, x: -18 }}
             animate={{ opacity: 1, x: 0 }}
@@ -237,7 +237,7 @@ export default function Hero() {
                 </span>
               </a>
             </div>
-          </motion.div>
+          </m.div>
 
           {/* ── Right: photo column — mask fade on left edge, no overlay ──
               Mobile: mask + overlay removed, frame shifted right so the frog
@@ -252,7 +252,7 @@ export default function Hero() {
                 forever for as long as the page is open, so it must run on the
                 compositor thread instead of ticking JS every frame. */}
             <div className="h-photo-zoom" style={{ position: 'absolute', inset: '-5%' }}>
-              <motion.div
+              <m.div
                 style={{ width: '100%', height: '100%', x: bgX, y: bgY }}
               >
                 <Image
@@ -265,7 +265,7 @@ export default function Hero() {
                   style={{ objectFit: 'cover', objectPosition: '50% 50%' }}
                   sizes="(max-width: 767px) 110vw, 58vw"
                 />
-              </motion.div>
+              </m.div>
             </div>
             <div className="h-photo-overlay" aria-hidden style={{
               position: 'absolute', inset: 0, pointerEvents: 'none',

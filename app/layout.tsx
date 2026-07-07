@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Onest, Inter } from "next/font/google";
+import { Cormorant_Garamond, Onest } from "next/font/google";
 import Script from "next/script";
+import { LazyMotion, domAnimation } from "motion/react";
 import "./globals.css";
 import CookieBanner from "@/components/CookieBanner";
 import ScrollRestoration from "@/components/ScrollRestoration";
@@ -8,7 +9,7 @@ import ScrollRestoration from "@/components/ScrollRestoration";
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
   subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -16,13 +17,6 @@ const onest = Onest({
   variable: "--font-onest",
   subsets: ["latin", "cyrillic"],
   weight: ["400", "500", "600"],
-  display: "swap",
-});
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin", "cyrillic"],
-  weight: ["300"],
   display: "swap",
 });
 
@@ -57,7 +51,7 @@ export default function RootLayout({
   return (
     <html
       lang="ru"
-      className={`${cormorant.variable} ${onest.variable} ${inter.variable}`}
+      className={`${cormorant.variable} ${onest.variable}`}
     >
       <body>
         <Script id="strip-hash-on-load" strategy="beforeInteractive">
@@ -70,7 +64,9 @@ export default function RootLayout({
           `}
         </Script>
         <ScrollRestoration />
-        {children}
+        <LazyMotion features={domAnimation} strict>
+          {children}
+        </LazyMotion>
         <CookieBanner />
       </body>
     </html>

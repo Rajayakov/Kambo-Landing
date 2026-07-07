@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion, useReducedMotion } from 'motion/react'
+import { m, useReducedMotion } from 'motion/react'
 import { ArrowUpRight } from '@phosphor-icons/react'
 import { NAV_LINKS } from '@/lib/constants'
 
@@ -54,7 +54,7 @@ export default function Nav() {
           pointerEvents: 'none',
         }}
       >
-        <motion.div
+        <m.div
           animate={reduce ? {} : {
             backgroundColor: scrolled
               ? 'rgba(11,26,15,0.85)'
@@ -210,7 +210,7 @@ export default function Nav() {
               <span className="nav-mobile-cta-short">Записаться</span>
             </a>
           </div>
-        </motion.div>
+        </m.div>
       </div>
 
       <style>{`
