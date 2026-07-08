@@ -1,7 +1,6 @@
 'use client'
 
 import { m, useReducedMotion } from 'motion/react'
-import Image from 'next/image'
 import { GUIDE } from '@/lib/constants'
 
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -29,13 +28,28 @@ export default function Guide() {
           transition={{ duration: 1.1, ease: EASE }}
           style={{ position: 'relative', overflow: 'hidden' }}
         >
-          <Image
-            src="/yakov-guide.webp"
-            alt="Яков Раджуна — проводник церемоний Камбо"
-            fill
-            style={{ objectFit: 'cover', objectPosition: 'center 20%' }}
-            sizes="(max-width: 767px) 100vw, 44vw"
-          />
+          {/* Plain <picture> instead of next/image: images.unoptimized means
+              next/image can't generate a srcset, so mobile was downloading
+              the same 1200px file sized for the 44vw desktop column. */}
+          <picture>
+            <source media="(max-width: 767px)" srcSet="/yakov-guide-mobile.webp" />
+            <source media="(min-width: 768px)" srcSet="/yakov-guide.webp" />
+            <img
+              src="/yakov-guide.webp"
+              alt="Яков Раджуна — проводник церемоний Камбо"
+              loading="lazy"
+              decoding="async"
+              style={{
+                position: 'absolute',
+                inset: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center 20%',
+                color: 'transparent',
+              }}
+            />
+          </picture>
           {/* Gradient right edge — blends into background */}
           <div
             aria-hidden
