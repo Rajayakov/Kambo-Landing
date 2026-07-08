@@ -56,7 +56,7 @@ export default function ForWhom() {
               marginInline: 'auto',
             }}
           >
-            Эта церемония для вас,<br />если вы испытываете
+            Камбо для вас,<br />если испытываете
           </h2>
         </m.div>
 
